@@ -30,3 +30,7 @@ yarn-error.log*
 *.njsproj
 *.sln
 *.sw?
+
+# Deployment
+docker-compose.yml
+/nginx
