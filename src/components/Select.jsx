@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styled from 'styled-components';
@@ -9,7 +9,6 @@ const SelectStyled = styled.div`
   font-weight: 700;
   display: flex;
   align-items: center;
-  
   transition: color 0.2s;
   
   &:hover, &:focus {
@@ -23,7 +22,6 @@ const SelectStyled = styled.div`
       color: ${({ theme: { black } }) => black};
     }
   }
-  
   
   .fa-calendar-alt {
     position: absolute;
@@ -50,27 +48,48 @@ const SelectStyled = styled.div`
     color: ${({ theme: { black } }) => black};
     cursor: pointer;
     appearance: none;
-    
     transition: color 0.2s;
   }
 `;
 
-const Select = ({ opts, onChange }) => (
-  <SelectStyled>
-    <FontAwesomeIcon
-      icon="calendar-alt"
-    />
-    <select onChange={onChange}>
-      {opts && opts.map((e) => <option key={e.name}>{ e.name }</option>)}
-    </select>
-    <FontAwesomeIcon
-      icon="chevron-down"
-    />
-  </SelectStyled>
-);
+const Select = ({ opts, defaultOpt, onChange }) => {
+  const [selectedVal, setSelectedVal] = useState(defaultOpt);
+  const onSelectChange = (event) => {
+    const sel = opts.find((e) => (e.name === event.target.value));
+    setSelectedVal(sel);
+    // TODO: Define why not possible to use the state value
+    onChange(sel.value);
+  };
+
+  return (
+    <SelectStyled>
+      <FontAwesomeIcon
+        icon="calendar-alt"
+      />
+      <select
+        value={selectedVal.name}
+        onChange={onSelectChange}
+        // onBlur={onSelectChange}
+      >
+        {opts && opts.map((opt) => (
+          <option
+            key={opt.name}
+            value={opt.name}
+          >
+            { opt.name }
+          </option>
+        ))}
+      </select>
+      <FontAwesomeIcon
+        icon="chevron-down"
+      />
+    </SelectStyled>
+  );
+};
 
 Select.propTypes = {
   opts: PropTypes.arrayOf(PropTypes.object).isRequired,
+  defaultOpt: PropTypes.object.isRequired,
   onChange: PropTypes.func.isRequired,
 };
 

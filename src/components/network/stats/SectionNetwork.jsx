@@ -5,7 +5,7 @@ import Card from '../../styled/Card';
 import TitleMinor from '../../styled/TitleMinor';
 import Section from './Section';
 import ColStyled from './ColStyled';
-import Percent from './Percent';
+import Percent from '../../Percent';
 
 const SectionNetwork = () => {
   // TODO: Store and compute data correctly

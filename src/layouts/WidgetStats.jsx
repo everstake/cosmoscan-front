@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import Card from '../components/styled/Card';
 import TitleMinor from '../components/styled/TitleMinor';
 import Sparkline from '../components/chart-types/Sparkline';
+import Percent from '../components/Percent';
 
 const CardBodyWidget = styled(Card.Body)`
   display: flex;
@@ -53,6 +54,13 @@ const WidgetStats = ({
           { mainInfo }
         </div>
         <div>
+          {sparklineData && sparklineData.length
+          && (
+          <Percent
+            prevVal={sparklineData[0].y}
+            currVal={sparklineData[sparklineData.length - 1].y}
+          />
+          )}
           { extraInfo }
         </div>
       </WidgetItem>

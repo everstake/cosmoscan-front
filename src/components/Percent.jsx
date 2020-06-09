@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import PropTypes from 'prop-types';
-import { roundToPrecision } from '../../../utils';
+import { roundToPrecision } from '../utils';
 
 const PercentSpan = styled.span`
 color: ${({ increase, theme: { success, danger, black } }) => {
