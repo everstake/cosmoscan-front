@@ -53,4 +53,4 @@ export const formatATOM = (amount) => `${numeral(amount).format('0,0[.][00000]')
 
 export const formatPercentValue = (val) => `${val}%`;
 
-export const formaPercentFee = (val) => `$${numeral(val).format('0,0[.][0]')}`
+export const formatPercentFee = (val) => `${numeral(val).format('0,0[.][0]')}%`;

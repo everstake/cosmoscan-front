@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import styled from 'styled-components';
 import API from '../../api';
 import {
-  noString, formatNum, formatUSD, formatSec, formatPercentValue, formaPercentFee
+  noString, formatNum, formatUSD, formatSec, formatPercentValue, formatPercentFee
 } from '../../utils';
 import Spinner from '../Spinner';
 import { Container } from '../styled/CustomBsGrid';
@@ -137,7 +137,7 @@ const AppTopStats = () => {
                       : stat.title === 'Block time'
                         ? formatSec(stat.value)
                         : stat.title === 'Validator fee'
-                          ? formatPercentValue(formaPercentFee(stat.value))
+                          ? formatPercentFee(stat.value)
                           : noString(formatNum(stat.value)) }
                   </TxtEllipsis>
                 </div>

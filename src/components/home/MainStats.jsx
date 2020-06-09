@@ -136,6 +136,8 @@ const MainStats = () => {
     return transformDataForCharts(historicalState.state.staked_ratio);
   }, [historicalState.state]);
 
+  // сonst
+
 
   return (
     <MainStatsGrid>
