@@ -78,45 +78,47 @@ const P = styled.p`
   font-weight: 500;
 `;
 
+
+const currentYear = new Date().getFullYear();
+const socials = [
+  {
+    title: 'Twitter',
+    icon: <FontAwesomeIcon className="mr-2" icon={['fab', 'twitter']} />,
+    href: 'https://twitter.com/everstake_pool',
+  },
+  {
+    title: 'Telegram',
+    icon: <FontAwesomeIcon className="mr-2" icon={['fab', 'telegram-plane']} />,
+    href: 'https://t.me/everstake_chat',
+  },
+  {
+    title: 'Medium',
+    icon: <FontAwesomeIcon className="mr-2" icon={['fab', 'medium-m']} />,
+    href: 'https://medium.com/@everstake',
+  },
+  {
+    title: 'Reddit',
+    icon: <FontAwesomeIcon className="mr-2" icon={['fab', 'reddit-alien']} />,
+    href: 'https://www.reddit.com/r/Everstake',
+  },
+];
+const behind = [
+  // {
+  //   title: 'API',
+  //   href: '#',
+  // },
+  {
+    title: 'Front repo',
+    href: 'https://github.com/everstake/cosmoscan-front',
+  },
+  {
+    title: 'Back repo',
+    href: 'https://github.com/everstake/cosmoscan-api',
+  },
+];
+
 const AppFooter = () => {
   const routes = useRoutes();
-  const currentYear = new Date().getFullYear();
-  const socials = [
-    {
-      title: 'Twitter',
-      icon: <FontAwesomeIcon className="mr-2" icon={['fab', 'twitter']} />,
-      href: 'https://twitter.com/everstake_pool',
-    },
-    {
-      title: 'Telegram',
-      icon: <FontAwesomeIcon className="mr-2" icon={['fab', 'telegram-plane']} />,
-      href: 'https://t.me/everstake_chat',
-    },
-    {
-      title: 'Medium',
-      icon: <FontAwesomeIcon className="mr-2" icon={['fab', 'medium-m']} />,
-      href: 'https://medium.com/@everstake',
-    },
-    {
-      title: 'Reddit',
-      icon: <FontAwesomeIcon className="mr-2" icon={['fab', 'reddit-alien']} />,
-      href: 'https://www.reddit.com/r/Everstake',
-    },
-  ];
-  const behind = [
-    // {
-    //   title: 'API',
-    //   href: '#',
-    // },
-    {
-      title: 'Front repo',
-      href: 'https://github.com/everstake/cosmoscan-front',
-    },
-    {
-      title: 'Back repo',
-      href: 'https://github.com/everstake/cosmoscan-api',
-    },
-  ];
 
   return (
     <Footer>

@@ -2,7 +2,8 @@ import { useState, useEffect } from 'react';
 
 const useRequest = (reqFunc, opts) => {
   const [resp, setResp] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
+  // TODO: May be needed to change the initial value
+  const [isLoading, setIsLoading] = useState(true);
   const [err, setErr] = useState(null);
 
   const request = async (options = opts) => {

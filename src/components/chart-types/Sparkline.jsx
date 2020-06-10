@@ -5,6 +5,7 @@ import {
   YAxis,
 } from 'recharts';
 import PropTypes from 'prop-types';
+import theme from '../../utils/theme';
 
 const Sparkline = ({ data, color }) => (
   <AreaChart
@@ -37,7 +38,7 @@ Sparkline.propTypes = {
   color: PropTypes.string,
 };
 Sparkline.defaultProps = {
-  color: '#5c3bed',
+  color: theme.blue,
 };
 
 export default Sparkline;

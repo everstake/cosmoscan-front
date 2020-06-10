@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Card from '../components/styled/Card';
 import TitleChart from '../components/styled/TitleChart';
-import SelectPeriod from '../components/SelectPeriod';
 
 const ChartHeader = styled(Card.Header)`
   display: flex;
@@ -12,19 +11,14 @@ const ChartHeader = styled(Card.Header)`
 `;
 
 const ChartContainer = ({
-  title, chart, onSelectChange, isPeriodSelectable, defaultSelectOpt,
+  title, chart, select,
 }) => (
   <Card>
     <ChartHeader>
       <TitleChart>
         {title}
       </TitleChart>
-      {isPeriodSelectable
-      && (
-      <SelectPeriod
-        onChange={onSelectChange}
-      />
-      )}
+      {select}
     </ChartHeader>
 
     <Card.Body>
@@ -36,12 +30,10 @@ const ChartContainer = ({
 ChartContainer.propTypes = {
   title: PropTypes.string.isRequired,
   chart: PropTypes.node.isRequired,
-  onSelectChange: PropTypes.func,
-  isPeriodSelectable: PropTypes.bool,
+  select: PropTypes.node,
 };
 ChartContainer.defaultProps = {
-  onSelectChange: null,
-  isPeriodSelectable: true,
+  select: <></>,
 };
 
 export default ChartContainer;

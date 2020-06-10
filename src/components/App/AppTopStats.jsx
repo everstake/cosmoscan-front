@@ -1,5 +1,6 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import styled from 'styled-components';
+import useRequest from '../../hooks/useRequest';
 import API from '../../api';
 import {
   noString, formatNum, formatUSD, formatSec, formatPercentFee,
@@ -54,95 +55,68 @@ const TxtEllipsis = styled.span`
   display: inline-block;
 `;
 
-const AppTopStats = () => {
-  // TODO: Store and compute data correctly
-  const statTitles = {
-    height: 'Block height',
-    latest_validator: 'Latest validator',
-    latest_proposal: 'Latest proposal',
-    validator_avg_fee: 'Validator fee',
-    block_time: 'Block time',
-    current_price: 'Current price',
-  };
-  // TODO: Refactor meta stats computation
-  // const statTitles = {
-  //   height: {
-  //     title: 'Block height',
-  //     formatFunc: formatNum,
-  //   },
-  //   latest_validator: {
-  //     title: 'Latest validator',
-  //     formatFunc: noString,
-  //   },
-  //   latest_proposal: {
-  //     title: 'Latest proposal',
-  //     formatFunc: noString,
-  //   },
-  //   validator_avg_fee: {
-  //     title: 'Validator fee',
-  //     formatFunc: formatATOM,
-  //   },
-  //   block_time: {
-  //     title: 'Block time',
-  //     formatFunc: formatSeconds,
-  //   },
-  //   current_price: {
-  //     title: 'Current price',
-  //     formatFunc: formatUSD,
-  //   },
-  // };
-  const [metaStatsState, setMetaStatsState] = useState({ metaStats: {}, isLoading: false });
-  const getMetaStats = async () => {
-    try {
-      setMetaStatsState({ metaStats: {}, isLoading: true });
-      const resp = await API.getMetaStats();
-      setMetaStatsState({ metaStats: resp.data, isLoading: false });
-    } catch (e) {
-      // TODO: Implement the error handler
-      console.error(e);
-      setMetaStatsState({ metaStats: {}, isLoading: false });
-    }
-  };
 
-  useEffect(() => {
-    getMetaStats();
-  }, []);
+const statTitles = {
+  height: 'Block height',
+  latest_validator: 'Latest validator',
+  latest_proposal: 'Latest proposal',
+  validator_avg_fee: 'Avg validator fee',
+  block_time: 'Block time',
+  current_price: 'Current price',
+};
+const transformMetaStats = (stats) => {
+  if (!stats || !Object.keys(stats).length) return [];
 
-  const metaStatsComputed = useMemo(() => Object.keys(metaStatsState.metaStats).map((stat) => ({
+  return Object.keys(stats).map((stat) => ({
     title: statTitles[stat],
-    value: metaStatsState.metaStats[stat],
-  })), [metaStatsState.metaStats, statTitles]);
+    value: stats[stat],
+  }));
+};
+
+const AppTopStats = () => {
+  const res = useRequest(API.getMetaStats, {});
+
+  // TODO: May need rendering all the items as if there's no data,
+  //  there's no way to show appropriate "no-data" stubs
+  const metaStatsComp = useMemo(() => transformMetaStats(res.resp), [res.resp]);
 
   return (
     <TopStatsStyled>
       <Container>
         <TopStatsContainer>
-          {metaStatsState.isLoading
+          {/* eslint-disable-next-line no-nested-ternary */}
+          {res.isLoading
             ? (
               <div className="d-flex w-100 justify-content-center">
                 <Spinner size={55} />
               </div>
             )
-            : metaStatsComputed.map((stat) => (
-              <TopStatsItem key={stat.title}>
-                <div className="text-center">
-                  <TitleMinor>
-                    { stat.title }
-                  </TitleMinor>
-                  <TxtEllipsis>
-                    {/* eslint-disable-next-line no-nested-ternary */}
-                    { stat.title === 'Current price'
-                      ? formatUSD(stat.value)
+            : !metaStatsComp || !metaStatsComp.length
+              ? <div className="text-center w-100">No data</div>
+              : metaStatsComp.map((stat) => (
+                <TopStatsItem key={stat.title}>
+                  <div className="text-center">
+                    <TitleMinor>
+                      { stat.title }
+                    </TitleMinor>
+                    <TxtEllipsis>
+                      {/* eslint-disable-next-line no-nested-ternary */}
+                      { stat.title === 'Current price'
+                        ? formatUSD(stat.value)
                       // eslint-disable-next-line no-nested-ternary
-                      : stat.title === 'Block time'
-                        ? formatSec(stat.value)
-                        : stat.title === 'Validator fee'
-                          ? formatPercentFee(stat.value)
-                          : noString(formatNum(stat.value)) }
-                  </TxtEllipsis>
-                </div>
-              </TopStatsItem>
-            ))}
+                        : stat.title === 'Block time'
+                          ? formatSec(stat.value)
+                          // eslint-disable-next-line no-nested-ternary
+                          : stat.title === 'Avg validator fee'
+                            ? formatPercentFee(stat.value)
+                            : stat.title === 'Latest proposal'
+                              // TODO: Refactor
+                              ? `#${stat.value.id}: ${stat.value.name}`
+                              : noString(formatNum(stat.value)) }
+                    </TxtEllipsis>
+                  </div>
+                </TopStatsItem>
+              ))}
         </TopStatsContainer>
       </Container>
     </TopStatsStyled>

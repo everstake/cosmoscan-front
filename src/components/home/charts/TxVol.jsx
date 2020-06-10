@@ -1,48 +1,45 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 // import { useHistory } from 'react-router-dom';
-import moment from 'moment';
 import useRequest from '../../../hooks/useRequest';
+import useChartFormatter from '../../../hooks/useChartFormatter';
 import AreaChart from '../../chart-types/AreaChart';
 import ChartContainer from '../../../layouts/ChartContainer';
-import { formatATOM, formatDate, formatDateWithTime } from '../../../utils';
+import SelectPeriod from '../../SelectPeriod';
+import { periodOpts } from '../../../utils/constants';
+import {
+  formatATOM, formatDate, formatDateWithTime,
+} from '../../../utils';
 import API from '../../../api';
 
+
+const chartName = 'Transaction volume';
+const yAxisWidth = 75;
+const yTickCount = 10;
+const areaName = 'Tx volume';
+const isDotClickable = false;
+const defaultPeriod = periodOpts[2];
+
 const TxVol = () => {
-  const chartName = 'Transaction volume';
-  const yAxisWidth = 75;
-  const yTickCount = 10;
-  const areaName = 'Tx volume';
   // TODO: Configure right navigation
   // const history = useHistory();
   // const onDotClick = () => history.push('/network');
-  const isDotClickable = false;
-
-  const res = useRequest(API.getTxVol, {
-    // TODO: Replace the hardcoded default. All the possible options are in SelectPeriod.jsx
-    by: 'day',
-    from: moment.utc().subtract(30, 'days').startOf('day').unix(),
-    to: moment.utc().startOf('day').unix(),
-  });
-
-  // TODO: Duplicated code. Extract somewhere
-  const txVolComp = useMemo(() => {
-    if (!res.resp || !res.resp.length) return [];
-
-    return res.resp.map((e) => ({
-      x: e.time,
-      y: +e.value,
-    }));
-  }, [res.resp]);
+  const res = useRequest(API.getTxVol, defaultPeriod);
+  const txVolComp = useChartFormatter(res.resp);
+  const isDataNotEmpty = Boolean(res.resp && res.resp.length);
 
   return (
     <div>
-      {res.resp
-      && (
       <ChartContainer
         title={chartName}
-        onSelectChange={res.request}
+        select={isDataNotEmpty && (
+          <SelectPeriod
+            // defaultPeriod={defaultPeriod}
+            onChange={res.request}
+          />
+        )}
         chart={(
           <AreaChart
+            isLoading={res.isLoading}
             data={txVolComp}
             yAxisLabelsFormatter={formatATOM}
             yAxisWidth={yAxisWidth}
@@ -55,7 +52,6 @@ const TxVol = () => {
           />
         )}
       />
-      )}
     </div>
   );
 };

@@ -1,23 +1,24 @@
 import React from 'react';
 import ChartContainer from '../../../layouts/ChartContainer';
-import PieChart from "../../chart-types/PieChart";
+import PieChart from '../../chart-types/PieChart';
+
+
+const chartName = 'Voting';
+const valFormatter = (val) => `${val}%`;
+const labelFormatter = (entry) => `${entry.value}%`;
+const data = [
+  {
+    title: 'Test', value: 22,
+  },
+  {
+    title: 'Test2', value: 87.9,
+  },
+  {
+    title: 'Test3', value: 0.1,
+  },
+];
 
 function VotingChart() {
-  const chartName = 'Voting';
-  const valFormatter = (val) => `${val}%`;
-  const labelFormatter = (entry) => `${entry.value}%`;
-  const data = [
-    {
-      title: 'Test', value: 22,
-    },
-    {
-      title: 'Test2', value: 87.9,
-    },
-    {
-      title: 'Test3', value: 0.1,
-    },
-  ];
-
   return (
     <ChartContainer
       title={chartName}
