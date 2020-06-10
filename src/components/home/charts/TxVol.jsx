@@ -1,81 +1,57 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useMemo } from 'react';
 // import { useHistory } from 'react-router-dom';
 import moment from 'moment';
+import useRequest from '../../../hooks/useRequest';
 import AreaChart from '../../chart-types/AreaChart';
 import ChartContainer from '../../../layouts/ChartContainer';
-import { formatATOM } from '../../../utils';
+import { formatATOM, formatDate, formatDateWithTime } from '../../../utils';
 import API from '../../../api';
 
 const TxVol = () => {
   const chartName = 'Transaction volume';
   const yAxisWidth = 75;
   const yTickCount = 10;
-  const areaUnit = ' ATOM';
   const areaName = 'Tx volume';
   // TODO: Configure right navigation
   // const history = useHistory();
   // const onDotClick = () => history.push('/network');
   const isDotClickable = false;
-  const selectOpts = [
-    { name: 'Month', value: 'month' },
-    { name: '2 months', value: '2months' },
-    { name: '3 months', value: '23months' },
-    { name: 'All time', value: 'All time' },
-  ];
-  const onSelectChange = () => alert('Select changed');
 
-  const by = 'day';
-  const to = moment.utc().startOf('day').unix();
-  const from = moment.utc().subtract(30, 'days').startOf('day').unix();
+  const res = useRequest(API.getTxVol, {
+    // TODO: Replace the hardcoded default. All the possible options are in SelectPeriod.jsx
+    by: 'day',
+    from: moment.utc().subtract(30, 'days').startOf('day').unix(),
+    to: moment.utc().startOf('day').unix(),
+  });
 
-  const [txVolState, setTxVolState] = useState({ data: [], isLoading: false });
-  const getTxVol = async () => {
-    try {
-      setTxVolState({ data: [...txVolState.data], isLoading: true });
-      const resp = await API.getTxVol({ by, from, to });
-      setTxVolState({ data: [...txVolState.data, ...resp.data], isLoading: false });
-    } catch (e) {
-      // TODO: Implement the error handler
-      console.error(e);
-      setTxVolState({ data: [...txVolState.data], isLoading: false });
-    }
-  };
-
-  useEffect(() => {
-    getTxVol();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
+  // TODO: Duplicated code. Extract somewhere
   const txVolComp = useMemo(() => {
-    if (!txVolState.data || !txVolState.data.length) return [];
+    if (!res.resp || !res.resp.length) return [];
 
-    return txVolState.data.map((e) => ({
-      x: moment.unix(e.time).format('DD-MM-YYYY'),
-      // y: Math.round(e.value * 1) / 1,
-      // y: Math.round(e.value * 1) / 1,
+    return res.resp.map((e) => ({
+      x: e.time,
       y: +e.value,
     }));
-  }, [txVolState.data]);
+  }, [res.resp]);
 
   return (
     <div>
-      {txVolState.data
+      {res.resp
       && (
       <ChartContainer
         title={chartName}
-        selectOpts={selectOpts}
-        onSelectChange={onSelectChange}
-        isPeriodSelectable={false}
+        onSelectChange={res.request}
         chart={(
           <AreaChart
             data={txVolComp}
             yAxisLabelsFormatter={formatATOM}
             yAxisWidth={yAxisWidth}
             yTickCount={yTickCount}
-            areaUnit={areaUnit}
+            xAxisTickFormatter={formatDate}
             areaName={areaName}
             isDotClickable={isDotClickable}
             tooltipFormatter={formatATOM}
+            tooltipLabelFormatter={formatDateWithTime}
           />
         )}
       />

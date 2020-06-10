@@ -54,3 +54,6 @@ export const formatATOM = (amount) => `${numeral(amount).format('0,0[.][00000]')
 export const formatPercentValue = (val) => `${val}%`;
 
 export const formatPercentFee = (val) => `${numeral(val).format('0,0[.][0]')}%`;
+
+export const formatDateWithTime = (val) => moment.unix(val).format('DD-MM-YYYY HH:mm');
+export const formatDate = (val) => moment.unix(val).format('DD-MM-YYYY');

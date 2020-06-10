@@ -24,7 +24,9 @@ const AreaChart = ({
   yAxisLabelsFormatter,
   yAxisWidth,
   yTickCount,
+  xAxisTickFormatter,
   tooltipFormatter,
+  tooltipLabelFormatter,
   areaName,
   areaUnit,
   color,
@@ -46,6 +48,7 @@ const AreaChart = ({
             tickLine={false}
             tick={{ fill: theme.gray }}
             axisLine={false}
+            tickFormatter={xAxisTickFormatter}
           />
           <YAxis
             tickLine={false}
@@ -64,6 +67,7 @@ const AreaChart = ({
           <Tooltip
             cursor={{ strokeDasharray: '3 3', stroke: color }}
             formatter={tooltipFormatter}
+            labelFormatter={tooltipLabelFormatter}
           />
           <Legend
             align="left"
@@ -102,7 +106,9 @@ AreaChart.propTypes = {
   data: PropTypes.arrayOf(PropTypes.object).isRequired,
   yAxisWidth: PropTypes.number.isRequired,
   yTickCount: PropTypes.number.isRequired,
+  xAxisTickFormatter: PropTypes.func,
   tooltipFormatter: PropTypes.func,
+  tooltipLabelFormatter: PropTypes.func,
   areaName: PropTypes.string.isRequired,
   areaUnit: PropTypes.string,
   color: PropTypes.string,
@@ -111,7 +117,9 @@ AreaChart.propTypes = {
 };
 AreaChart.defaultProps = {
   yAxisLabelsFormatter: (value) => value,
+  xAxisTickFormatter: (value) => value,
   tooltipFormatter: (value) => value,
+  tooltipLabelFormatter: (value) => value,
   areaUnit: '',
   color: '#476eeb',
   isDotClickable: false,

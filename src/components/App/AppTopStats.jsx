@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import styled from 'styled-components';
 import API from '../../api';
 import {
-  noString, formatNum, formatUSD, formatSec, formatPercentValue, formatPercentFee
+  noString, formatNum, formatUSD, formatSec, formatPercentFee,
 } from '../../utils';
 import Spinner from '../Spinner';
 import { Container } from '../styled/CustomBsGrid';
