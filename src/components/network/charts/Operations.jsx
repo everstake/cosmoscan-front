@@ -5,16 +5,17 @@ import Card from '../../styled/Card';
 import { lastThirtyDays } from '../../../utils';
 import TitleChart from '../../styled/TitleChart';
 
+
+const data = lastThirtyDays.map((e, i) => ({
+  x: e,
+  y: i * 1000,
+}));
+const yAxisWidth = 76;
+const yTickCount = 10;
+const areaName = 'Operations';
+
 const Operations = () => {
-  // TODO: Store and compute data correctly
-  const data = lastThirtyDays.map((e, i) => ({
-    x: e,
-    y: i * 1000,
-  }));
   const theme = useContext(ThemeContext);
-  const yAxisWidth = 76;
-  const yTickCount = 10;
-  const areaName = 'Operations';
   const color = theme.burgundy;
 
   return (

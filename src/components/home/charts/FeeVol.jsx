@@ -1,46 +1,44 @@
 import React, {
-  useContext, useMemo,
+  useContext,
 } from 'react';
 import { ThemeContext } from 'styled-components';
-import moment from 'moment';
 import useRequest from '../../../hooks/useRequest';
+import useChartFormatter from '../../../hooks/useChartFormatter';
 import AreaChart from '../../chart-types/AreaChart';
-import { formatATOM, formatDate, formatDateWithTime } from '../../../utils';
+import SelectPeriod from '../../SelectPeriod';
+import { periodOpts } from '../../../utils/constants';
+import {
+  formatATOM, formatDate, formatDateWithTime,
+} from '../../../utils';
 import ChartContainer from '../../../layouts/ChartContainer';
 import API from '../../../api';
 
 
-const TxVol = () => {
+const chartName = 'Fee volume';
+const yAxisWidth = 76;
+const yTickCount = 10;
+const areaName = chartName;
+const defaultPeriod = periodOpts[2];
+
+const FeeVol = () => {
   const theme = useContext(ThemeContext);
-  const chartName = 'Fee volume';
-  const yAxisWidth = 76;
-  const yTickCount = 10;
-  const areaName = chartName;
   const color = theme.navyBlue;
-
-  const res = useRequest(API.getFeeVol, {
-    // TODO: Replace the hardcoded default. All the possible options are in SelectPeriod.jsx
-    by: 'day',
-    from: moment.utc().subtract(30, 'days').startOf('day').unix(),
-    to: moment.utc().startOf('day').unix(),
-  });
-
-  // TODO: Duplicated code. Extract somewhere
-  const feeVolComp = useMemo(() => {
-    if (!res.resp || !res.resp.length) return [];
-
-    return res.resp.map((e) => ({
-      x: e.time,
-      y: +e.value,
-    }));
-  }, [res.resp]);
+  const res = useRequest(API.getFeeVol, defaultPeriod);
+  const feeVolComp = useChartFormatter(res.resp);
+  const isDataNotEmpty = Boolean(res.resp && res.resp.length);
 
   return (
     <ChartContainer
       title={chartName}
-      onSelectChange={res.request}
+      select={isDataNotEmpty && (
+        <SelectPeriod
+          // defaultPeriod={defaultPeriod}
+          onChange={res.request}
+        />
+      )}
       chart={(
         <AreaChart
+          isLoading={res.isLoading}
           data={feeVolComp}
           yAxisLabelsFormatter={formatATOM}
           yAxisWidth={yAxisWidth}
@@ -56,4 +54,4 @@ const TxVol = () => {
   );
 };
 
-export default TxVol;
+export default FeeVol;

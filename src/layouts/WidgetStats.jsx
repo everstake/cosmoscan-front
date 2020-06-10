@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import styled, { ThemeContext } from 'styled-components';
 import Card from '../components/styled/Card';
 import TitleMinor from '../components/styled/TitleMinor';
 import Sparkline from '../components/chart-types/Sparkline';
@@ -25,7 +25,10 @@ const WidgetItem = styled.div`
 
 const WidgetStats = ({
   title, mainInfo, sparklineData, extraInfo,
-}) => (
+}) => {
+  const theme = useContext(ThemeContext)
+
+  return (
   <Card modifiers="height100">
     <CardBodyWidget>
       <WidgetItem>
@@ -41,8 +44,8 @@ const WidgetStats = ({
                 color={
                   sparklineData[sparklineData.length - 1].y
                   > sparklineData[sparklineData.length - 2].y
-                    ? '#4ed22c'
-                    : '#e04949'
+                    ? theme.success
+                    : theme.danger
                 }
               />
             </div>
@@ -66,15 +69,16 @@ const WidgetStats = ({
       </WidgetItem>
     </CardBodyWidget>
   </Card>
-);
+)};
 
 WidgetStats.propTypes = {
   title: PropTypes.string.isRequired,
-  mainInfo: PropTypes.node.isRequired,
+  mainInfo: PropTypes.node,
   sparklineData: PropTypes.arrayOf(PropTypes.object),
   extraInfo: PropTypes.node,
 };
 WidgetStats.defaultProps = {
+  mainInfo: '---',
   sparklineData: null,
   extraInfo: null,
 };

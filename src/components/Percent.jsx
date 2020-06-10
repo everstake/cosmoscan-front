@@ -5,15 +5,14 @@ import PropTypes from 'prop-types';
 import { roundToPrecision } from '../utils';
 
 const PercentSpan = styled.span`
-color: ${({ increase, theme: { success, danger, black } }) => {
-    if (Math.sign(increase) === 1) {
-      return success;
-    }
-    if (Math.sign(increase) === -1) {
-      return danger;
-    }
-    return black;
-  }
+color: ${({ increase, theme: { success, danger, black } }) =>
+    // if (Math.sign(increase) === 1) {
+    //   return success;
+    // }
+    // if (Math.sign(increase) === -1) {
+    //   return danger;
+    // }
+    black
 }
 `;
 

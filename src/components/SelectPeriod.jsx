@@ -1,55 +1,105 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import moment from 'moment';
-import Select from './Select';
+import Select, { components } from 'react-select';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome/index';
+import { periodOpts } from '../utils/constants';
+import theme from '../utils/theme';
 
-const SelectPeriod = ({ onChange }) => {
-  const opts = [
-    {
-      name: 'Last day',
-      value: {
-        by: 'hour',
-        from: moment.utc().subtract(1, 'days').startOf('day').unix(),
-        to: moment.utc().subtract(1, 'days').endOf('day').unix(),
-      },
+
+const ValueContainer = ({ children, ...props }) => (
+  components.ValueContainer && (
+  // eslint-disable-next-line react/jsx-props-no-spreading
+  <components.ValueContainer {...props}>
+    {!!children && (
+    <FontAwesomeIcon
+      icon="calendar-alt"
+      style={{ position: 'absolute', left: 0 }}
+    />
+    )}
+    {children}
+  </components.ValueContainer>
+  )
+);
+
+ValueContainer.propTypes = {
+  children: PropTypes.node.isRequired,
+};
+
+const styles = {
+  container: (base) => ({
+    ...base,
+    minWidth: '120px',
+    fontSize: '12px',
+  }),
+  control: (base) => ({
+    ...base,
+    border: '0',
+    backgroundColor: 'transparent',
+    fontWeight: 700,
+    minHeight: '13px',
+    cursor: 'pointer',
+    transition: 'all 0.2s',
+    color: theme.black,
+    '&:hover': {
+      color: theme.blue,
     },
-    {
-      name: 'Last week',
-      value: {
-        by: 'day',
-        from: moment.utc().subtract(7, 'days').startOf('day').unix(),
-        to: moment.utc().startOf('day').unix(),
-      },
+  }),
+  dropdownIndicator: (base, state) => ({
+    ...base,
+    padding: 0,
+    color: 'inherit',
+    transition: 'transform 0.2s',
+    transform: state.selectProps.menuIsOpen ? 'rotateX(180deg)' : '',
+    '&:hover': {
+      color: 'inherit',
     },
-    {
-      name: 'Last month',
-      value: {
-        by: 'day',
-        from: moment.utc().subtract(30, 'days').startOf('day').unix(),
-        to: moment.utc().startOf('day').unix(),
-      },
-    },
-    {
-      name: 'Last 3 months',
-      value: {
-        by: 'day',
-        from: moment.utc().subtract(60, 'days').startOf('day').unix(),
-        to: moment.utc().startOf('day').unix(),
-      },
-    },
-  ];
+  }),
+  indicatorSeparator: (base) => ({
+    ...base,
+    display: 'none',
+  }),
+  singleValue: (base) => ({
+    ...base,
+    color: 'inherit',
+  }),
+  menuList: (base) => ({
+    ...base,
+    padding: 0,
+  }),
+  valueContainer: (base) => ({
+    ...base,
+    paddingLeft: 15,
+  }),
+};
+
+const SelectPeriod = ({ defaultVal, onChange }) => {
+  const [period, setPeriod] = useState(defaultVal);
+  const handleChange = (opt) => {
+    setPeriod(opt);
+    onChange(opt.value);
+  };
 
   return (
     <Select
-      opts={opts}
-      defaultOpt={opts[2]}
-      onChange={onChange}
+      options={periodOpts}
+      value={period}
+      onChange={handleChange}
+      noOptionsMessage={() => 'No data'}
+      isSearchable={false}
+      getOptionLabel={(opt) => opt.name}
+      styles={styles}
+      components={{ ValueContainer }}
     />
   );
 };
 
 SelectPeriod.propTypes = {
-  onChange: PropTypes.func.isRequired,
+  defaultVal: PropTypes.object,
+  onChange: PropTypes.func,
+};
+SelectPeriod.defaultProps = {
+  defaultVal: periodOpts[2],
+  onChange: () => null,
 };
 
 export default SelectPeriod;

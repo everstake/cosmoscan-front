@@ -1,15 +1,38 @@
 import moment from 'moment';
 import numeral from 'numeral';
 
-export const lastThirtyDays = (() => {
-  const thirtyDaysAgo = moment.utc().startOf('day').subtract(29, 'days');
+export const formatSec = (num) => `${num} sec`;
 
-  return [...new Array(30)]
-    .map((i, idx) => moment
-      .utc(thirtyDaysAgo)
-      .add(idx, 'days')
-      .format('DD-MM-YYYY'));
-})();
+export const formatUSD = (amount) => `$${numeral(amount).format('0,0[.][00]')}`;
+
+export const formatATOM = (amount) => `${numeral(amount).format('0,0[.][00000]')} ATOM`;
+
+export const formatPercentValue = (val) => `${val}%`;
+
+export const formatPercentFee = (val) => `${numeral(val).format('0,0[.][0]')}%`;
+
+export const formatDateWithTime = (val) => moment.unix(val).format('DD-MM-YYYY HH:mm');
+
+export const formatDate = (val) => moment.unix(val).format('DD-MM-YYYY');
+
+export const removeTrailingSlash = (string) => String(string).replace(/\/+$/, '');
+
+export const noString = (string) => string || '-----';
+
+export const formatChartData = (chartDataRaw) => {
+  if (!chartDataRaw || !chartDataRaw) return [];
+
+  return chartDataRaw.map((e) => ({
+    x: e.time,
+    y: +e.value,
+  }));
+};
+
+export const formatNum = (num) => {
+  if (typeof num !== 'number') return num;
+  // TODO: Make the precision dynamic
+  return numeral(num).format('0,0[.][000000]');
+};
 
 export const roundToPrecision = (val, precision = 0) => {
   const multiplier = 10 ** precision;
@@ -35,25 +58,12 @@ export const formatSeconds = (seconds) => {
   return `${date.getSeconds()} s ${date.getMilliseconds()} ms`;
 };
 
-export const removeTrailingSlash = (string) => String(string).replace(/\/+$/, '');
+export const lastThirtyDays = (() => {
+  const thirtyDaysAgo = moment.utc().startOf('day').subtract(29, 'days');
 
-export const noString = (string) => string || '-----';
-
-export const formatNum = (num) => {
-  if (typeof num !== 'number') return num;
-  // TODO: Make the precision dynamic
-  return numeral(num).format('0,0[.][000000]');
-};
-
-export const formatSec = (num) => `${num} sec`;
-
-export const formatUSD = (amount) => `$${numeral(amount).format('0,0[.][00]')}`;
-
-export const formatATOM = (amount) => `${numeral(amount).format('0,0[.][00000]')} ATOM`;
-
-export const formatPercentValue = (val) => `${val}%`;
-
-export const formatPercentFee = (val) => `${numeral(val).format('0,0[.][0]')}%`;
-
-export const formatDateWithTime = (val) => moment.unix(val).format('DD-MM-YYYY HH:mm');
-export const formatDate = (val) => moment.unix(val).format('DD-MM-YYYY');
+  return [...new Array(30)]
+    .map((i, idx) => moment
+      .utc(thirtyDaysAgo)
+      .add(idx, 'days')
+      .format('DD-MM-YYYY'));
+})();

@@ -72,15 +72,16 @@ const DropdownMenuStatic = styled(Dropdown.Menu)`
   }
 `;
 
+
+const currentYear = new Date().getFullYear();
+
 const AppMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
   const routes = useRoutes();
-  const currentYear = new Date().getFullYear();
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
-
   const closeMenu = () => {
     setIsOpen(false);
   };
