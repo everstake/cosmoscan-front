@@ -10,7 +10,7 @@ import {
   Tooltip,
   Legend,
 } from 'recharts';
-import PropTypes, {checkPropTypes} from 'prop-types';
+import PropTypes from 'prop-types';
 import styled, { ThemeContext } from 'styled-components';
 import Spinner from '../Spinner';
 
