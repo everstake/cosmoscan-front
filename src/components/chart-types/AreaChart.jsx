@@ -10,7 +10,7 @@ import {
   Tooltip,
   Legend,
 } from 'recharts';
-import PropTypes from 'prop-types';
+import PropTypes, {checkPropTypes} from 'prop-types';
 import styled, { ThemeContext } from 'styled-components';
 import Spinner from '../Spinner';
 
@@ -27,6 +27,8 @@ const AreaChart = ({
   yAxisWidth,
   yTickCount,
   xAxisTickFormatter,
+  yAxisDomain,
+  yAllowDecimals,
   tooltipFormatter,
   tooltipLabelFormatter,
   areaName,
@@ -71,6 +73,8 @@ const AreaChart = ({
                   tickCount={yTickCount}
                   axisLine={false}
                   type="number"
+                  domain={yAxisDomain}
+                  allowDecimals={yAllowDecimals}
                 />
                 <CartesianGrid
                   strokeDasharray="3 3"
@@ -136,6 +140,12 @@ AreaChart.propTypes = {
   color: PropTypes.string,
   isDotClickable: PropTypes.bool,
   onDotClick: PropTypes.func,
+  yAxisDomain: PropTypes.arrayOf(PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+    PropTypes.func,
+  ])),
+  yAllowDecimals: PropTypes.bool,
 };
 AreaChart.defaultProps = {
   isLoading: false,
@@ -147,6 +157,8 @@ AreaChart.defaultProps = {
   color: '#476eeb',
   isDotClickable: false,
   onDotClick: () => null,
+  yAxisDomain: [0, 'auto'],
+  yAllowDecimals: true,
 };
 
 export default AreaChart;

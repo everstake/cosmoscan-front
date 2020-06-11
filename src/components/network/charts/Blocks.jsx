@@ -9,10 +9,10 @@ import { formatNum, formatDate, formatDateWithTime } from '../../../utils';
 import API from '../../../api';
 
 
-const chartName = 'Blocks';
+const chartName = '# of blocks per day/hour';
 const yAxisWidth = 50;
 const yTickCount = 10;
-const areaName = chartName;
+const areaName = '# of blocks';
 const defaultPeriod = periodOpts[2];
 
 const Blocks = () => {
@@ -37,6 +37,7 @@ const Blocks = () => {
           yAxisLabelsFormatter={formatNum}
           yAxisWidth={yAxisWidth}
           yTickCount={yTickCount}
+          yAxisDomain={['dataMin', 'dataMax']}
           xAxisTickFormatter={formatDate}
           tooltipFormatter={formatNum}
           tooltipLabelFormatter={formatDateWithTime}

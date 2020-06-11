@@ -103,10 +103,10 @@ const socials = [
   },
 ];
 const behind = [
-  // {
-  //   title: 'API',
-  //   href: '#',
-  // },
+  {
+    title: 'API',
+    href: 'https://api.cosmoscan.net/api',
+  },
   {
     title: 'Front repo',
     href: 'https://github.com/everstake/cosmoscan-front',
