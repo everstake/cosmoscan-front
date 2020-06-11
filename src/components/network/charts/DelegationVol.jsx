@@ -1,5 +1,5 @@
-import React from 'react';
-// import { useHistory } from 'react-router-dom';
+import React, { useContext } from 'react';
+import { ThemeContext } from 'styled-components';
 import useRequest from '../../../hooks/useRequest';
 import useChartFormatter from '../../../hooks/useChartFormatter';
 import ChartContainer from '../../../layouts/ChartContainer';
@@ -10,19 +10,17 @@ import { formatATOM, formatDate, formatDateWithTime } from '../../../utils';
 import API from '../../../api';
 
 
-const chartName = 'Transaction volume';
-const yAxisWidth = 75;
+const chartName = 'Delegation volume';
+const yAxisWidth = 60;
 const yTickCount = 10;
-const areaName = 'Tx volume';
+const areaName = chartName;
 const defaultPeriod = periodOpts[2];
-const isDotClickable = false;
 
-const TxVol = () => {
-  const res = useRequest(API.getTxVol, defaultPeriod.value);
-  const txVolComp = useChartFormatter(res.resp);
-  // TODO: Configure right navigation
-  // const history = useHistory();
-  // const onDotClick = () => history.push('/network');
+const DelegationVol = () => {
+  const theme = useContext(ThemeContext);
+  const color = theme.success;
+  const res = useRequest(API.getDelegationVol, defaultPeriod.value);
+  const delegationVolComp = useChartFormatter(res.resp);
 
   return (
     <ChartContainer
@@ -38,18 +36,18 @@ const TxVol = () => {
         <AreaChart
           areaName={areaName}
           isLoading={res.isLoading}
-          data={txVolComp}
+          data={delegationVolComp}
           yAxisLabelsFormatter={formatATOM}
           yAxisWidth={yAxisWidth}
           yTickCount={yTickCount}
           xAxisTickFormatter={formatDate}
           tooltipFormatter={formatATOM}
           tooltipLabelFormatter={formatDateWithTime}
-          isDotClickable={isDotClickable}
+          color={color}
         />
-        )}
+      )}
     />
   );
 };
 
-export default TxVol;
+export default DelegationVol;

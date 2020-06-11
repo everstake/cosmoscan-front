@@ -1,39 +1,48 @@
-import React, { useContext } from 'react';
-import { ThemeContext } from 'styled-components';
+import React from 'react';
+import useRequest from '../../../hooks/useRequest';
+import useChartFormatter from '../../../hooks/useChartFormatter';
+import ChartContainer from '../../../layouts/ChartContainer';
+import SelectPeriod from '../../SelectPeriod';
 import AreaChart from '../../chart-types/AreaChart';
-import Card from '../../styled/Card';
-import { lastThirtyDays } from '../../../utils';
-import TitleChart from '../../styled/TitleChart';
+import { periodOpts } from '../../../utils/constants';
+import { formatNum, formatDate, formatDateWithTime } from '../../../utils';
+import API from '../../../api';
 
 
-const data = lastThirtyDays.map((e, i) => ({
-  x: e,
-  y: i * 100000,
-}));
-const yAxisWidth = 76;
+const chartName = 'Blocks';
+const yAxisWidth = 50;
 const yTickCount = 10;
-const areaName = 'Blocks';
+const areaName = chartName;
+const defaultPeriod = periodOpts[2];
 
 const Blocks = () => {
-  const theme = useContext(ThemeContext);
-  const color = theme.black;
+  const res = useRequest(API.getBlocks, defaultPeriod.value);
+  const blocksComp = useChartFormatter(res.resp);
 
   return (
-    <Card>
-      <Card.Header>
-        <TitleChart>Blocks</TitleChart>
-      </Card.Header>
-
-      <Card.Body>
+    <ChartContainer
+      title={chartName}
+      select={(
+        <SelectPeriod
+          defaultOpt={defaultPeriod}
+          isDisabled={res.isLoading}
+          onChange={res.request}
+        />
+      )}
+      chart={(
         <AreaChart
-          data={data}
+          areaName={areaName}
+          isLoading={res.isLoading}
+          data={blocksComp}
+          yAxisLabelsFormatter={formatNum}
           yAxisWidth={yAxisWidth}
           yTickCount={yTickCount}
-          areaName={areaName}
-          color={color}
+          xAxisTickFormatter={formatDate}
+          tooltipFormatter={formatNum}
+          tooltipLabelFormatter={formatDateWithTime}
         />
-      </Card.Body>
-    </Card>
+      )}
+    />
   );
 };
 

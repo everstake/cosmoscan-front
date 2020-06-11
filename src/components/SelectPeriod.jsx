@@ -10,7 +10,7 @@ const ValueContainer = ({ children, ...props }) => (
   components.ValueContainer && (
   // eslint-disable-next-line react/jsx-props-no-spreading
   <components.ValueContainer {...props}>
-    {!!children && (
+    {children && (
     <FontAwesomeIcon
       icon="calendar-alt"
       style={{ position: 'absolute', left: 0 }}
@@ -28,10 +28,10 @@ ValueContainer.propTypes = {
 const styles = {
   container: (base) => ({
     ...base,
-    minWidth: '120px',
+    minWidth: '125px',
     fontSize: '12px',
   }),
-  control: (base) => ({
+  control: (base, state) => ({
     ...base,
     border: '0',
     backgroundColor: 'transparent',
@@ -39,7 +39,7 @@ const styles = {
     minHeight: '13px',
     cursor: 'pointer',
     transition: 'all 0.2s',
-    color: theme.black,
+    color: state.isDisabled ? theme.grey : theme.black,
     '&:hover': {
       color: theme.blue,
     },
@@ -58,22 +58,33 @@ const styles = {
     ...base,
     display: 'none',
   }),
+  valueContainer: (base) => ({
+    ...base,
+    paddingLeft: 15,
+  }),
   singleValue: (base) => ({
     ...base,
     color: 'inherit',
+  }),
+  menu: (base) => ({
+    ...base,
+    marginTop: '1px',
   }),
   menuList: (base) => ({
     ...base,
     padding: 0,
   }),
-  valueContainer: (base) => ({
+  option: (base, state) => ({
     ...base,
-    paddingLeft: 15,
+    backgroundColor: state.isSelected ? theme.blue : 'transparent',
+    '&:active': {
+      backgroundColor: theme.blue4,
+    },
   }),
 };
 
-const SelectPeriod = ({ defaultVal, onChange }) => {
-  const [period, setPeriod] = useState(defaultVal);
+const SelectPeriod = ({ defaultOpt, onChange, isDisabled }) => {
+  const [period, setPeriod] = useState(defaultOpt);
   const handleChange = (opt) => {
     setPeriod(opt);
     onChange(opt.value);
@@ -89,16 +100,19 @@ const SelectPeriod = ({ defaultVal, onChange }) => {
       getOptionLabel={(opt) => opt.name}
       styles={styles}
       components={{ ValueContainer }}
+      isDisabled={isDisabled}
     />
   );
 };
 
 SelectPeriod.propTypes = {
-  defaultVal: PropTypes.object,
+  defaultOpt: PropTypes.oneOfType([PropTypes.object]),
+  isDisabled: PropTypes.bool,
   onChange: PropTypes.func,
 };
 SelectPeriod.defaultProps = {
-  defaultVal: periodOpts[2],
+  defaultOpt: periodOpts[2],
+  isDisabled: false,
   onChange: () => null,
 };
 
