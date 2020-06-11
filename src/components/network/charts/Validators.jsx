@@ -10,10 +10,10 @@ import { formatDate, formatDateWithTime, formatNum } from '../../../utils';
 import API from '../../../api';
 
 
-const chartName = 'Validators';
+const chartName = '# of validators per day/hour';
 const yAxisWidth = 30;
 const yTickCount = 10;
-const areaName = chartName;
+const areaName = '# of validators';
 const defaultPeriod = periodOpts[2];
 
 const Validators = () => {
@@ -40,6 +40,8 @@ const Validators = () => {
           yAxisLabelsFormatter={formatNum}
           yAxisWidth={yAxisWidth}
           yTickCount={yTickCount}
+          yAxisDomain={['dataMin', 'dataMax']}
+          yAllowDecimals={false}
           xAxisTickFormatter={formatDate}
           tooltipFormatter={formatNum}
           tooltipLabelFormatter={formatDateWithTime}

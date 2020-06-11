@@ -40,6 +40,7 @@ const BlockDelay = () => {
           yAxisLabelsFormatter={formatSeconds}
           yAxisWidth={yAxisWidth}
           yTickCount={yTickCount}
+          yAxisDomain={['dataMin', 'dataMax']}
           xAxisTickFormatter={formatDate}
           tooltipFormatter={formatSeconds}
           tooltipLabelFormatter={formatDateWithTime}

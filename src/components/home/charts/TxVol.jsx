@@ -42,6 +42,7 @@ const TxVol = () => {
           yAxisLabelsFormatter={formatATOM}
           yAxisWidth={yAxisWidth}
           yTickCount={yTickCount}
+          yAxisDomain={[(dataMin) => Math.round(dataMin), (dataMax) => Math.round(dataMax)]}
           xAxisTickFormatter={formatDate}
           tooltipFormatter={formatATOM}
           tooltipLabelFormatter={formatDateWithTime}

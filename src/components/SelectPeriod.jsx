@@ -77,6 +77,12 @@ const styles = {
   option: (base, state) => ({
     ...base,
     backgroundColor: state.isSelected ? theme.blue : 'transparent',
+    padding: '4px 10px',
+    transition: 'background-color 0.2s',
+    cursor: 'pointer',
+    '&:hover': {
+      backgroundColor: !state.isSelected ? theme.blue4 : '',
+    },
     '&:active': {
       backgroundColor: theme.blue4,
     },

@@ -10,10 +10,10 @@ import { formatDate, formatDateWithTime, formatNum } from '../../../utils';
 import API from '../../../api';
 
 
-const chartName = 'Operations';
+const chartName = '# of operations per day/hour';
 const yAxisWidth = 50;
 const yTickCount = 10;
-const areaName = chartName;
+const areaName = '# of operations';
 const defaultPeriod = periodOpts[2];
 
 const Operations = () => {
@@ -40,6 +40,7 @@ const Operations = () => {
           yAxisLabelsFormatter={formatNum}
           yAxisWidth={yAxisWidth}
           yTickCount={yTickCount}
+          yAxisDomain={['dataMin', 'dataMax']}
           xAxisTickFormatter={formatDate}
           tooltipFormatter={formatNum}
           tooltipLabelFormatter={formatDateWithTime}
