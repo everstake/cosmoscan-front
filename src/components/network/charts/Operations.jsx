@@ -1,39 +1,52 @@
 import React, { useContext } from 'react';
 import { ThemeContext } from 'styled-components';
+import useRequest from '../../../hooks/useRequest';
+import useChartFormatter from '../../../hooks/useChartFormatter';
+import ChartContainer from '../../../layouts/ChartContainer';
+import SelectPeriod from '../../SelectPeriod';
 import AreaChart from '../../chart-types/AreaChart';
-import Card from '../../styled/Card';
-import { lastThirtyDays } from '../../../utils';
-import TitleChart from '../../styled/TitleChart';
+import { periodOpts } from '../../../utils/constants';
+import { formatDate, formatDateWithTime, formatNum } from '../../../utils';
+import API from '../../../api';
 
 
-const data = lastThirtyDays.map((e, i) => ({
-  x: e,
-  y: i * 1000,
-}));
-const yAxisWidth = 76;
+const chartName = 'Operations';
+const yAxisWidth = 50;
 const yTickCount = 10;
-const areaName = 'Operations';
+const areaName = chartName;
+const defaultPeriod = periodOpts[2];
 
 const Operations = () => {
   const theme = useContext(ThemeContext);
-  const color = theme.burgundy;
+  const color = theme.violet;
+  const res = useRequest(API.getOperations, defaultPeriod.value);
+  const opsComp = useChartFormatter(res.resp);
 
   return (
-    <Card>
-      <Card.Header>
-        <TitleChart>Operations</TitleChart>
-      </Card.Header>
-
-      <Card.Body>
+    <ChartContainer
+      title={chartName}
+      select={(
+        <SelectPeriod
+          defaultOpt={defaultPeriod}
+          isDisabled={res.isLoading}
+          onChange={res.request}
+        />
+      )}
+      chart={(
         <AreaChart
-          data={data}
+          areaName={areaName}
+          isLoading={res.isLoading}
+          data={opsComp}
+          yAxisLabelsFormatter={formatNum}
           yAxisWidth={yAxisWidth}
           yTickCount={yTickCount}
-          areaName={areaName}
+          xAxisTickFormatter={formatDate}
+          tooltipFormatter={formatNum}
+          tooltipLabelFormatter={formatDateWithTime}
           color={color}
         />
-      </Card.Body>
-    </Card>
+      )}
+    />
   );
 };
 

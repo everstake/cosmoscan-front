@@ -4,19 +4,19 @@ import { useState } from 'react';
 const useRoutes = () => {
   const [routes] = useState([
     { name: 'Home', path: '/' },
-    // {
-    //   name: 'Network',
-    //   paths: [
-    //     {
-    //       name: 'Stats',
-    //       path: '/network-stats',
-    //     },
-    //     {
-    //       name: 'Charts',
-    //       path: '/network-charts',
-    //     },
-    //   ],
-    // },
+    {
+      name: 'Network',
+      paths: [
+        // {
+        //   name: 'Stats',
+        //   path: '/network-stats',
+        // },
+        {
+          name: 'Charts',
+          path: '/network-charts',
+        },
+      ],
+    },
     // { name: 'Trading', path: '/trading' },
     // { name: 'Validator', path: '/validator' },
   ]);

@@ -25,6 +25,30 @@ const API = {
     const { by = 'day' } = params;
     return APIService.get(`/transactions/fee/agg${formatParams({ by, ...params })}`);
   },
+  getBlocks(params = {}) {
+    const { by = 'day' } = params;
+    return APIService.get(`/blocks/count/agg${formatParams({ by, ...params })}`);
+  },
+  getBlockDelay(params = {}) {
+    const { by = 'day' } = params;
+    return APIService.get(`/blocks/delay/agg${formatParams({ by, ...params })}`);
+  },
+  getValidators(params = {}) {
+    const { by = 'day' } = params;
+    return APIService.get(`/blocks/validators/uniq/agg${formatParams({ by, ...params })}`);
+  },
+  getOperations(params = {}) {
+    const { by = 'day' } = params;
+    return APIService.get(`/operations/count/agg${formatParams({ by, ...params })}`);
+  },
+  getDelegationVol(params = {}) {
+    const { by = 'day' } = params;
+    return APIService.get(`/delegations/volume/agg${formatParams({ by, ...params })}`);
+  },
+  getUndelegationVol(params = {}) {
+    const { by = 'day' } = params;
+    return APIService.get(`/undelegations/volume/agg${formatParams({ by, ...params })}`);
+  },
 };
 
 export default API;

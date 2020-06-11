@@ -10,8 +10,8 @@ export default {
   blue: '#476eeb',
   blue2: '#1949e6',
   blue3: '#1742cf',
+  blue4: '#d1dbfa',
   violet: '#5c3bed',
-  violetWhite: '#d8d0fb',
   grey: '#999',
   grey2: '#555',
 

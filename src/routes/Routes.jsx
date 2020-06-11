@@ -5,7 +5,7 @@ import ScrollToTop from './ScrollToTop';
 import Home from '../pages/home';
 // import Trading from '../pages/trading';
 // import NetworkStats from '../pages/network/stats';
-// import NetworkCharts from '../pages/network/charts';
+import NetworkCharts from '../pages/network/charts';
 // import Validator from '../pages/validator';
 // import Proposal from '../pages/governance/Proposal';
 import NotFound from '../pages/NotFound';
@@ -30,11 +30,11 @@ const Routes = () => (
       {/*  path="/network-stats" */}
       {/*  component={NetworkStats} */}
       {/* /> */}
-      {/* <Route */}
-      {/*  exact */}
-      {/*  path="/network-charts" */}
-      {/*  component={NetworkCharts} */}
-      {/* /> */}
+      <Route
+        exact
+        path="/network-charts"
+        component={NetworkCharts}
+      />
       {/* <Route */}
       {/*  exact */}
       {/*  path="/validator" */}
