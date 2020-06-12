@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import Card from '../../styled/Card';
 import TitleMinor from '../../styled/TitleMinor';
 
 const TopStatusContainer = styled.div`
@@ -13,8 +12,8 @@ const TopStatusContainer = styled.div`
   }
 `;
 
-const CardStatus = styled(Card)`
-  margin-bottom: 10px;
+const Status = styled.div`
+  margin-bottom: 20px;
 `;
 
 const StatusValue = styled.span`
@@ -25,32 +24,28 @@ const StatusValue = styled.span`
 
 const TopStatus = () => (
   <TopStatusContainer>
-    <CardStatus>
-      <CardStatus.Body>
-        <TitleMinor
-          as="span"
-          className="mb-0 mr-1"
-        >
-          Voting ends in:
-        </TitleMinor>
-        <span>
-          23 days
-        </span>
-      </CardStatus.Body>
-    </CardStatus>
-    <CardStatus>
-      <CardStatus.Body>
-        <TitleMinor
-          as="span"
-          className="mb-0 mr-1"
-        >
-          Status:
-        </TitleMinor>
-        <StatusValue>
-          active
-        </StatusValue>
-      </CardStatus.Body>
-    </CardStatus>
+    <Status>
+      <TitleMinor
+        as="span"
+        className="mb-0 mr-1"
+      >
+        Voting ends in:
+      </TitleMinor>
+      <span>
+        23 days
+      </span>
+    </Status>
+    <Status>
+      <TitleMinor
+        as="span"
+        className="mb-0 mr-1"
+      >
+        Status:
+      </TitleMinor>
+      <StatusValue>
+        active
+      </StatusValue>
+    </Status>
   </TopStatusContainer>
 );
 
