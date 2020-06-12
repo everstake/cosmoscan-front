@@ -1,39 +1,39 @@
-import React from 'react';
+import React, { useMemo } from 'react';
+import useRequest from '../../../hooks/useRequest';
+import ChartContainer from '../../../layouts/ChartContainer';
 import PieChart from '../../chart-types/PieChart';
-import Card from '../../styled/Card';
-import TitleChart from '../../styled/TitleChart';
-import { formatPercentValue } from '../../../utils';
+import { formatPercentDec2 } from '../../../utils';
+import API from '../../../api';
 
+const chartTitle = 'Voting power';
+const labelFormatter = (entry) => formatPercentDec2(entry.value);
 
-const labelFormatter = (entry) => `${entry.value}%`;
-const votingDist = [
-  {
-    title: 'Test', value: 22,
-  },
-  {
-    title: 'Test2', value: 87.9,
-  },
-  {
-    title: 'Test3', value: 0.1,
-  },
-];
+const VotingPower = () => {
+  const res = useRequest(API.getVotingPower);
+  const data = useMemo(() => {
+    if (!res || !res.resp) return [];
+    const total = Number(res.resp.total);
 
-const VotingPower = () => (
-  <Card>
-    <Card.Header>
-      <TitleChart>
-        Voting power
-      </TitleChart>
-    </Card.Header>
+    return res.resp.parts.map((el) => ({
+      ...el,
+      value: (+el.value * 100) / total,
+    }));
+  }, [res]);
 
-    <Card.Body>
-      <PieChart
-        data={votingDist}
-        valFormatter={formatPercentValue}
-        labelFormatter={labelFormatter}
-      />
-    </Card.Body>
-  </Card>
-);
+  return (
+    <ChartContainer
+      title={chartTitle}
+      chart={(
+        <PieChart
+          data={data}
+          valFormatter={formatPercentDec2}
+          labelFormatter={labelFormatter}
+          height={500}
+          isAnimationActive={false}
+        />
+      )}
+    />
+  );
+};
 
 export default VotingPower;

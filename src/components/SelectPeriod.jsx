@@ -89,7 +89,9 @@ const styles = {
   }),
 };
 
-const SelectPeriod = ({ defaultOpt, onChange, isDisabled }) => {
+const SelectPeriod = ({
+  opts, defaultOpt, onChange, isDisabled, className,
+}) => {
   const [period, setPeriod] = useState(defaultOpt);
   const handleChange = (opt) => {
     setPeriod(opt);
@@ -98,7 +100,7 @@ const SelectPeriod = ({ defaultOpt, onChange, isDisabled }) => {
 
   return (
     <Select
-      options={periodOpts}
+      options={opts}
       value={period}
       onChange={handleChange}
       noOptionsMessage={() => 'No data'}
@@ -107,19 +109,24 @@ const SelectPeriod = ({ defaultOpt, onChange, isDisabled }) => {
       styles={styles}
       components={{ ValueContainer }}
       isDisabled={isDisabled}
+      className={className}
     />
   );
 };
 
 SelectPeriod.propTypes = {
+  opts: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object])),
   defaultOpt: PropTypes.oneOfType([PropTypes.object]),
   isDisabled: PropTypes.bool,
   onChange: PropTypes.func,
+  className: PropTypes.string,
 };
 SelectPeriod.defaultProps = {
+  opts: periodOpts,
   defaultOpt: periodOpts[2],
   isDisabled: false,
   onChange: () => null,
+  className: '',
 };
 
 export default SelectPeriod;

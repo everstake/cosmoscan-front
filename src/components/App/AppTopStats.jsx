@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import useRequest from '../../hooks/useRequest';
 import API from '../../api';
 import {
-  noString, formatNum, formatUSD, formatSec, formatPercentFee,
+  noString, formatNum, formatUSD, formatSec, formatPercentDec,
 } from '../../utils';
 import Spinner from '../Spinner';
 import { Container } from '../styled/CustomBsGrid';
@@ -108,7 +108,7 @@ const AppTopStats = () => {
                           ? formatSec(stat.value)
                           // eslint-disable-next-line no-nested-ternary
                           : stat.title === 'Avg validator fee'
-                            ? formatPercentFee(stat.value)
+                            ? formatPercentDec(stat.value)
                             : stat.title === 'Latest proposal'
                               // TODO: Refactor
                               ? `#${stat.value.id}: ${stat.value.name}`
