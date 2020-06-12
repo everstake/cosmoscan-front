@@ -9,7 +9,9 @@ export const formatATOM = (amount) => `${numeral(amount).format('0,0[.][00000]')
 
 export const formatPercentValue = (val) => `${val}%`;
 
-export const formatPercentFee = (val) => `${numeral(val).format('0,0[.][0]')}%`;
+export const formatPercentDec = (val) => `${numeral(val).format('0,0[.][0]')}%`;
+
+export const formatPercentDec2 = (val) => `${numeral(val).format('0,0[.][00]')}%`;
 
 export const formatDateWithTime = (val) => moment.unix(val).format('DD-MM-YYYY HH:mm');
 

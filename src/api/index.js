@@ -49,6 +49,12 @@ const API = {
     const { by = 'day' } = params;
     return APIService.get(`/undelegations/volume/agg${formatParams({ by, ...params })}`);
   },
+  getNetworkStats() {
+    return APIService.get('/network/stats');
+  },
+  getVotingPower() {
+    return APIService.get('/staking/pie');
+  },
 };
 
 export default API;

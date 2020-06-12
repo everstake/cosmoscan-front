@@ -4,7 +4,7 @@ import ScrollToTop from './ScrollToTop';
 // TODO: Add dynamic imports
 import Home from '../pages/home';
 // import Trading from '../pages/trading';
-// import NetworkStats from '../pages/network/stats';
+import NetworkStats from '../pages/network/stats';
 import NetworkCharts from '../pages/network/charts';
 // import Validator from '../pages/validator';
 // import Proposal from '../pages/governance/Proposal';
@@ -25,11 +25,11 @@ const Routes = () => (
       {/*  path="/trading" */}
       {/*  component={Trading} */}
       {/* /> */}
-      {/* <Route */}
-      {/*  exact */}
-      {/*  path="/network-stats" */}
-      {/*  component={NetworkStats} */}
-      {/* /> */}
+      <Route
+        exact
+        path="/network-stats"
+        component={NetworkStats}
+      />
       <Route
         exact
         path="/network-charts"
@@ -40,11 +40,11 @@ const Routes = () => (
       {/*  path="/validator" */}
       {/*  component={Validator} */}
       {/* /> */}
-      {/* <Route */}
-      {/*  exact */}
-      {/*  path="/proposal" */}
-      {/*  component={Proposal} */}
-      {/* /> */}
+      {/* <Route*/}
+      {/*  exact*/}
+      {/*  path="/proposal"*/}
+      {/*  component={Proposal}*/}
+      {/* />*/}
       <Route
         component={NotFound}
       />

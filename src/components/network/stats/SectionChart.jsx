@@ -6,7 +6,7 @@ import VotingPower from './VotingPower';
 
 const SectionChart = () => (
   <Section>
-    <Row lg={2}>
+    <Row lg={1}>
       <ColStyled>
         <VotingPower />
       </ColStyled>

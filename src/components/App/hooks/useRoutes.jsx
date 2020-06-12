@@ -7,10 +7,10 @@ const useRoutes = () => {
     {
       name: 'Network',
       paths: [
-        // {
-        //   name: 'Stats',
-        //   path: '/network-stats',
-        // },
+        {
+          name: 'Stats',
+          path: '/network-stats',
+        },
         {
           name: 'Charts',
           path: '/network-charts',

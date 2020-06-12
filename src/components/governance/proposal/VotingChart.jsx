@@ -22,7 +22,6 @@ function VotingChart() {
   return (
     <ChartContainer
       title={chartName}
-      isPeriodSelectable={false}
       chart={(
         <PieChart
           data={data}
