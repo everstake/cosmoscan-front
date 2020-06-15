@@ -8,6 +8,7 @@ const AtomSpinner = styled.div`
   height: ${({ size }) => `${size}px` || `${60}px`};
   width: ${({ size }) => `${size}px` || `${60}px`};
   overflow: hidden;
+  display: inline-block;
   
   & * {
     box-sizing: border-box;

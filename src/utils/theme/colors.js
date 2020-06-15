@@ -5,6 +5,7 @@ export default {
   whiteGrey: '#fcfefe',
   whiteGrey2: '#f8fafa',
   whiteGrey3: '#f9fbfb',
+  whiteGrey4: '#f7f7f7',
   success: '#4ed22c',
   danger: '#e04949',
   blue: '#476eeb',

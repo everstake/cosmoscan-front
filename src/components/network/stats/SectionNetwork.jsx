@@ -18,6 +18,7 @@ import { formatNum } from '../../../utils';
 //   { title: 'Network size', value: '120 777' },
 //   { title: 'Proposal voting', value: '40%' },
 // ];
+const defaultPeriod = periodOptsStats[2];
 
 const SectionNetwork = ({ stats }) => {
   const [period, setPeriod] = useState(periodOptsStats[2].value);
@@ -29,6 +30,7 @@ const SectionNetwork = ({ stats }) => {
       </Title>
 
       <SelectPeriodStyled
+        defaultOpt={defaultPeriod}
         opts={periodOptsStats}
         onChange={setPeriod}
       />

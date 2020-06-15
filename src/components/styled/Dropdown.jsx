@@ -4,10 +4,15 @@ import { Dropdown as Ddwn } from 'react-bootstrap';
 const Dropdown = styled(Ddwn)`
   .dropdown-item {
     font-weight: 500;
-    padding: .25rem 0.8rem;
+    padding: .35rem 0.8rem;
+    transition: all 0.2s;
+  
+    &:hover {
+      background-color:  ${({ theme }) => theme.whiteGrey4};
+    }
   
     &:active, &.active {
-      background-color: transparent;
+      background-color:  ${({ theme }) => theme.whiteGrey4};
       color: ${({ theme }) => theme.blue};
     }
   }
@@ -15,8 +20,8 @@ const Dropdown = styled(Ddwn)`
   .dropdown-menu {
     font-size: ${({ theme }) => theme.fs14};
     transition: all 0.2s;
-    min-width: 100px;
-    padding: .4rem 0;
+    min-width: 75px;
+    padding: 0;
   }
 `;
 
