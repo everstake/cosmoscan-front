@@ -18,6 +18,7 @@ import { formatATOM } from '../../../utils';
 //   { title: 'Total burned', value: '120 777 222 ATOM' },
 //   { title: 'Highest fee block', value: '120 777' },
 // ];
+const defaultPeriod = periodOptsStats[2];
 
 const SectionBalances = ({ stats }) => {
   const [period, setPeriod] = useState(periodOptsStats[2].value);
@@ -29,6 +30,7 @@ const SectionBalances = ({ stats }) => {
       </Title>
 
       <SelectPeriodStyled
+        defaultOpt={defaultPeriod}
         opts={periodOptsStats}
         onChange={setPeriod}
       />

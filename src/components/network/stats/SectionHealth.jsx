@@ -17,6 +17,7 @@ import { formatSeconds } from '../../../utils';
 //   { title: 'Double sign evidence', value: '120 777 222 ATOM' },
 //   { title: 'Slashing evidence', value: '120 777' },
 // ];
+const defaultPeriod = periodOptsStats[2];
 
 const SectionHealth = ({ stats }) => {
   const [period, setPeriod] = useState(periodOptsStats[2].value);
@@ -28,6 +29,7 @@ const SectionHealth = ({ stats }) => {
       </Title>
 
       <SelectPeriodStyled
+        defaultOpt={defaultPeriod}
         opts={periodOptsStats}
         onChange={setPeriod}
       />

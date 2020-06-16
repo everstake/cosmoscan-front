@@ -28,7 +28,7 @@ const VotingPower = () => {
           data={data}
           valFormatter={formatPercentDec2}
           labelFormatter={labelFormatter}
-          height={500}
+          height={400}
           isAnimationActive={false}
         />
       )}

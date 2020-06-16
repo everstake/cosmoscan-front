@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
-import { Table, Button } from 'react-bootstrap';
+import moment from 'moment';
+import { Button } from 'react-bootstrap';
 import Card from '../../styled/Card';
 import TitleMinor from '../../styled/TitleMinor';
+import Table from '../../Table';
 
 
 const FlexContainer = css`
@@ -69,7 +71,7 @@ const Blue = styled.div`
 const Btn = styled(Button)`
  ${({
     active, theme: {
-      fs14, blue, blue2, blue3, grey,
+      fs14, blue, blue2, grey,
     },
   }) => css`
      font-size: ${fs14};
@@ -82,12 +84,34 @@ const Btn = styled(Button)`
      }
      &:not(:disabled):not(.disabled).active,
      &:not(:disabled):not(.disabled):active {
-       background-color: ${blue3};
-       border-color: ${blue3};
+       background-color: ${blue};
+       border-color: ${blue};
      }
     `
-}
+}2
 `;
+
+const cols = [
+  { value: 'voter', label: 'Voter' },
+  { value: 'vote', label: 'Vote' },
+  { value: 'amount', label: 'Amount' },
+  { value: 'timestamp', label: 'Date/time' },
+  { value: 'hash', label: 'Hash' },
+
+  // 'voter',
+  // 'vote',
+  // 'amount',
+  // 'timestamp',
+  // 'hash',
+];
+const rows = [
+  {
+    vote: 'Yes', amount: 200, voter: 'Otto', timestamp: moment().format('YYYY-MM-DD'), hash: 'hg2123333144fcs',
+  },
+  {
+    amount: 300, voter: 'Max', vote: 'No', timestamp: moment().format('YYYY-MM-DD'), hash: 'hg2123333144fcs',
+  },
+];
 
 const VotingTable = ({ className }) => {
   const [validatorType, setValidatorType] = useState('all');
@@ -147,12 +171,10 @@ const VotingTable = ({ className }) => {
         </Card.Body>
       </Card>
 
-      <Card>
-        <Card.Body>
-          { validatorType }
-        </Card.Body>
-        <Table />
-      </Card>
+      <Table
+        cols={cols}
+        rows={rows}
+      />
     </section>
   );
 };
