@@ -25,6 +25,7 @@ const VotingPower = () => {
       title={chartTitle}
       chart={(
         <PieChart
+          isLoading={res.isLoading}
           data={data}
           valFormatter={formatPercentDec2}
           labelFormatter={labelFormatter}

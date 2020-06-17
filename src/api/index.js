@@ -1,6 +1,7 @@
 import axios from 'axios';
 import queryString from 'querystring';
-import { removeTrailingSlash } from '../utils';
+import moment from 'moment';
+import {removeTrailingSlash} from '../utils';
 
 const formatParams = (params) => (params && Object.keys(params).length ? `?${queryString.stringify(params)}` : '');
 
@@ -49,8 +50,9 @@ const API = {
     const { by = 'day' } = params;
     return APIService.get(`/undelegations/volume/agg${formatParams({ by, ...params })}`);
   },
-  getNetworkStats() {
-    return APIService.get('/network/stats');
+  getNetworkStats(params = {}) {
+    const { to = moment().startOf('day').unix() } = params;
+    return APIService.get(`/network/stats${formatParams({ to, ...params })}`);
   },
   getVotingPower() {
     return APIService.get('/staking/pie');

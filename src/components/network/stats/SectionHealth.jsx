@@ -1,38 +1,25 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import Title from '../../styled/Title';
 import { Row } from '../../styled/CustomBsGrid';
-import Card from '../../styled/Card';
-import TitleMinor from '../../styled/TitleMinor';
-import Section from './Section';
 import ColStyled from './ColStyled';
-import SelectPeriodStyled from './SelectPeriodStyled';
-import { periodOptsStats } from '../../../utils/constants';
-import { formatSeconds } from '../../../utils';
+import Section from './Section';
+import WidgetStats from '../../../layouts/WidgetStats';
+import { formatNum, formatSeconds } from '../../../utils';
 
 
 // const healths = [
-//   { title: 'Block delay', value: '120 777 222 ATOM' },
 //   { title: 'Missed blocks', value: '120 777 222 ATOM' },
 //   { title: 'Double sign evidence', value: '120 777 222 ATOM' },
-//   { title: 'Slashing evidence', value: '120 777' },
 // ];
-const defaultPeriod = periodOptsStats[2];
 
 const SectionHealth = ({ stats }) => {
-  const [period, setPeriod] = useState(periodOptsStats[2].value);
-
+  const { blockDelay, jailers } = stats;
   return (
     <Section>
       <Title>
         Health
       </Title>
-
-      <SelectPeriodStyled
-        defaultOpt={defaultPeriod}
-        opts={periodOptsStats}
-        onChange={setPeriod}
-      />
 
       <Row
         xs={1}
@@ -41,16 +28,20 @@ const SectionHealth = ({ stats }) => {
         xl={4}
       >
         <ColStyled>
-          <Card modifiers={['height100', 'flexCol']}>
-            <Card.Body>
-              <TitleMinor>
-                Block delay
-              </TitleMinor>
-              <div>
-                { stats.blockDelay ? formatSeconds(Number(stats.blockDelay[period])) : '-----' }
-              </div>
-            </Card.Body>
-          </Card>
+          <WidgetStats
+            title="Block delay"
+            isVertical
+            mainInfo={blockDelay ? formatSeconds(blockDelay[blockDelay.length - 1]) : '---'}
+            sparklineData={blockDelay ? blockDelay.map((e) => ({ y: +e })) : []}
+          />
+        </ColStyled>
+        <ColStyled>
+          <WidgetStats
+            title="Slashing evidence"
+            isVertical
+            mainInfo={jailers ? formatNum(Number(jailers[jailers.length - 1])) : '---'}
+            sparklineData={jailers ? jailers.map((e) => ({ y: +e })) : []}
+          />
         </ColStyled>
       </Row>
     </Section>
@@ -58,7 +49,7 @@ const SectionHealth = ({ stats }) => {
 };
 
 SectionHealth.propTypes = {
-  stats: PropTypes.objectOf(PropTypes.object),
+  stats: PropTypes.objectOf(PropTypes.array),
 };
 SectionHealth.defaultProps = {
   stats: {},
