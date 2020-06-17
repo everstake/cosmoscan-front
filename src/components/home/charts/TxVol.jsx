@@ -10,10 +10,10 @@ import { formatATOM, formatDate, formatDateWithTime } from '../../../utils';
 import API from '../../../api';
 
 
-const chartName = 'Transaction volume';
+const chartName = 'Transfer volume';
 const yAxisWidth = 75;
 const yTickCount = 10;
-const areaName = 'Tx volume';
+const areaName = chartName;
 const defaultPeriod = periodOpts[2];
 const isDotClickable = false;
 

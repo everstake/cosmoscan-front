@@ -34,10 +34,3 @@ export const periodOpts = [
     },
   },
 ];
-
-export const periodOptsStats = [
-  { name: 'Last day', value: 'd1' },
-  { name: 'Last week', value: 'd7' },
-  { name: 'Last month', value: 'd30' },
-  { name: 'Last 3 months', value: 'd90' },
-];

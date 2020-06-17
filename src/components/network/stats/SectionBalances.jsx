@@ -1,39 +1,26 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import Title from '../../styled/Title';
 import { Row } from '../../styled/CustomBsGrid';
-import Card from '../../styled/Card';
-import TitleMinor from '../../styled/TitleMinor';
-import Section from './Section';
 import ColStyled from './ColStyled';
-import SelectPeriodStyled from './SelectPeriodStyled';
-import { periodOptsStats } from '../../../utils/constants';
+import Section from './Section';
+import WidgetStats from '../../../layouts/WidgetStats';
 import { formatATOM } from '../../../utils';
 
 
 // const balances = [
-//   { title: 'Transaction volume', value: '120 777 222 ATOM' },
-//   { title: 'Fee volume', value: '120 777 222 ATOM' },
-//   { title: 'Total unbonding', value: '120 777 222 ATOM' },
 //   { title: 'Total burned', value: '120 777 222 ATOM' },
-//   { title: 'Highest fee block', value: '120 777' },
 // ];
-const defaultPeriod = periodOptsStats[2];
 
 const SectionBalances = ({ stats }) => {
-  const [period, setPeriod] = useState(periodOptsStats[2].value);
-
+  const {
+    txVol, feeVol, unbond, highestFee,
+  } = stats;
   return (
     <Section>
       <Title>
         Balances
       </Title>
-
-      <SelectPeriodStyled
-        defaultOpt={defaultPeriod}
-        opts={periodOptsStats}
-        onChange={setPeriod}
-      />
 
       <Row
         xs={1}
@@ -42,55 +29,39 @@ const SectionBalances = ({ stats }) => {
         xl={4}
       >
         <ColStyled>
-          <Card modifiers={['height100', 'flexCol']}>
-            <Card.Body>
-              <TitleMinor>
-                Transaction volume
-              </TitleMinor>
-              <div>
-                { stats.txVol ? formatATOM(Number(stats.txVol[period])) : '-----' }
-              </div>
-            </Card.Body>
-          </Card>
+          <WidgetStats
+            title="Transfer volume"
+            isVertical
+            mainInfo={txVol ? formatATOM(txVol[txVol.length - 1]) : '---'}
+            sparklineData={txVol ? txVol.map((e) => ({ y: +e })) : []}
+          />
         </ColStyled>
 
         <ColStyled>
-          <Card modifiers={['height100', 'flexCol']}>
-            <Card.Body>
-              <TitleMinor>
-                Fee volume
-              </TitleMinor>
-              <div>
-                { stats.feeVol ? formatATOM(Number(stats.feeVol[period])) : '-----' }
-              </div>
-            </Card.Body>
-          </Card>
+          <WidgetStats
+            title="Fee volume"
+            isVertical
+            mainInfo={feeVol ? formatATOM(feeVol[feeVol.length - 1]) : '---'}
+            sparklineData={feeVol ? feeVol.map((e) => ({ y: +e })) : []}
+          />
         </ColStyled>
 
         <ColStyled>
-          <Card modifiers={['height100', 'flexCol']}>
-            <Card.Body>
-              <TitleMinor>
-                Total unbonding
-              </TitleMinor>
-              <div>
-                { stats.unbond ? formatATOM(Number(stats.unbond[period])) : '-----' }
-              </div>
-            </Card.Body>
-          </Card>
+          <WidgetStats
+            title="Total unbonding"
+            isVertical
+            mainInfo={unbond ? formatATOM(unbond[unbond.length - 1]) : '---'}
+            sparklineData={unbond ? unbond.map((e) => ({ y: +e })) : []}
+          />
         </ColStyled>
 
         <ColStyled>
-          <Card modifiers={['height100', 'flexCol']}>
-            <Card.Body>
-              <TitleMinor>
-                Highest fee block
-              </TitleMinor>
-              <div>
-                { stats.highestFee ? formatATOM(Number(stats.highestFee[period])) : '-----' }
-              </div>
-            </Card.Body>
-          </Card>
+          <WidgetStats
+            title="Highest fee block"
+            isVertical
+            mainInfo={highestFee ? formatATOM(highestFee[highestFee.length - 1]) : '---'}
+            sparklineData={highestFee ? highestFee.map((e) => ({ y: +e })) : []}
+          />
         </ColStyled>
       </Row>
     </Section>
@@ -98,7 +69,7 @@ const SectionBalances = ({ stats }) => {
 };
 
 SectionBalances.propTypes = {
-  stats: PropTypes.objectOf(PropTypes.object),
+  stats: PropTypes.objectOf(PropTypes.array),
 };
 SectionBalances.defaultProps = {
   stats: {},

@@ -1,19 +1,15 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Title from '../../styled/Title';
 import { Row } from '../../styled/CustomBsGrid';
-import Card from '../../styled/Card';
-import TitleMinor from '../../styled/TitleMinor';
-import Section from './Section';
 import ColStyled from './ColStyled';
+import Section from './Section';
+import WidgetStats from '../../../layouts/WidgetStats';
+import { formatNum } from '../../../utils';
 
-
-const accs = [
-  { title: 'Number of accounts', value: '120 777' },
-  { title: 'Number of whale accounts (over 1m $)', value: '120 777' },
-  { title: 'Number of small accounts (under 1 Atom)', value: '120 777' },
-];
-
-const SectionAccounts = () => (
+const SectionAccounts = ({ stats }) => {
+  const { accs, whales, smallAccs } = stats;
+  return (
   <Section>
     <Title>
       Accounts
@@ -25,22 +21,39 @@ const SectionAccounts = () => (
       lg={3}
       xl={4}
     >
-      {accs.map((e) => (
-        <ColStyled key={e.title}>
-          <Card modifiers={['height100', 'flexCol']}>
-            <Card.Body modifiers={['flexCol']}>
-              <TitleMinor>
-                {e.title}
-              </TitleMinor>
-              <div>
-                {e.value}
-              </div>
-            </Card.Body>
-          </Card>
-        </ColStyled>
-      ))}
+      <ColStyled>
+        <WidgetStats
+          title="# of accounts"
+          isVertical
+          mainInfo={accs ? formatNum(Number(accs[accs.length - 1])) : '---'}
+          sparklineData={accs ? accs.map((e) => ({ y: +e })) : []}
+        />
+      </ColStyled>
+      <ColStyled>
+        <WidgetStats
+          title="# of whale accounts (over 1m $)"
+          isVertical
+          mainInfo={whales ? formatNum(Number(whales[whales.length - 1])) : '---'}
+          sparklineData={whales ? whales.map((e) => ({ y: +e })) : []}
+        />
+      </ColStyled>
+      <ColStyled>
+        <WidgetStats
+          title="# of small accounts (under 1 ATOM)"
+          isVertical
+          mainInfo={smallAccs ? formatNum(Number(smallAccs[smallAccs.length - 1])) : '---'}
+          sparklineData={smallAccs ? smallAccs.map((e) => ({ y: +e })) : []}
+        />
+      </ColStyled>
     </Row>
   </Section>
-);
+)};
+
+SectionAccounts.propTypes = {
+  stats: PropTypes.objectOf(PropTypes.array),
+};
+SectionAccounts.defaultProps = {
+  stats: {},
+};
 
 export default SectionAccounts;
