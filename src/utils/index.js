@@ -17,6 +17,8 @@ export const formatDateWithTime = (val) => moment.unix(val).format('DD-MM-YYYY H
 
 export const formatDate = (val) => moment.unix(val).format('DD-MM-YYYY');
 
+export const formatGB = (val) => `${val} GB`;
+
 export const removeTrailingSlash = (string) => String(string).replace(/\/+$/, '');
 
 export const noString = (string) => string || '-----';
