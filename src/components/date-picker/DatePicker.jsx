@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, forwardRef } from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import DP, { registerLocale } from 'react-datepicker';
@@ -8,6 +8,27 @@ import moment from 'moment';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome/index';
 
 registerLocale('en-GB', enGB);
+
+const CustomInput = forwardRef(({ value, onClick, onKeyDown }, ref) => (
+  <input
+    type="text"
+    value={value}
+    onClick={onClick}
+    onKeyDown={onKeyDown}
+    readOnly
+  />
+));
+
+CustomInput.propTypes = {
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  onClick: PropTypes.func,
+  onKeyDown: PropTypes.func,
+};
+CustomInput.defaultProps = {
+  value: '',
+  onClick: () => null,
+  onKeyDown: () => null,
+};
 
 const DPWrapper = styled.div`
   ${({
@@ -189,6 +210,8 @@ const DatePicker = ({ className, onChange }) => {
         onChangeRaw={handleDateChangeRaw}
         onCalendarOpen={() => setIsOpen(true)}
         onCalendarClose={() => setIsOpen(false)}
+        popperPlacement="top-end"
+        customInput={<CustomInput />}
       />
       <Chevron
         isOpen={isOpen}

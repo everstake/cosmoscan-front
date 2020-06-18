@@ -16,6 +16,15 @@ const PieChartStyled = styled(PieChartDefault)`
   font-size: 12px;
 `;
 
+const ChartWrapper = styled.div`
+   width: 100%;
+   height: ${({ defaultHeight }) => `${defaultHeight}px`};
+   
+   @media(max-width: ${({ theme: { smDown } }) => smDown}) {
+     height: 600px;
+   };
+`;
+
 const PieChart = ({
   isLoading,
   data,
@@ -49,7 +58,8 @@ const PieChart = ({
   ];
 
   return (
-    <div style={{ width: '100%', height: `${height}px` }}>
+    <ChartWrapper defaultHeight={height}>
+      {/* eslint-disable-next-line no-nested-ternary */}
       {isLoading
         ? (
           <div
@@ -97,7 +107,7 @@ const PieChart = ({
               No data
             </div>
           )}
-    </div>
+    </ChartWrapper>
   );
 };
 

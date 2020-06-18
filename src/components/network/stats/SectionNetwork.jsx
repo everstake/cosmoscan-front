@@ -5,7 +5,7 @@ import { Row } from '../../styled/CustomBsGrid';
 import ColStyled from './ColStyled';
 import Section from './Section';
 import WidgetStats from '../../../layouts/WidgetStats';
-import { formatATOM, formatNum } from '../../../utils';
+import { formatATOM, formatNum, formatGB } from '../../../utils';
 
 
 // const networkStats = [
@@ -56,7 +56,7 @@ const SectionNetwork = ({ stats }) => {
           <WidgetStats
             title="Network size"
             isVertical
-            mainInfo={networkSize ? formatATOM(networkSize[networkSize.length - 1]) : '---'}
+            mainInfo={networkSize ? formatGB(networkSize[networkSize.length - 1]) : '---'}
             sparklineData={networkSize ? networkSize.map((e) => ({ y: +e })) : []}
           />
         </ColStyled>
