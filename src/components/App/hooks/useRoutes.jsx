@@ -17,6 +17,15 @@ const useRoutes = () => {
         },
       ],
     },
+    {
+      name: 'Governance',
+      paths: [
+        {
+          name: 'Stats',
+          path: '/governance-stats',
+        },
+      ],
+    },
     // { name: 'Trading', path: '/trading' },
     // { name: 'Validator', path: '/validator' },
   ]);

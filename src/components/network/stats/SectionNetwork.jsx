@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Title from '../../styled/Title';
 import { Row } from '../../styled/CustomBsGrid';
-import ColStyled from './ColStyled';
+import ColStyled from '../../styled/ColStyled';
 import Section from './Section';
 import WidgetStats from '../../../layouts/WidgetStats';
 import { formatATOM, formatNum, formatGB } from '../../../utils';

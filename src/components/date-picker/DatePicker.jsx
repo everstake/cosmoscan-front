@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome/index';
 
 registerLocale('en-GB', enGB);
 
+// eslint-disable-next-line no-unused-vars
 const CustomInput = forwardRef(({ value, onClick, onKeyDown }, ref) => (
   <input
     type="text"

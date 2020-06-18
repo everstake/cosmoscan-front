@@ -1,6 +1,6 @@
 import React from 'react';
-import { Col } from 'react-bootstrap';
 import styled from 'styled-components';
+import { Col } from 'react-bootstrap';
 import { Container, Row } from '../../components/styled/CustomBsGrid';
 import TopStatus from '../../components/governance/proposal/TopStatus';
 import VotingChart from '../../components/governance/proposal/VotingChart';

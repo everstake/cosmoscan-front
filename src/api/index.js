@@ -1,7 +1,7 @@
 import axios from 'axios';
 import queryString from 'querystring';
 import moment from 'moment';
-import {removeTrailingSlash} from '../utils';
+import { removeTrailingSlash } from '../utils';
 
 const formatParams = (params) => (params && Object.keys(params).length ? `?${queryString.stringify(params)}` : '');
 
@@ -56,6 +56,10 @@ const API = {
   },
   getVotingPower() {
     return APIService.get('/staking/pie');
+  },
+  getProposals(params = {}) {
+    const { limit = 0, offset = 0 } = params;
+    return APIService.get(`/proposals${formatParams({ limit, offset, ...params })}`);
   },
 };
 
