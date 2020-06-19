@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import moment from 'moment';
 import useRequest from '../../hooks/useRequest';
 import { Container } from '../../components/styled/CustomBsGrid';
 import SectionChart from '../../components/network/stats/SectionChart';
@@ -41,7 +42,7 @@ const Stats = () => {
   return (
     <Container>
       <SectionChart />
-      <DatePickerStyled onChange={res.request}/>
+      <DatePickerStyled onChange={(date) => res.request({ to: moment(date).unix() })} />
       <SectionNetwork stats={{
         stakingBal,
         delegators,

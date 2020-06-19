@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useMemo, useContext } from 'react';
 import PropTypes from 'prop-types';
 import styled, { css, ThemeContext } from 'styled-components';
 import Card from '../../styled/Card';
@@ -6,8 +6,14 @@ import TitleChart from '../../styled/TitleChart';
 import TitleMinor from '../../styled/TitleMinor';
 import BreakTxt from '../../styled/BreakTxt';
 import PieChart from '../../chart-types/PieChart';
+import Sparkline from '../../chart-types/Sparkline';
 import {
-  noString, formatNum, formatPercentValue, formatDays, formatATOM, formatPercentDec2,
+  noString,
+  formatNum,
+  formatPercentValue,
+  formatATOM,
+  formatPercentDec2,
+  formatChartData,
 } from '../../../utils';
 
 const Status = styled.div`
@@ -36,11 +42,13 @@ const CardProposal = ({ proposal }) => {
     status,
     title,
     proposer,
-    total_deposits: deposits,
+    voters,
     votes_yes: yes,
     votes_no: no,
     votes_no_with_veto: veto,
     votes_abstain: abstain,
+    participation_rate: partRate,
+    activity,
   } = proposal;
   const totalATOMVoted = Number(yes) + Number(no) + Number(veto) + Number(abstain);
   const votingChartData = [
@@ -49,6 +57,11 @@ const CardProposal = ({ proposal }) => {
     { value: (Number(veto) * 100) / totalATOMVoted, title: 'No with veto' },
     { value: (Number(abstain) * 100) / totalATOMVoted, title: 'Abstain' },
   ];
+  const activityComp = useMemo(() => {
+    if (!activity || !activity.length) return [];
+
+    return formatChartData(activity);
+  }, [activity]);
 
   return (
     <Card modifiers="height100">
@@ -91,7 +104,7 @@ const CardProposal = ({ proposal }) => {
                 Number of voters:
               </TitleMinor>
               <div>
-                {formatNum(deposits)}
+                {formatNum(voters)}
               </div>
             </div>
 
@@ -109,17 +122,18 @@ const CardProposal = ({ proposal }) => {
                 Participation rate:
               </TitleMinor>
               <div>
-                {formatPercentValue(76)}
+                {formatPercentValue(partRate)}
               </div>
             </div>
 
             <div className="mb-1">
               <TitleMinor className="mb-0">
-                Quorum reached in:
+                Voter activity:
               </TitleMinor>
-              <div>
-                {formatDays(76)}
-              </div>
+              <Sparkline
+                data={activityComp}
+                color={theme.success}
+              />
             </div>
           </div>
 
@@ -143,7 +157,7 @@ const CardProposal = ({ proposal }) => {
 };
 
 CardProposal.propTypes = {
-  proposal: PropTypes.objectOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])).isRequired,
+  proposal: PropTypes.objectOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.array])).isRequired,
 };
 
 export default CardProposal;

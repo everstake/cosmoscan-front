@@ -191,7 +191,7 @@ const DatePicker = ({ className, onChange }) => {
   const handleChange = (newDate) => {
     setDate(newDate);
     // TODO: Refactor. The component is bind to the specific onChange method.
-    onChange({ to: moment(newDate).unix() });
+    onChange(newDate);
   };
 
   return (
