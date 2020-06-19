@@ -7,6 +7,8 @@ export const formatUSD = (amount) => `$${numeral(amount).format('0,0[.][00]')}`;
 
 export const formatATOM = (amount) => `${numeral(amount).format('0,0[.][00000]')} ATOM`;
 
+export const formatATOMAmount = (amount) => `${numeral(amount).format('0,0[.][00000]')}`;
+
 export const formatPercentValue = (val) => `${val}%`;
 
 export const formatPercentDec = (val) => `${numeral(val).format('0,0[.][0]')}%`;

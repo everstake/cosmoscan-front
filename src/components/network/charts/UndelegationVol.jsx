@@ -6,14 +6,14 @@ import ChartContainer from '../../../layouts/ChartContainer';
 import SelectPeriod from '../../SelectPeriod';
 import AreaChart from '../../chart-types/AreaChart';
 import { periodOpts } from '../../../utils/constants';
-import { formatATOM, formatDate, formatDateWithTime } from '../../../utils';
+import { formatATOM, formatATOMAmount, formatDate, formatDateWithTime } from '../../../utils';
 import API from '../../../api';
 
 
-const chartName = 'Undelegation volume';
+const chartName = 'Initiated unbonding per day/hour volume (ATOM)';
 const yAxisWidth = 70;
 const yTickCount = 10;
-const areaName = chartName;
+const areaName = 'Unbonding volume';
 const defaultPeriod = periodOpts[2];
 
 const UndelegationVol = () => {
@@ -37,7 +37,7 @@ const UndelegationVol = () => {
           areaName={areaName}
           isLoading={res.isLoading}
           data={undelegationVolComp}
-          yAxisLabelsFormatter={formatATOM}
+          yAxisLabelsFormatter={formatATOMAmount}
           yAxisWidth={yAxisWidth}
           yTickCount={yTickCount}
           yAxisDomain={[(dataMin) => Math.round(dataMin), (dataMax) => Math.round(dataMax)]}

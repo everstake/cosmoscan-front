@@ -6,14 +6,14 @@ import ChartContainer from '../../../layouts/ChartContainer';
 import SelectPeriod from '../../SelectPeriod';
 import AreaChart from '../../chart-types/AreaChart';
 import { periodOpts } from '../../../utils/constants';
-import { formatATOM, formatDate, formatDateWithTime } from '../../../utils';
+import { formatATOM, formatATOMAmount, formatDate, formatDateWithTime } from '../../../utils';
 import API from '../../../api';
 
 
-const chartName = 'Fee volume';
-const yAxisWidth = 76;
+const chartName = 'Fee volume (ATOM)';
+const yAxisWidth = 40;
 const yTickCount = 10;
-const areaName = chartName;
+const areaName = 'Fee volume';
 const defaultPeriod = periodOpts[2];
 
 const FeeVol = () => {
@@ -37,7 +37,7 @@ const FeeVol = () => {
           areaName={areaName}
           isLoading={res.isLoading}
           data={feeVolComp}
-          yAxisLabelsFormatter={formatATOM}
+          yAxisLabelsFormatter={formatATOMAmount}
           yAxisWidth={yAxisWidth}
           yTickCount={yTickCount}
           xAxisTickFormatter={formatDate}

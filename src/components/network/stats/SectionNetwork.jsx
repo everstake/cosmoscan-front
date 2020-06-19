@@ -30,7 +30,7 @@ const SectionNetwork = ({ stats }) => {
       >
         <ColStyled>
           <WidgetStats
-            title="Total staking balance"
+            title="Total bonded balance"
             isVertical
             mainInfo={stakingBal ? formatATOM(stakingBal[stakingBal.length - 1]) : '---'}
             sparklineData={stakingBal ? stakingBal.map((e) => ({ y: +e })) : []}
