@@ -37,7 +37,7 @@ const SectionHealth = ({ stats }) => {
         </ColStyled>
         <ColStyled>
           <WidgetStats
-            title="Slashing evidence"
+            title="Total jailed"
             isVertical
             mainInfo={jailers ? formatNum(Number(jailers[jailers.length - 1])) : '---'}
             sparklineData={jailers ? jailers.map((e) => ({ y: +e })) : []}

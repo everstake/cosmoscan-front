@@ -6,14 +6,14 @@ import ChartContainer from '../../../layouts/ChartContainer';
 import SelectPeriod from '../../SelectPeriod';
 import AreaChart from '../../chart-types/AreaChart';
 import { periodOpts } from '../../../utils/constants';
-import { formatATOM, formatDate, formatDateWithTime } from '../../../utils';
+import { formatATOM, formatATOMAmount, formatDate, formatDateWithTime } from '../../../utils';
 import API from '../../../api';
 
 
-const chartName = 'Transfer volume';
-const yAxisWidth = 75;
+const chartName = 'Transfer volume (ATOM)';
+const yAxisWidth = 60;
 const yTickCount = 10;
-const areaName = chartName;
+const areaName = 'Transfer volume';
 const defaultPeriod = periodOpts[2];
 const isDotClickable = false;
 
@@ -39,7 +39,7 @@ const TxVol = () => {
           areaName={areaName}
           isLoading={res.isLoading}
           data={txVolComp}
-          yAxisLabelsFormatter={formatATOM}
+          yAxisLabelsFormatter={formatATOMAmount}
           yAxisWidth={yAxisWidth}
           yTickCount={yTickCount}
           yAxisDomain={[(dataMin) => Math.round(dataMin), (dataMax) => Math.round(dataMax)]}

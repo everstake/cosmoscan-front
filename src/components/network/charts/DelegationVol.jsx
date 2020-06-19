@@ -6,14 +6,14 @@ import ChartContainer from '../../../layouts/ChartContainer';
 import SelectPeriod from '../../SelectPeriod';
 import AreaChart from '../../chart-types/AreaChart';
 import { periodOpts } from '../../../utils/constants';
-import { formatATOM, formatDate, formatDateWithTime } from '../../../utils';
+import { formatATOM, formatATOMAmount, formatDate, formatDateWithTime } from '../../../utils';
 import API from '../../../api';
 
 
-const chartName = 'Delegation volume';
+const chartName = 'Delegations per day/hour volume (ATOM)';
 const yAxisWidth = 60;
 const yTickCount = 10;
-const areaName = chartName;
+const areaName = 'Delegations volume';
 const defaultPeriod = periodOpts[2];
 
 const DelegationVol = () => {
@@ -37,7 +37,7 @@ const DelegationVol = () => {
           areaName={areaName}
           isLoading={res.isLoading}
           data={delegationVolComp}
-          yAxisLabelsFormatter={formatATOM}
+          yAxisLabelsFormatter={formatATOMAmount}
           yAxisWidth={yAxisWidth}
           yTickCount={yTickCount}
           yAxisDomain={[(dataMin) => Math.round(dataMin), (dataMax) => Math.round(dataMax)]}

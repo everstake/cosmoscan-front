@@ -69,7 +69,7 @@ const MainStats = () => {
             mainInfo={formatUSD(formatNum(Number(res.resp.current.trading_volume)))}
           />
           <WidgetStats
-            title="Staked ratio"
+            title="Bonded ratio"
             mainInfo={formatPercentValue(res.resp.current.staked_ratio)}
             sparklineData={stakedRatio}
           />
@@ -82,7 +82,7 @@ const MainStats = () => {
             mainInfo={formatATOM(formatNum(Number(res.resp.current.community_pool)))}
           />
           <WidgetStats
-            title="Top-20 stake weight"
+            title="Top-20 voting power"
             mainInfo={formatPercentValue(res.resp.current.top20_weight)}
           />
         </>
