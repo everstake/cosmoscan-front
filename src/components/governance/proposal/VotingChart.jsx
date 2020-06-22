@@ -1,37 +1,41 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { ThemeContext } from 'styled-components';
+import PropTypes from 'prop-types';
 import ChartContainer from '../../../layouts/ChartContainer';
 import PieChart from '../../chart-types/PieChart';
+import { formatPercentDec2 } from '../../../utils';
 
 
 const chartName = 'Voting';
-const valFormatter = (val) => `${val}%`;
-const labelFormatter = (entry) => `${entry.value}%`;
-const data = [
-  {
-    title: 'Test', value: 22,
-  },
-  {
-    title: 'Test2', value: 87.9,
-  },
-  {
-    title: 'Test3', value: 0.1,
-  },
-];
+const labelFormatter = (entry) => `${formatPercentDec2(entry.value)}`;
 
-function VotingChart() {
+function VotingChart({ data }) {
+  const theme = useContext(ThemeContext);
+
   return (
     <ChartContainer
       title={chartName}
       chart={(
         <PieChart
           data={data}
-          valFormatter={valFormatter}
+          valFormatter={formatPercentDec2}
           labelFormatter={labelFormatter}
-          height={200}
+          height={250}
+          minAngle={7}
+          growOnMobile={false}
+          cellColors={[theme.blue, theme.danger, theme.burgundy, theme.grey]}
+          isAnimationActive={false}
         />
       )}
     />
   );
 }
+
+VotingChart.propTypes = {
+  data: PropTypes.arrayOf(PropTypes.object),
+};
+VotingChart.defaultProps = {
+  data: [],
+};
 
 export default VotingChart;

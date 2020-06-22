@@ -1,16 +1,32 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Col } from 'react-bootstrap';
+import styled from 'styled-components';
 import Card from '../../styled/Card';
 import { Row } from '../../styled/CustomBsGrid';
 import TitleMinor from '../../styled/TitleMinor';
 import BreakTxt from '../../styled/BreakTxt';
-import styled from 'styled-components';
+import { formatATOM } from '../../../utils';
 
 const StatsItem = styled.div`
   margin-bottom: 5px;
 `;
 
-const Stats = () => (
+const Stats = ({
+  stats: {
+    id,
+    title,
+    proposer,
+    hash,
+    type,
+    submitted,
+    votingStart,
+    votingEnd,
+    depositEnd,
+    turnout,
+    totalATOMVoted,
+  },
+}) => (
   <Card modifiers="height100">
     <Card.Body>
       <Row>
@@ -23,19 +39,19 @@ const Stats = () => (
               Proposal number:
             </TitleMinor>
             <span>
-            26
-          </span>
+              {id}
+            </span>
           </StatsItem>
           <StatsItem>
             <TitleMinor
               as="span"
               className="mb-0 mr-1"
             >
-              Proposal name:
+              Proposal title:
             </TitleMinor>
             <span>
-            Some name
-          </span>
+              { title }
+            </span>
           </StatsItem>
           <StatsItem>
             <TitleMinor
@@ -44,9 +60,9 @@ const Stats = () => (
             >
               Proposer:
             </TitleMinor>
-            <span>
-            Some proposer
-          </span>
+            <BreakTxt>
+              {proposer}
+            </BreakTxt>
           </StatsItem>
           <StatsItem>
             <TitleMinor
@@ -56,7 +72,7 @@ const Stats = () => (
               Proposal hash:
             </TitleMinor>
             <BreakTxt>
-              hashhashhashhashhashhashhash
+              {hash}
             </BreakTxt>
           </StatsItem>
         </Col>
@@ -70,8 +86,8 @@ const Stats = () => (
               Type:
             </TitleMinor>
             <span>
-            some type
-          </span>
+              {type}
+            </span>
           </StatsItem>
           <StatsItem>
             <TitleMinor
@@ -81,8 +97,8 @@ const Stats = () => (
               Submitted on:
             </TitleMinor>
             <span>
-            { new Date().getFullYear() }
-          </span>
+              {submitted}
+            </span>
           </StatsItem>
           <StatsItem>
             <TitleMinor
@@ -92,8 +108,8 @@ const Stats = () => (
               Deposit period:
             </TitleMinor>
             <span>
-            { new Date().getFullYear() }
-          </span>
+              { `${submitted} - ${depositEnd}` }
+            </span>
           </StatsItem>
           <StatsItem>
             <TitleMinor
@@ -103,8 +119,8 @@ const Stats = () => (
               Voting period:
             </TitleMinor>
             <span>
-            { new Date().getFullYear() }
-          </span>
+              { `${votingStart} - ${votingEnd}` }
+            </span>
           </StatsItem>
         </Col>
       </Row>
@@ -120,19 +136,46 @@ const Stats = () => (
             >
               Turnout:
             </TitleMinor>
-            <span>n%</span>
+            <span>{turnout}</span>
           </StatsItem>
           <StatsItem>
-            <span>222,222 / 223 331 ATOM</span>
+            <span>{formatATOM(totalATOMVoted)}</span>
           </StatsItem>
         </Col>
 
-        <Col>
-
-        </Col>
+        <Col />
       </Row>
     </Card.Footer>
   </Card>
 );
+
+Stats.propTypes = {
+  stats: PropTypes.shape({
+    id: PropTypes.number,
+    title: PropTypes.string,
+    proposer: PropTypes.string,
+    hash: PropTypes.string,
+    type: PropTypes.string,
+    submitted: PropTypes.string,
+    votingStart: PropTypes.string,
+    votingEnd: PropTypes.string,
+    depositEnd: PropTypes.string,
+    turnout: PropTypes.string,
+  }),
+};
+Stats.defaultProps = {
+  stats: {
+    id: '-----',
+    title: '-----',
+    proposer: '-----',
+    hash: '-----',
+    type: '-----',
+    submitted: '-----',
+    votingStart: '-----',
+    votingEnd: '-----',
+    depositEnd: '-----',
+    turnout: '-----',
+  },
+};
 
 export default Stats;

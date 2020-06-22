@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import TitleMinor from '../../styled/TitleMinor';
 
@@ -17,12 +18,19 @@ const Status = styled.div`
 `;
 
 const StatusValue = styled.span`
+  color: ${({
+    status, theme: { danger, success },
+  }) => (status === 'Rejected' ? danger : success)};
+  font-weight: 700;
+`;
+
+const VotingVal = styled.span`
+  font-weight: 700;
   color: ${({ theme: { blue } }) => blue};
-  font-weight: 600;
 `;
 
 
-const TopStatus = () => (
+const TopStatus = ({ status, votingEnds }) => (
   <TopStatusContainer>
     <Status>
       <TitleMinor
@@ -31,9 +39,9 @@ const TopStatus = () => (
       >
         Voting ends in:
       </TitleMinor>
-      <span>
-        23 days
-      </span>
+      <VotingVal>
+        { votingEnds }
+      </VotingVal>
     </Status>
     <Status>
       <TitleMinor
@@ -42,11 +50,20 @@ const TopStatus = () => (
       >
         Status:
       </TitleMinor>
-      <StatusValue>
-        active
+      <StatusValue status={status}>
+        { status }
       </StatusValue>
     </Status>
   </TopStatusContainer>
 );
+
+TopStatus.propTypes = {
+  status: PropTypes.string,
+  votingEnds: PropTypes.string,
+};
+TopStatus.defaultProps = {
+  status: '-----',
+  votingEnds: '-----',
+};
 
 export default TopStatus;
