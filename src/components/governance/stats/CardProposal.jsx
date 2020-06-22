@@ -49,6 +49,7 @@ const CardProposal = ({ proposal }) => {
     votes_abstain: abstain,
     participation_rate: partRate,
     activity,
+    turnout,
   } = proposal;
   const totalATOMVoted = Number(yes) + Number(no) + Number(veto) + Number(abstain);
   const votingChartData = [
@@ -104,7 +105,7 @@ const CardProposal = ({ proposal }) => {
                 Number of voters:
               </TitleMinor>
               <div>
-                {formatNum(voters)}
+                {voters ? `${formatNum(voters)}(${formatPercentValue(partRate)})` : '-----'}
               </div>
             </div>
 
@@ -119,10 +120,10 @@ const CardProposal = ({ proposal }) => {
 
             <div className="mb-1">
               <TitleMinor className="mb-0">
-                Participation rate:
+                Turnout:
               </TitleMinor>
               <div>
-                {formatPercentValue(partRate)}
+                {formatPercentValue(turnout)}
               </div>
             </div>
 
@@ -130,10 +131,14 @@ const CardProposal = ({ proposal }) => {
               <TitleMinor className="mb-0">
                 Voter activity:
               </TitleMinor>
-              <Sparkline
-                data={activityComp}
-                color={theme.success}
-              />
+              {activityComp && activityComp.length
+                ? (
+                  <Sparkline
+                    data={activityComp}
+                    color={theme.success}
+                  />
+                )
+                : '-----'}
             </div>
           </div>
 
