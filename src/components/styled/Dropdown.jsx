@@ -2,6 +2,8 @@ import styled from 'styled-components';
 import { Dropdown as Ddwn } from 'react-bootstrap';
 
 const Dropdown = styled(Ddwn)`
+  display: inline-block;
+
   .dropdown-item {
     font-weight: 500;
     padding: .35rem 0.8rem;
@@ -21,6 +23,7 @@ const Dropdown = styled(Ddwn)`
     font-size: ${({ theme }) => theme.fs14};
     transition: all 0.2s;
     min-width: 75px;
+    width: 100%;
     padding: 0;
   }
 `;

@@ -1,14 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
-import useRequest from '../../../hooks/useRequest';
-import { Container } from '../../../components/styled/CustomBsGrid';
-import SectionChart from '../../../components/network/stats/SectionChart';
-import DatePicker from '../../../components/date-picker';
-import SectionNetwork from '../../../components/network/stats/SectionNetwork';
-import SectionAccounts from '../../../components/network/stats/SectionAccounts';
-import SectionBalances from '../../../components/network/stats/SectionBalances';
-import SectionHealth from '../../../components/network/stats/SectionHealth';
-import API from '../../../api';
+import moment from 'moment';
+import useRequest from '../../hooks/useRequest';
+import { Container } from '../../components/styled/CustomBsGrid';
+import SectionChart from '../../components/network/stats/SectionChart';
+import DatePicker from '../../components/DatePicker';
+import SectionNetwork from '../../components/network/stats/SectionNetwork';
+import SectionAccounts from '../../components/network/stats/SectionAccounts';
+import SectionBalances from '../../components/network/stats/SectionBalances';
+import SectionHealth from '../../components/network/stats/SectionHealth';
+import API from '../../api';
 
 const DatePickerStyled = styled(DatePicker)`
   margin-bottom: 15px;
@@ -41,7 +42,7 @@ const Stats = () => {
   return (
     <Container>
       <SectionChart />
-      <DatePickerStyled onChange={res.request}/>
+      <DatePickerStyled onChange={(date) => res.request({ to: moment(date).unix() })} />
       <SectionNetwork stats={{
         stakingBal,
         delegators,

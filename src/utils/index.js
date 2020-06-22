@@ -13,13 +13,33 @@ export const formatPercentValue = (val) => `${val}%`;
 
 export const formatPercentDec = (val) => `${numeral(val).format('0,0[.][0]')}%`;
 
-export const formatPercentDec2 = (val) => `${numeral(val).format('0,0[.][00]')}%`;
+export const roundToPrecision = (val, precision = 0) => {
+  const multiplier = 10 ** precision;
+  return Math.round(val * multiplier) / multiplier;
+};
+
+// export const formatPercentDec2 = (val) => `${numeral(val).format('0,0[.][00]')}%`;
+// TODO: Find a fix for Numeral.js.
+//  format() returns NaN if the number is with too large precision (e-7)
+export const formatPercentDec2 = (val) => {
+  const res = numeral(val).format('0,0[.][00]');
+  if (res === 'NaN') return `${roundToPrecision(val, 2)}%`;
+  return `${res}%`;
+};
 
 export const formatDateWithTime = (val) => moment.unix(val).format('DD-MM-YYYY HH:mm');
 
 export const formatDate = (val) => moment.unix(val).format('DD-MM-YYYY');
 
 export const formatGB = (val) => `${val} GB`;
+
+export const formatNum = (num) => {
+  if (typeof num !== 'number') return num;
+  // TODO: Make the precision dynamic
+  return numeral(num).format('0,0[.][000000]');
+};
+
+export const formatDays = (val) => `${formatNum(val)} days`;
 
 export const removeTrailingSlash = (string) => String(string).replace(/\/+$/, '');
 
@@ -32,17 +52,6 @@ export const formatChartData = (chartDataRaw) => {
     x: e.time,
     y: +e.value,
   }));
-};
-
-export const formatNum = (num) => {
-  if (typeof num !== 'number') return num;
-  // TODO: Make the precision dynamic
-  return numeral(num).format('0,0[.][000000]');
-};
-
-export const roundToPrecision = (val, precision = 0) => {
-  const multiplier = 10 ** precision;
-  return Math.round(val * multiplier) / multiplier;
 };
 
 export const formatSeconds = (seconds) => {

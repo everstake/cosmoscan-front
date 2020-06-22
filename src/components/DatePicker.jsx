@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome/index';
 
 registerLocale('en-GB', enGB);
 
+// eslint-disable-next-line no-unused-vars
 const CustomInput = forwardRef(({ value, onClick, onKeyDown }, ref) => (
   <input
     type="text"
@@ -190,7 +191,7 @@ const DatePicker = ({ className, onChange }) => {
   const handleChange = (newDate) => {
     setDate(newDate);
     // TODO: Refactor. The component is bind to the specific onChange method.
-    onChange({ to: moment(newDate).unix() });
+    onChange(newDate);
   };
 
   return (

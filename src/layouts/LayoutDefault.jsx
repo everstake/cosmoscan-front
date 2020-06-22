@@ -14,7 +14,6 @@ const AppWrapper = styled.div`
 const AppContent = styled.div`
   flex: 1 0 auto;
   background-color: ${({ theme }) => theme.whiteGrey};
-  //padding: ${({ theme }) => theme.marginSectionsSmall} 0 ${({ theme }) => theme.marginSectionsStandard};
   padding: ${({ theme }) => theme.marginSectionsStandard} 0;
 `;
 
