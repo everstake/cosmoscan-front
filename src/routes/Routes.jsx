@@ -6,7 +6,7 @@ import Home from '../pages/Home';
 import NetworkStats from '../pages/network/Stats';
 import NetworkCharts from '../pages/network/Charts';
 import GovernanceStats from '../pages/governance/Stats';
-// import Proposal from '../pages/governance/Proposal';
+import Proposal from '../pages/governance/Proposal';
 // import Trading from '../pages/Trading';
 // import Validator from '../pages/Validator';
 import NotFound from '../pages/NotFound';
@@ -41,15 +41,15 @@ const Routes = () => (
         path="/governance-stats"
         component={GovernanceStats}
       />
+      <Route
+        // exact
+        path="/proposal/:id"
+        component={Proposal}
+      />
       {/* <Route */}
       {/*  exact */}
       {/*  path="/validator" */}
       {/*  component={Validator} */}
-      {/* /> */}
-      {/* <Route */}
-      {/*  exact */}
-      {/*  path="/proposal" */}
-      {/*  component={Proposal} */}
       {/* /> */}
       <Route
         component={NotFound}

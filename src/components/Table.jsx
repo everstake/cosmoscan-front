@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Table as BTable } from 'react-bootstrap';
@@ -31,6 +31,20 @@ const Th = styled.th`
   top: -1px;
 `;
 
+const CellVal = styled.span`
+  max-width: 300px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  //word-break: break-all;
+  display: inline-block;
+  white-space: nowrap;
+  color: ${({ color, theme }) => theme[color]} !important;
+  
+  @media(max-width: ${({ theme }) => theme.lgDown}) {
+    max-width: 200px;
+  }
+`;
+
 const orderRowsData = (rows, cols, colValueKey) => {
   if (!rows || !rows.length || !cols || !cols.length) return [];
 
@@ -56,20 +70,20 @@ const Table = ({
 }) => {
   const rowsOrdered = useMemo(() => orderRowsData(rows, cols, colValueKey), [cols, rows, colValueKey]);
 
-  useEffect(() => {
-    const list = document.getElementById('tableWrap');
-    console.log('Load more');
-    list.addEventListener('scroll', (e) => {
-      const el = e.target;
-      if (el.scrollTop + el.clientHeight === el.scrollHeight) {
-        console.log('Load more');
-      }
-    });
-
-    return () => {
-      list.removeEventListener('scroll');
-    };
-  }, []);
+  // useEffect(() => {
+  //   const list = document.getElementById('tableWrap');
+  //   console.log('Load more');
+  //   list.addEventListener('scroll', (e) => {
+  //     const el = e.target;
+  //     if (el.scrollTop + el.clientHeight === el.scrollHeight) {
+  //       console.log('Load more');
+  //     }
+  //   });
+  //
+  //   return () => {
+  //     list.removeEventListener('scroll');
+  //   };
+  // }, []);
 
   return (
     <Card>
@@ -108,7 +122,9 @@ const Table = ({
                     {Object.keys(row).map((cell, cellIndex) => (
                       // eslint-disable-next-line react/no-array-index-key
                       <td key={`cell-${cellIndex}`}>
-                        {row[cell]}
+                        <CellVal color={row[cell].color}>
+                          {typeof row[cell] === 'object' ? row[cell].value : row[cell]}
+                        </CellVal>
                       </td>
                     ))}
                   </Tr>

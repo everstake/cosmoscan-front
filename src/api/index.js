@@ -58,8 +58,11 @@ const API = {
     return APIService.get('/staking/pie');
   },
   getProposals(params = {}) {
-    const { limit = 0, offset = 0 } = params;
-    return APIService.get(`/proposals${formatParams({ limit, offset, ...params })}`);
+    // const { limit = 0, offset = 0 } = params;
+    return APIService.get(`/proposals${formatParams({ ...params })}`);
+  },
+  getVotes(proposalId) {
+    return APIService.get(`/proposals/votes${formatParams({ proposal_id: proposalId })}`);
   },
 };
 

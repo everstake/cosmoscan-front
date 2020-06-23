@@ -1,7 +1,9 @@
 import React from 'react';
+import ReactDOMServer from 'react-dom/server';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import { Accordion } from 'react-bootstrap';
+import Linkify from 'react-linkify';
 import Card from '../../styled/Card';
 import TitleChart from '../../styled/TitleChart';
 
@@ -20,10 +22,31 @@ const AccordionToggle = styled(Accordion.Toggle)`
   `}
 `;
 
-const title = 'Proposal description';
-const desc = 'Proposal desc long';
+const parseParagraphs = (string) => {
+  let str = string;
+  str = str.replace(/\r\n\r\n/g, '</p><p>').replace(/\n\n/g, '</p><p>');
+  str = str.replace(/\r\n/g, '<br />').replace(/\n/g, '<br />');
+  return str;
+};
 
-const Description = ({ className }) => (
+const linkify = (text) => ReactDOMServer.renderToStaticMarkup(
+  <Linkify
+    componentDecorator={(decoratedHref, decoratedText, key) => (
+      <a
+        target="blank"
+        rel="noopener noreferrer"
+        href={decoratedHref}
+        key={key}
+      >
+        {decoratedText}
+      </a>
+    )}
+  >
+    {text}
+  </Linkify>,
+);
+
+const Description = ({ title, desc, className }) => (
   <Accordion className={className}>
     <Card>
       <Card.Header as={AccordionToggle} eventKey="0">
@@ -33,7 +56,10 @@ const Description = ({ className }) => (
       </Card.Header>
       <Accordion.Collapse eventKey="0">
         <Card.Body>
-          { desc }
+          <div
+            dangerouslySetInnerHTML={{ __html: parseParagraphs(linkify(desc)) }}
+            className="w-75"
+          />
         </Card.Body>
       </Accordion.Collapse>
     </Card>
@@ -42,9 +68,13 @@ const Description = ({ className }) => (
 
 Description.propTypes = {
   className: PropTypes.string,
+  title: PropTypes.string,
+  desc: PropTypes.string,
 };
 Description.defaultProps = {
   className: '',
+  title: '',
+  desc: '',
 };
 
 export default Description;

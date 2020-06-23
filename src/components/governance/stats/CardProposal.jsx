@@ -1,6 +1,7 @@
 import React, { useMemo, useContext } from 'react';
 import PropTypes from 'prop-types';
 import styled, { css, ThemeContext } from 'styled-components';
+import { NavLink } from 'react-router-dom';
 import Card from '../../styled/Card';
 import TitleChart from '../../styled/TitleChart';
 import TitleMinor from '../../styled/TitleMinor';
@@ -34,6 +35,17 @@ const Flex = styled.div`
   justify-content: space-between;
   align-items: center;
 `;
+const NavLinkStyled = styled(NavLink)`
+  cursor: pointer;
+  font-weight: 400;
+  transition: transform 0.2s;
+
+  &:hover {
+    text-decoration: none;
+    color: initial;
+    transform: translateY(-5px);
+  }
+`;
 
 const CardProposal = ({ proposal }) => {
   const theme = useContext(ThemeContext);
@@ -65,7 +77,7 @@ const CardProposal = ({ proposal }) => {
   }, [activity]);
 
   return (
-    <Card modifiers="height100">
+    <Card modifiers="height100" as={NavLinkStyled} to={`proposal/${id}`}>
       <Card.Header>
         <Flex>
           <div>
@@ -89,6 +101,7 @@ const CardProposal = ({ proposal }) => {
           </BreakTxt>
         </div>
 
+        {proposer && (
         <div>
           <TitleMinor as="span">
             Proposer:
@@ -97,17 +110,22 @@ const CardProposal = ({ proposal }) => {
             {noString(proposer)}
           </BreakTxt>
         </div>
+        )}
 
         <StatsGrid>
           <div>
+            {/* TODO: Define why the value is not converted to bool */}
+            {Boolean(voters) && (
             <div className="mb-1">
               <TitleMinor className="mb-0">
                 Number of voters:
               </TitleMinor>
               <div>
-                {voters ? `${formatNum(voters)}(${formatPercentValue(partRate)})` : '-----'}
+                {/* {voters ? `${formatNum(voters)}(${formatPercentValue(partRate)})` : '-----'} */}
+                {`${formatNum(voters)}(${formatPercentValue(partRate)})`}
               </div>
             </div>
+            )}
 
             <div className="mb-1">
               <TitleMinor className="mb-0">
@@ -127,6 +145,8 @@ const CardProposal = ({ proposal }) => {
               </div>
             </div>
 
+            {/* TODO: Define why the value is not converted to bool */}
+            {Boolean(activityComp && activityComp.length) && (
             <div className="mb-1">
               <TitleMinor className="mb-0">
                 Voter activity:
@@ -140,6 +160,7 @@ const CardProposal = ({ proposal }) => {
                 )
                 : '-----'}
             </div>
+            )}
           </div>
 
           <div>

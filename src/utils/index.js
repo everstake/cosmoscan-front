@@ -41,6 +41,22 @@ export const formatNum = (num) => {
 
 export const formatDays = (val) => `${formatNum(val)} days`;
 
+export const calculatePercent = (total, knownVal, isKnownValPercent = false) => {
+  return formatPercentDec2((Number(knownVal) * 100) / Number(total));
+};
+
+export const formatStatuses = (status) => {
+  // TODO: Pass transaltions keys
+  const statusMap = {
+    abstain: 'Abstain',
+    nowithveto: 'No with veto',
+    no: 'No',
+    yes: 'Yes',
+  };
+
+  return statusMap[status.toLowerCase()];
+};
+
 export const removeTrailingSlash = (string) => String(string).replace(/\/+$/, '');
 
 export const noString = (string) => string || '-----';
