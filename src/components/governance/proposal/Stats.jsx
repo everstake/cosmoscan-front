@@ -53,6 +53,7 @@ const Stats = ({
               { title }
             </span>
           </StatsItem>
+          {proposer && (
           <StatsItem>
             <TitleMinor
               as="span"
@@ -64,6 +65,8 @@ const Stats = ({
               {proposer}
             </BreakTxt>
           </StatsItem>
+          )}
+          {hash && (
           <StatsItem>
             <TitleMinor
               as="span"
@@ -75,6 +78,7 @@ const Stats = ({
               {hash}
             </BreakTxt>
           </StatsItem>
+          )}
         </Col>
 
         <Col>
@@ -161,13 +165,14 @@ Stats.propTypes = {
     votingEnd: PropTypes.string,
     depositEnd: PropTypes.string,
     turnout: PropTypes.string,
+    totalATOMVoted: PropTypes.number,
   }),
 };
 Stats.defaultProps = {
   stats: {
     id: '-----',
     title: '-----',
-    proposer: '-----',
+    proposer: '',
     hash: '-----',
     type: '-----',
     submitted: '-----',
@@ -175,6 +180,7 @@ Stats.defaultProps = {
     votingEnd: '-----',
     depositEnd: '-----',
     turnout: '-----',
+    totalATOMVoted: 0,
   },
 };
 

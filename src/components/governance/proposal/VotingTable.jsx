@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import moment from 'moment';
@@ -6,6 +6,10 @@ import { Button } from 'react-bootstrap';
 import Card from '../../styled/Card';
 import TitleMinor from '../../styled/TitleMinor';
 import Table from '../../Table';
+import Spinner from '../../Spinner';
+import useRequest from '../../../hooks/useRequest';
+import { calculatePercent, formatNum, formatStatuses } from '../../../utils';
+import API from '../../../api';
 
 
 const FlexContainer = css`
@@ -88,99 +92,179 @@ const Btn = styled(Button)`
        border-color: ${blue};
      }
     `
-}2
+};
 `;
 
 const cols = [
   { value: 'voter', label: 'Voter' },
   { value: 'vote', label: 'Vote' },
-  { value: 'amount', label: 'Amount' },
   { value: 'timestamp', label: 'Date/time' },
   { value: 'hash', label: 'Hash' },
-
-  // 'voter',
-  // 'vote',
-  // 'amount',
-  // 'timestamp',
-  // 'hash',
-];
-const rows = [
-  {
-    vote: 'Yes', amount: 200, voter: 'Otto', timestamp: moment().format('YYYY-MM-DD'), hash: 'hg2123333144fcs',
-  },
-  {
-    amount: 300, voter: 'Max', vote: 'No', timestamp: moment().format('YYYY-MM-DD'), hash: 'hg2123333144fcs',
-  },
 ];
 
-const VotingTable = ({ className }) => {
+const VotingTable = ({ proposalId, className }) => {
   const [validatorType, setValidatorType] = useState('all');
 
+  const res = useRequest(API.getVotes, proposalId);
+
+  const isVotesEmpty = useMemo(() => Boolean(!res || !res.resp || !res.resp.length), [res]);
+
+  const votesAll = useMemo(() => {
+    if (isVotesEmpty) return [];
+
+    return res.resp.sort((a, b) => b.created_at - a.created_at).map((vote) => ({
+      voter: vote.title ? vote.title : vote.voter,
+      vote: {
+        value: formatStatuses(vote.option),
+        // eslint-disable-next-line no-nested-ternary
+        color: vote.option === 'Yes'
+          ? 'success'
+          // eslint-disable-next-line no-nested-ternary
+          : vote.option === 'No'
+            ? 'danger'
+            : vote.option === 'NoWithVeto'
+              ? 'burgundy'
+              : 'blue',
+      },
+      timestamp: moment.unix(vote.created_at).format('DD-MM-YYYY'),
+      hash: vote.tx_hash,
+      isValidator: vote.is_validator,
+    }));
+  }, [res.resp, isVotesEmpty]);
+
+
+  const [currentVotesSet, setCurrentVotesSet] = useState(votesAll);
+  useEffect(() => {
+    setCurrentVotesSet(votesAll);
+  }, [votesAll]);
+
+  useEffect(() => {
+    const chooseVotes = (filterBy) => {
+      switch (filterBy) {
+        case 'validators':
+          setCurrentVotesSet(votesAll.filter((vote) => vote.isValidator));
+          break;
+        case 'addresses':
+          setCurrentVotesSet(votesAll.filter((vote) => !vote.isValidator));
+          break;
+        default:
+          setCurrentVotesSet(votesAll);
+          break;
+      }
+    };
+
+    chooseVotes(validatorType);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [validatorType]);
+
+  const votesCalcs = useMemo(() => {
+    if (!currentVotesSet || !currentVotesSet.length) return 0;
+    let all = 0;
+    let yes = 0;
+    let no = 0;
+    let noVeto = 0;
+    let abstain = 0;
+
+    currentVotesSet.forEach((vote) => {
+      if (vote.vote.value) {
+        all += 1;
+      }
+      if (vote.vote.value.toLowerCase() === 'yes') {
+        yes += 1;
+      }
+      if (vote.vote.value.toLowerCase() === 'no') {
+        no += 1;
+      }
+      if (vote.vote.value.toLowerCase() === 'no with veto') {
+        noVeto += 1;
+      }
+      if (vote.vote.value.toLowerCase() === 'abstain') {
+        abstain += 1;
+      }
+    });
+
+    return {
+      yes: `${formatNum(yes)}(${calculatePercent(all, yes)})`,
+      no: `${formatNum(no)}(${calculatePercent(all, no)})`,
+      noVeto: `${formatNum(noVeto)}(${calculatePercent(all, noVeto)})`,
+      abstain: `${formatNum(abstain)}(${calculatePercent(all, abstain)})`,
+    };
+  }, [currentVotesSet]);
+
   return (
-    <section className={className}>
-      <BtnsContainer>
-        <div>
-          <Btn
-            block
-            onClick={() => setValidatorType('all')}
-            active={validatorType === 'all'}
-          >
-            All
-          </Btn>
-        </div>
-        <div>
-          <Btn
-            block
-            onClick={() => setValidatorType('validators')}
-            active={validatorType === 'validators'}
-          >
-            Validators
-          </Btn>
-        </div>
-        <div>
-          <Btn
-            block
-            onClick={() => setValidatorType('addresses')}
-            active={validatorType === 'addresses'}
-          >
-            Individual addresses
-          </Btn>
-        </div>
-      </BtnsContainer>
+    <>
+      {/* eslint-disable-next-line no-nested-ternary */}
+      {res.isLoading
+        ? <div className="text-center mt-5"><Spinner /></div>
+        : !isVotesEmpty ? (
+          <section className={className}>
+            <BtnsContainer>
+              <div>
+                <Btn
+                  block
+                  onClick={() => setValidatorType('all')}
+                  active={validatorType === 'all'}
+                >
+                  All
+                </Btn>
+              </div>
+              <div>
+                <Btn
+                  block
+                  onClick={() => setValidatorType('validators')}
+                  active={validatorType === 'validators'}
+                >
+                  Validators
+                </Btn>
+              </div>
+              <div>
+                <Btn
+                  block
+                  onClick={() => setValidatorType('addresses')}
+                  active={validatorType === 'addresses'}
+                >
+                  Individual addresses
+                </Btn>
+              </div>
+            </BtnsContainer>
 
-      <Card style={{ marginBottom: '10px' }}>
-        <Card.Body>
-          <StatsContainer>
-            <StatsItem>
-              <TitleMinor>Yes: </TitleMinor>
-              <Green>50%(2,000 ATOM)</Green>
-            </StatsItem>
-            <StatsItem>
-              <TitleMinor>No: </TitleMinor>
-              <Burgundy>50%(2,000 ATOM)</Burgundy>
-            </StatsItem>
-            <StatsItem>
-              <TitleMinor>No with veto: </TitleMinor>
-              <Red>50%(2,000 ATOM)</Red>
-            </StatsItem>
-            <StatsItem>
-              <TitleMinor>Abstain: </TitleMinor>
-              <Blue>50%(2,000 ATOM)</Blue>
-            </StatsItem>
-          </StatsContainer>
-        </Card.Body>
-      </Card>
+            <Card style={{ marginBottom: '10px' }}>
+              <Card.Body>
+                <StatsContainer>
+                  <StatsItem>
+                    <TitleMinor>Yes: </TitleMinor>
+                    <Green>{votesCalcs.yes}</Green>
+                  </StatsItem>
+                  <StatsItem>
+                    <TitleMinor>No: </TitleMinor>
+                    <Red>{votesCalcs.no}</Red>
+                  </StatsItem>
+                  <StatsItem>
+                    <TitleMinor>No with veto: </TitleMinor>
+                    <Burgundy>{votesCalcs.noVeto}</Burgundy>
+                  </StatsItem>
+                  <StatsItem>
+                    <TitleMinor>Abstain: </TitleMinor>
+                    <Blue>{votesCalcs.abstain}</Blue>
+                  </StatsItem>
+                </StatsContainer>
+              </Card.Body>
+            </Card>
 
-      <Table
-        cols={cols}
-        rows={rows}
-      />
-    </section>
+            <Table
+              isLoading={res.isLoading}
+              cols={cols}
+              rows={currentVotesSet}
+            />
+          </section>
+        ) : <div />}
+    </>
   );
 };
 
 VotingTable.propTypes = {
   className: PropTypes.string,
+  proposalId: PropTypes.string.isRequired,
 };
 VotingTable.defaultProps = {
   className: '',

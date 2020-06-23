@@ -36,7 +36,7 @@ const Proposal = () => {
     id,
     title,
     proposer,
-    // txHash: tx_hash,
+    tx_hash: txHash,
     submit_time: submitTime,
     deposit_end_time: depositEnd,
     type,
@@ -97,9 +97,8 @@ const Proposal = () => {
       id,
       title,
       proposer,
-      // hash: txHash,
-      hash: '0ADA12A5BFB324B71D5317294E69B4B12F79D6D32AB5A734840078EF00DE25DB',
-      type: type,
+      hash: txHash,
+      type,
       submitted: moment.unix(submitTime).format('DD-MM-YYYY'),
       votingStart: moment.unix(votingStart).format('DD-MM-YYYY'),
       votingEnd: moment.unix(votingEnd).format('DD-MM-YYYY'),
@@ -112,6 +111,7 @@ const Proposal = () => {
     id,
     title,
     proposer,
+    txHash,
     type,
     submitTime,
     votingStart,
@@ -141,7 +141,7 @@ const Proposal = () => {
           desc={description}
         />
       </section>
-      {/*<VotingTableStyled />*/}
+      <VotingTableStyled proposalId={proposalIdFromRoute} />
     </Container>
   );
 };

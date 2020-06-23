@@ -101,6 +101,7 @@ const CardProposal = ({ proposal }) => {
           </BreakTxt>
         </div>
 
+        {proposer && (
         <div>
           <TitleMinor as="span">
             Proposer:
@@ -109,17 +110,22 @@ const CardProposal = ({ proposal }) => {
             {noString(proposer)}
           </BreakTxt>
         </div>
+        )}
 
         <StatsGrid>
           <div>
+            {/* TODO: Define why the value is not converted to bool */}
+            {Boolean(voters) && (
             <div className="mb-1">
               <TitleMinor className="mb-0">
                 Number of voters:
               </TitleMinor>
               <div>
-                {voters ? `${formatNum(voters)}(${formatPercentValue(partRate)})` : '-----'}
+                {/* {voters ? `${formatNum(voters)}(${formatPercentValue(partRate)})` : '-----'} */}
+                {`${formatNum(voters)}(${formatPercentValue(partRate)})`}
               </div>
             </div>
+            )}
 
             <div className="mb-1">
               <TitleMinor className="mb-0">
@@ -139,6 +145,8 @@ const CardProposal = ({ proposal }) => {
               </div>
             </div>
 
+            {/* TODO: Define why the value is not converted to bool */}
+            {Boolean(activityComp && activityComp.length) && (
             <div className="mb-1">
               <TitleMinor className="mb-0">
                 Voter activity:
@@ -152,6 +160,7 @@ const CardProposal = ({ proposal }) => {
                 )
                 : '-----'}
             </div>
+            )}
           </div>
 
           <div>
