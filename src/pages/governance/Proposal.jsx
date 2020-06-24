@@ -130,7 +130,10 @@ const Proposal = () => {
         />
         <Row>
           <Col xl={6}>
-            <VotingChart data={chartData} />
+            <VotingChart
+              isLoading={res.isLoading}
+              data={chartData}
+            />
           </Col>
           <Col xl={6}>
             <Stats stats={stats} />

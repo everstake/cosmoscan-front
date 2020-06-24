@@ -6,7 +6,7 @@ import Card from '../../styled/Card';
 import { Row } from '../../styled/CustomBsGrid';
 import TitleMinor from '../../styled/TitleMinor';
 import BreakTxt from '../../styled/BreakTxt';
-import { formatATOM } from '../../../utils';
+import { formatATOM, noString } from '../../../utils';
 
 const StatsItem = styled.div`
   margin-bottom: 5px;
@@ -39,7 +39,7 @@ const Stats = ({
               Proposal number:
             </TitleMinor>
             <span>
-              {id}
+              {noString(id)}
             </span>
           </StatsItem>
           <StatsItem>
@@ -50,7 +50,7 @@ const Stats = ({
               Proposal title:
             </TitleMinor>
             <span>
-              { title }
+              {noString(title)}
             </span>
           </StatsItem>
           {proposer && (
@@ -62,7 +62,7 @@ const Stats = ({
               Proposer:
             </TitleMinor>
             <BreakTxt>
-              {proposer}
+              {noString(proposer)}
             </BreakTxt>
           </StatsItem>
           )}
@@ -75,7 +75,7 @@ const Stats = ({
               Proposal hash:
             </TitleMinor>
             <BreakTxt>
-              {hash}
+              {noString(hash)}
             </BreakTxt>
           </StatsItem>
           )}
@@ -90,7 +90,7 @@ const Stats = ({
               Type:
             </TitleMinor>
             <span>
-              {type}
+              {noString(type)}
             </span>
           </StatsItem>
           <StatsItem>
@@ -101,7 +101,7 @@ const Stats = ({
               Submitted on:
             </TitleMinor>
             <span>
-              {submitted}
+              {noString(submitted)}
             </span>
           </StatsItem>
           <StatsItem>
@@ -112,7 +112,7 @@ const Stats = ({
               Deposit period:
             </TitleMinor>
             <span>
-              { `${submitted} - ${depositEnd}` }
+              { `${noString(submitted)} - ${noString(depositEnd)}` }
             </span>
           </StatsItem>
           <StatsItem>
@@ -123,7 +123,7 @@ const Stats = ({
               Voting period:
             </TitleMinor>
             <span>
-              { `${votingStart} - ${votingEnd}` }
+              { `${noString(votingStart)} - ${noString(votingEnd)}` }
             </span>
           </StatsItem>
         </Col>
@@ -140,7 +140,7 @@ const Stats = ({
             >
               Turnout:
             </TitleMinor>
-            <span>{turnout}</span>
+            <span>{noString(turnout)}</span>
           </StatsItem>
           <StatsItem>
             <span>{formatATOM(totalATOMVoted)}</span>
