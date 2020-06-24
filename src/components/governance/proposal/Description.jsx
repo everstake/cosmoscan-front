@@ -6,6 +6,7 @@ import { Accordion } from 'react-bootstrap';
 import Linkify from 'react-linkify';
 import Card from '../../styled/Card';
 import TitleChart from '../../styled/TitleChart';
+// import { noString } from '../../../utils';
 
 
 const AccordionToggle = styled(Accordion.Toggle)`
@@ -73,8 +74,8 @@ Description.propTypes = {
 };
 Description.defaultProps = {
   className: '',
-  title: '',
-  desc: '',
+  title: 'No title',
+  desc: 'No description',
 };
 
 export default Description;

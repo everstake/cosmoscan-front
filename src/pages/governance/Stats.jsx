@@ -12,20 +12,23 @@ const Stats = () => {
   return (
     <Container>
       <Row>
+        {/* eslint-disable-next-line no-nested-ternary */}
         {isLoading
           ? (
             <div className="text-center w-100">
               <Spinner />
             </div>
           )
-          : resp.map((proposal, id) => (
-            <ColStyled
-              key={proposal.id}
-              xl={6}
-            >
-              <CardProposal proposal={proposal} />
-            </ColStyled>
-          ))}
+          : resp
+            ? resp.map((proposal, id) => (
+              <ColStyled
+                key={proposal.id}
+                xl={6}
+              >
+                <CardProposal proposal={proposal} />
+              </ColStyled>
+            ))
+            : <div className="text-center w-100">No data</div>}
       </Row>
     </Container>
   );

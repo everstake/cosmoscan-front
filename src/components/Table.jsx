@@ -9,7 +9,7 @@ import Spinner from './Spinner';
 const TableResp = styled.div`
   width: 100%;
   overflow-x: auto;
-  max-height: 507px;
+  max-height: 517px;
   border-radius: 8px;
 `;
 
@@ -35,7 +35,6 @@ const CellVal = styled.span`
   max-width: 300px;
   overflow: hidden;
   text-overflow: ellipsis;
-  //word-break: break-all;
   display: inline-block;
   white-space: nowrap;
   color: ${({ color, theme }) => theme[color]} !important;
@@ -65,6 +64,26 @@ const orderRowsData = (rows, cols, colValueKey) => {
   }, []);
 };
 
+// const debounce = (func, delay, ...args) => {
+//   let inDebounce;
+//   return function () {
+//     clearTimeout(inDebounce);
+//     inDebounce = setTimeout(() => {
+//       func.apply(this, args);
+//     }, delay);
+//   };
+// };
+
+
+// const handleScroll = (e, callback) => {
+//   console.log('handle scroll');
+//   const el = e.target;
+//   if (el.scrollTop + el.clientHeight === el.scrollHeight) {
+//     callback(el);
+//   }
+// };
+
+// callback
 const Table = ({
   cols, rows, colLabelKey, colValueKey, isLoading,
 }) => {
@@ -72,16 +91,12 @@ const Table = ({
 
   // useEffect(() => {
   //   const list = document.getElementById('tableWrap');
-  //   console.log('Load more');
-  //   list.addEventListener('scroll', (e) => {
-  //     const el = e.target;
-  //     if (el.scrollTop + el.clientHeight === el.scrollHeight) {
-  //       console.log('Load more');
-  //     }
-  //   });
+  //   list.addEventListener('scroll', (e) => handleScroll(e, callback));
+  //   // list.addEventListener('scroll', (e) => debounce((e) => handleScroll(e, callback), 2000));
   //
   //   return () => {
-  //     list.removeEventListener('scroll');
+  //     list.removeEventListener('scroll', (e) => handleScroll(e, callback));
+  //     // list.removeEventListener('scroll',(e) => debounce((e) => handleScroll(e, callback), 2000));
   //   };
   // }, []);
 
@@ -152,6 +167,7 @@ Table.propTypes = {
   colLabelKey: PropTypes.string,
   colValueKey: PropTypes.string,
   isLoading: PropTypes.bool,
+  // callback: PropTypes.func,
 };
 Table.defaultProps = {
   cols: [],
@@ -159,6 +175,7 @@ Table.defaultProps = {
   colLabelKey: 'label',
   colValueKey: 'value',
   isLoading: false,
+  // callback: () => null,
 };
 
 export default Table;

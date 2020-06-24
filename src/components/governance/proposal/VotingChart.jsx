@@ -9,7 +9,7 @@ import { formatPercentDec2 } from '../../../utils';
 const chartName = 'Voting';
 const labelFormatter = (entry) => `${formatPercentDec2(entry.value)}`;
 
-function VotingChart({ data }) {
+function VotingChart({ data, isLoading }) {
   const theme = useContext(ThemeContext);
 
   return (
@@ -17,6 +17,7 @@ function VotingChart({ data }) {
       title={chartName}
       chart={(
         <PieChart
+          isLoading={isLoading}
           data={data}
           valFormatter={formatPercentDec2}
           labelFormatter={labelFormatter}
@@ -33,9 +34,11 @@ function VotingChart({ data }) {
 
 VotingChart.propTypes = {
   data: PropTypes.arrayOf(PropTypes.object),
+  isLoading: PropTypes.bool,
 };
 VotingChart.defaultProps = {
   data: [],
+  isLoading: false,
 };
 
 export default VotingChart;

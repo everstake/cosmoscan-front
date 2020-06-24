@@ -133,21 +133,21 @@ const VotingTable = ({ proposalId, className }) => {
   }, [res.resp, isVotesEmpty]);
 
 
+  // const [offset, setOffset] = useState(0);
   const [currentVotesSet, setCurrentVotesSet] = useState(votesAll);
-  useEffect(() => {
-    setCurrentVotesSet(votesAll);
-  }, [votesAll]);
-
   useEffect(() => {
     const chooseVotes = (filterBy) => {
       switch (filterBy) {
         case 'validators':
+          // setOffset(0);
           setCurrentVotesSet(votesAll.filter((vote) => vote.isValidator));
           break;
         case 'addresses':
+          // setOffset(0);
           setCurrentVotesSet(votesAll.filter((vote) => !vote.isValidator));
           break;
         default:
+          // setOffset(0);
           setCurrentVotesSet(votesAll);
           break;
       }
@@ -155,17 +155,26 @@ const VotingTable = ({ proposalId, className }) => {
 
     chooseVotes(validatorType);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [validatorType]);
+  }, [votesAll, validatorType]);
+
+  // const [currVotes, setCurrVotes] = useState([]);
+  // useEffect(() => {
+  //   if (offset === 0) {
+  //     setCurrVotes(currentVotesSet.slice(offset, 10));
+  //     return;
+  //   }
+  //   setCurrVotes((prev) => [...prev, ...currentVotesSet.slice(offset, offset + 10)]);
+  // }, [currentVotesSet, offset]);
 
   const votesCalcs = useMemo(() => {
-    if (!currentVotesSet || !currentVotesSet.length) return 0;
+    if (!votesAll || !votesAll.length) return 0;
     let all = 0;
     let yes = 0;
     let no = 0;
     let noVeto = 0;
     let abstain = 0;
 
-    currentVotesSet.forEach((vote) => {
+    votesAll.forEach((vote) => {
       if (vote.vote.value) {
         all += 1;
       }
@@ -189,7 +198,7 @@ const VotingTable = ({ proposalId, className }) => {
       noVeto: `${formatNum(noVeto)}(${calculatePercent(all, noVeto)})`,
       abstain: `${formatNum(abstain)}(${calculatePercent(all, abstain)})`,
     };
-  }, [currentVotesSet]);
+  }, [votesAll]);
 
   return (
     <>
@@ -255,6 +264,15 @@ const VotingTable = ({ proposalId, className }) => {
               isLoading={res.isLoading}
               cols={cols}
               rows={currentVotesSet}
+              // rows={currVotes}
+              // callback={(el) => {
+              //   return setOffset((prev) => {
+              //     if (prev === 0) {
+              //       el.scrollTop = 0;
+              //     }
+              //     return prev + 10;
+              //   })
+              // }}
             />
           </section>
         ) : <div />}
