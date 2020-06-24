@@ -47,7 +47,7 @@ const WidgetStats = ({
                 data={sparklineData}
                 color={
                   sparklineData[sparklineData.length - 1].y
-                  > sparklineData[sparklineData.length - 2].y
+                  > sparklineData[0].y
                     ? theme.success
                     : theme.danger
                 }

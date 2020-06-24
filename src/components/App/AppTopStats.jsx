@@ -1,11 +1,11 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useEffect } from 'react';
 import styled from 'styled-components';
 import useRequest from '../../hooks/useRequest';
 import API from '../../api';
 import {
   noString, formatNum, formatUSD, formatSec, formatPercentDec,
 } from '../../utils';
-import Spinner from '../Spinner';
+// import Spinner from '../Spinner';
 import { Container } from '../styled/CustomBsGrid';
 import TitleMinor from '../styled/TitleMinor';
 
@@ -75,6 +75,14 @@ const transformMetaStats = (stats) => {
 
 const AppTopStats = () => {
   const res = useRequest(API.getMetaStats, {});
+  useEffect(() => {
+    const interval = setInterval(() => {
+      res.request();
+    }, 7000);
+
+    return () => clearInterval(interval);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // TODO: May need rendering all the items as if there's no data,
   //  there's no way to show appropriate "no-data" stubs
@@ -85,38 +93,41 @@ const AppTopStats = () => {
       <Container>
         <TopStatsContainer>
           {/* eslint-disable-next-line no-nested-ternary */}
-          {res.isLoading
-            ? (
-              <div className="d-flex w-100 justify-content-center">
-                <Spinner size={55} />
-              </div>
-            )
-            : !metaStatsComp || !metaStatsComp.length
-              ? <div className="text-center w-100">No data</div>
-              : metaStatsComp.map((stat) => (
-                <TopStatsItem key={stat.title}>
-                  <div className="text-center">
-                    <TitleMinor>
-                      { stat.title }
-                    </TitleMinor>
-                    <TxtEllipsis>
-                      {/* eslint-disable-next-line no-nested-ternary */}
-                      { stat.title === 'Current price'
-                        ? formatUSD(stat.value)
-                      // eslint-disable-next-line no-nested-ternary
-                        : stat.title === 'Block time'
-                          ? formatSec(stat.value)
-                          // eslint-disable-next-line no-nested-ternary
-                          : stat.title === 'Avg validator fee'
-                            ? formatPercentDec(stat.value)
-                            : stat.title === 'Latest proposal'
-                              // TODO: Refactor
-                              ? `#${stat.value.id}: ${stat.value.name}`
-                              : noString(formatNum(stat.value)) }
-                    </TxtEllipsis>
-                  </div>
-                </TopStatsItem>
-              ))}
+          {
+            // res.isLoading
+            // ? (
+            //   <div className="d-flex w-100 justify-content-center">
+            //     <Spinner size={55} />
+            //   </div>
+            // )
+            // :
+           !metaStatsComp || !metaStatsComp.length
+             ? <div className="text-center w-100">-----</div>
+             : metaStatsComp.map((stat) => (
+               <TopStatsItem key={stat.title}>
+                 <div className="text-center">
+                   <TitleMinor>
+                     { stat.title }
+                   </TitleMinor>
+                   <TxtEllipsis>
+                     {/* eslint-disable-next-line no-nested-ternary */}
+                     { stat.title === 'Current price'
+                       ? formatUSD(stat.value)
+                     // eslint-disable-next-line no-nested-ternary
+                       : stat.title === 'Block time'
+                         ? formatSec(stat.value)
+                       // eslint-disable-next-line no-nested-ternary
+                         : stat.title === 'Avg validator fee'
+                           ? formatPercentDec(stat.value)
+                           : stat.title === 'Latest proposal'
+                           // TODO: Refactor
+                             ? `#${stat.value.id}: ${stat.value.name}`
+                             : noString(formatNum(stat.value)) }
+                   </TxtEllipsis>
+                 </div>
+               </TopStatsItem>
+             ))
+}
         </TopStatsContainer>
       </Container>
     </TopStatsStyled>
