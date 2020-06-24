@@ -7,6 +7,7 @@ import NetworkStats from '../pages/network/Stats';
 import NetworkCharts from '../pages/network/Charts';
 import GovernanceStats from '../pages/governance/Stats';
 import Proposal from '../pages/governance/Proposal';
+import GovernanceCharts from '../pages/governance/Charts';
 // import Trading from '../pages/Trading';
 // import Validator from '../pages/Validator';
 import NotFound from '../pages/NotFound';
@@ -42,9 +43,14 @@ const Routes = () => (
         component={GovernanceStats}
       />
       <Route
-        // exact
+        exact
         path="/proposal/:id"
         component={Proposal}
+      />
+      <Route
+        exact
+        path="/governance-charts"
+        component={GovernanceCharts}
       />
       {/* <Route */}
       {/*  exact */}

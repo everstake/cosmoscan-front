@@ -64,6 +64,9 @@ const API = {
   getVotes(proposalId) {
     return APIService.get(`/proposals/votes${formatParams({ proposal_id: proposalId })}`);
   },
+  getProposalsCharts() {
+    return APIService.get('/proposals/chart');
+  }
 };
 
 export default API;
