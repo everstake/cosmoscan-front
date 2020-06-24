@@ -1,10 +1,11 @@
-#Cosmoscan (front-end)
+
+# Cosmoscan (front-end)
 
 Cosmoscan is the first data and statistics explorer for the Cosmos network. It provides information oт the overall network operations, governance details, validators and much more. This is still an MVP, so if you have any suggestions, please reach out.
 
 This is a repo of the front-end part of the project.
 
-##How to run
+## How to run
 
 Clone the repo and run `npm install` from the folder of the project to install all the necessary dependencies.
 
@@ -19,7 +20,7 @@ HTTP requests will fail. Visit the [back-end repo](https://github.com/everstake/
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-##Dependencies
+## Dependencies
 
 * "@fortawesome/fontawesome-svg-core": "^1.2.28",
 * "@fortawesome/free-brands-svg-icons": "^5.13.0",
