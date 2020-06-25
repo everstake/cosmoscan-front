@@ -33,6 +33,8 @@ export const formatDate = (val) => moment.unix(val).format('DD-MM-YYYY');
 
 export const formatGB = (val) => `${val} GB`;
 
+export const formatId = (val) => `#${val}`
+
 export const formatNum = (num) => {
   if (typeof num !== 'number') return num;
   // TODO: Make the precision dynamic

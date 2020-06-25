@@ -24,6 +24,10 @@ const useRoutes = () => {
           name: 'Stats',
           path: '/governance-stats',
         },
+        {
+          name: 'Charts',
+          path: '/governance-charts',
+        },
       ],
     },
     // { name: 'Trading', path: '/trading' },

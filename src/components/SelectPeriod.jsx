@@ -95,7 +95,7 @@ const SelectPeriod = ({
   const [period, setPeriod] = useState(defaultOpt);
   const handleChange = (opt) => {
     setPeriod(opt);
-    // TODO: Refactor. The component is bind to the specific onChange method.
+    // TODO: Refactor. The component is bound to the specific onChange method.
     onChange(opt.value);
   };
 
