@@ -110,7 +110,6 @@ const Table = ({
           <THead>
             <tr>
               {cols.map((col, index) => (
-                // eslint-disable-next-line react/no-array-index-key
                 <Th key={`cell-${index}`}>
                   { col[colLabelKey] ? col[colLabelKey] : col}
                 </Th>
@@ -118,7 +117,6 @@ const Table = ({
             </tr>
           </THead>
           <tbody>
-            {/* eslint-disable-next-line no-nested-ternary */}
             {isLoading
               ? (
                 <Tr>
@@ -132,10 +130,8 @@ const Table = ({
               )
               : rowsOrdered && rowsOrdered.length
                 ? rowsOrdered.map((row, rowIndex) => (
-                  // eslint-disable-next-line react/no-array-index-key
                   <Tr key={`row-${rowIndex}`}>
                     {Object.keys(row).map((cell, cellIndex) => (
-                      // eslint-disable-next-line react/no-array-index-key
                       <td key={`cell-${cellIndex}`}>
                         <CellVal color={row[cell].color}>
                           {typeof row[cell] === 'object' ? row[cell].value : row[cell]}
