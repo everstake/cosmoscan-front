@@ -16,6 +16,18 @@ import Spinner from '../Spinner';
 const BarChartStyled = styled(BarChartDefault)`
   font-family: 'Montserrat', sans-serif;
   font-size: 12px;
+  
+  .recharts-tooltip-wrapper {
+    max-width: 200px;
+    word-break: break-all;
+    word-wrap: break-word;
+  }
+  
+  .recharts-default-tooltip {
+    max-width: 200px;
+    word-wrap: break-word;
+    white-space: initial !important;
+  }
 `;
 
 const BarChart = ({
@@ -28,7 +40,7 @@ const BarChart = ({
   tooltipFormatter,
   tooltipLabelFormatter,
   barName,
-  barColor
+  barColor,
 }) => {
   const theme = useContext(ThemeContext);
 
@@ -50,9 +62,6 @@ const BarChart = ({
             <ResponsiveContainer>
               <BarChartStyled
                 data={data}
-                barCategoryGap="35%"
-                barGap="1"
-                barSize={10}
               >
                 <CartesianGrid
                   strokeDasharray="3 3"
@@ -93,7 +102,7 @@ const BarChart = ({
                   dataKey="dataPiece"
                   fill={barColor}
                   name={barName}
-                  // barSize={10}
+                  minPointSize={1}
                 />
               </BarChartStyled>
             </ResponsiveContainer>

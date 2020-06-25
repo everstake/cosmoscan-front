@@ -66,7 +66,11 @@ const API = {
   },
   getProposalsCharts() {
     return APIService.get('/proposals/chart');
-  }
+  },
+  getValidatorsVotingPower(params = {}) {
+    const { by = 'day' } = params;
+    return APIService.get(`/validators/33power/agg${formatParams({ by, ...params })}`)
+  },
 };
 
 export default API;

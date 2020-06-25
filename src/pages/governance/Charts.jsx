@@ -1,28 +1,22 @@
-import React, { useMemo, useContext } from 'react';
-import styled, { ThemeContext } from 'styled-components';
+import React, { useMemo } from 'react';
+import styled from 'styled-components';
 import { Col } from 'react-bootstrap';
 import { Container, Row } from '../../components/styled/CustomBsGrid';
-import ChartContainer from '../../layouts/ChartContainer';
 import useRequest from '../../hooks/useRequest';
 import API from '../../api';
-import BarChart from '../../components/chart-types/BarChart';
-import { formatPercentValue, formatId } from '../../utils';
+import ProposalTurnout from '../../components/governance/charts/ProposalTurnout';
+import VoterActivity from '../../components/governance/charts/VoterActivity';
+import VotingPowerToVeto from '../../components/governance/charts/VotingPowerToVeto';
+import VetoedProposals from '../../components/governance/charts/VetoedProposals';
 
 const ColStyled = styled(Col)`
   margin-bottom: ${({ theme: { marginSectionsStandard } }) => marginSectionsStandard};
 `;
 
-const chartName = 'All props participation in %';
-const yAxisWidth = 40;
-const yAxisTickCount = 10;
-const barName = 'Props participation';
-const tooltipLabelFormatter = (val) => `Proposal ${formatId(val)}`
-
 const Charts = () => {
-  const theme = useContext(ThemeContext);
   const { resp, isLoading } = useRequest(API.getProposalsCharts);
 
-  const participationPercents = useMemo(() => {
+  const turnouts = useMemo(() => {
     if (!resp || !resp.length) return [];
 
     return resp.map((proposal) => ({
@@ -31,42 +25,48 @@ const Charts = () => {
     })).reverse();
   }, [resp]);
 
+  const voterActivity = useMemo(() => {
+    if (!resp || !resp.length) return [];
+
+    return resp.filter((proposal) => (proposal.voters_total !== 0)).map((proposal) => ({
+      name: proposal.proposal_id,
+      voters: proposal.voters_total,
+      validators: proposal.validators_total,
+    })).reverse();
+  }, [resp]);
+
+  const vetoed = useMemo(() => {
+    if (!resp || !resp.length) return [];
+
+    return resp.filter((proposal) => (Number(proposal.no_with_veto_percent) !== 0)).map((proposal) => ({
+      name: proposal.proposal_id,
+      dataPiece: +proposal.no_with_veto_percent,
+    })).reverse();
+  }, [resp]);
+
   return (
     <Container>
       <Row xs={1} xl={2}>
         <ColStyled>
-          <ChartContainer
-            title={chartName}
-            chart={(
-              <BarChart
-                isLoading={isLoading}
-                data={participationPercents}
-                yAxisWidth={yAxisWidth}
-                yAxisTickCount={yAxisTickCount}
-                yAxisLabelsFormatter={formatPercentValue}
-                xAxisTickFormatter={formatId}
-                tooltipLabelFormatter={tooltipLabelFormatter}
-                tooltipFormatter={formatPercentValue}
-                barColor={theme.blue}
-                barName={barName}
-              />
-            )}
+          <ProposalTurnout
+            isLoading={isLoading}
+            data={turnouts}
           />
         </ColStyled>
         <ColStyled>
-          All props participation, amount of addresses
+          <VoterActivity
+            isLoading={isLoading}
+            data={voterActivity}
+          />
         </ColStyled>
         <ColStyled>
-          Validator amount holding 33.4% voting power
+          <VotingPowerToVeto />
         </ColStyled>
         <ColStyled>
-          Most vetoed proposals
-        </ColStyled>
-        <ColStyled>
-          Most active delegators
-        </ColStyled>
-        <ColStyled>
-          Time to quorum
+          <VetoedProposals
+            isLoading={isLoading}
+            data={vetoed}
+          />
         </ColStyled>
       </Row>
     </Container>

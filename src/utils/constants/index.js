@@ -1,4 +1,5 @@
 import moment from 'moment';
+import theme from '../theme';
 
 export const periodOpts = [
   {
@@ -34,3 +35,67 @@ export const periodOpts = [
     },
   },
 ];
+
+export const selectStyles = {
+  container: (base) => ({
+    ...base,
+    minWidth: '125px',
+    fontSize: '12px',
+  }),
+  control: (base, state) => ({
+    ...base,
+    border: '0',
+    backgroundColor: 'transparent',
+    fontWeight: 700,
+    minHeight: '13px',
+    cursor: 'pointer',
+    transition: 'all 0.2s',
+    color: state.isDisabled ? theme.grey : theme.black,
+    '&:hover': {
+      color: theme.blue,
+    },
+  }),
+  dropdownIndicator: (base, state) => ({
+    ...base,
+    padding: 0,
+    color: 'inherit',
+    transition: 'transform 0.2s',
+    transform: state.selectProps.menuIsOpen ? 'rotateX(180deg)' : '',
+    '&:hover': {
+      color: 'inherit',
+    },
+  }),
+  indicatorSeparator: (base) => ({
+    ...base,
+    display: 'none',
+  }),
+  valueContainer: (base) => ({
+    ...base,
+    paddingLeft: 15,
+  }),
+  singleValue: (base) => ({
+    ...base,
+    color: 'inherit',
+  }),
+  menu: (base) => ({
+    ...base,
+    marginTop: '1px',
+  }),
+  menuList: (base) => ({
+    ...base,
+    padding: 0,
+  }),
+  option: (base, state) => ({
+    ...base,
+    backgroundColor: state.isSelected ? theme.blue : 'transparent',
+    padding: '4px 10px',
+    transition: 'background-color 0.2s',
+    cursor: 'pointer',
+    '&:hover': {
+      backgroundColor: !state.isSelected ? theme.blue4 : '',
+    },
+    '&:active': {
+      backgroundColor: theme.blue4,
+    },
+  }),
+};

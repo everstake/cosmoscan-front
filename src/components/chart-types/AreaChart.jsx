@@ -18,6 +18,12 @@ import Spinner from '../Spinner';
 const AreaChartStyled = styled(AreaChartDefault)`
   font-family: 'Montserrat', sans-serif;
   font-size: 12px;
+  
+   .recharts-default-tooltip {
+    max-width: 300px;
+    word-wrap: break-word;
+    white-space: initial !important;
+  }
 `;
 
 const AreaChart = ({
