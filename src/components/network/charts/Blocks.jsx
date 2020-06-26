@@ -24,7 +24,7 @@ const Blocks = () => {
       title={chartName}
       select={(
         <SelectPeriod
-          defaultOpt={defaultPeriod}
+          defaultPeriod={defaultPeriod}
           isDisabled={res.isLoading}
           onChange={res.request}
         />

@@ -4,7 +4,8 @@ import { ThemeContext } from 'styled-components';
 import ChartContainer from '../../../layouts/ChartContainer';
 import BarChart from '../../chart-types/BarChart';
 import { formatId, formatPercentValue } from '../../../utils';
-import SelectNumOfProposals from '../../SelectNumOfProposals';
+import SelectCustom from '../../SelectCustom';
+import { numsOfProposals } from '../../../utils/constants';
 
 
 const chartName = 'Proposal turnout';
@@ -21,7 +22,7 @@ const ProposalTurnout = ({ isLoading, data }) => {
     setProposals(data);
   }, [data]);
   const handleChange = (opt) => {
-    switch (opt) {
+    switch (opt.value) {
       case 3:
         setProposals(data.slice(-3));
         break;
@@ -38,7 +39,11 @@ const ProposalTurnout = ({ isLoading, data }) => {
     <ChartContainer
       title={chartName}
       select={(
-        <SelectNumOfProposals onChange={handleChange} />
+        <SelectCustom
+          opts={numsOfProposals}
+          defaultOpt={numsOfProposals[2]}
+          onChange={handleChange}
+        />
       )}
       chart={(
         <BarChart

@@ -1,7 +1,6 @@
-import React, { useMemo } from 'react';
-import styled from 'styled-components';
-import { Col } from 'react-bootstrap';
+import React, { useState, useEffect } from 'react';
 import { Container, Row } from '../../components/styled/CustomBsGrid';
+import ColMarginStandard from '../../components/styled/ColMarginStabdard';
 import useRequest from '../../hooks/useRequest';
 import API from '../../api';
 import ProposalTurnout from '../../components/governance/charts/ProposalTurnout';
@@ -9,65 +8,61 @@ import VoterActivity from '../../components/governance/charts/VoterActivity';
 import VotingPowerToVeto from '../../components/governance/charts/VotingPowerToVeto';
 import VetoedProposals from '../../components/governance/charts/VetoedProposals';
 
-const ColStyled = styled(Col)`
-  margin-bottom: ${({ theme: { marginSectionsStandard } }) => marginSectionsStandard};
-`;
 
 const Charts = () => {
   const { resp, isLoading } = useRequest(API.getProposalsCharts);
+  const [turnouts, setTurnouts] = useState([]);
+  const [voterActivity, setVoterActivity] = useState([]);
+  const [vetoed, setVetoed] = useState([]);
+  useEffect(() => {
+    if (!resp || !resp.length) return;
 
-  const turnouts = useMemo(() => {
-    if (!resp || !resp.length) return [];
-
-    return resp.map((proposal) => ({
-      name: proposal.proposal_id,
-      dataPiece: proposal.turnout,
-    })).reverse();
-  }, [resp]);
-
-  const voterActivity = useMemo(() => {
-    if (!resp || !resp.length) return [];
-
-    return resp.filter((proposal) => (proposal.voters_total !== 0)).map((proposal) => ({
-      name: proposal.proposal_id,
-      voters: proposal.voters_total,
-      validators: proposal.validators_total,
-    })).reverse();
-  }, [resp]);
-
-  const vetoed = useMemo(() => {
-    if (!resp || !resp.length) return [];
-
-    return resp.filter((proposal) => (Number(proposal.no_with_veto_percent) !== 0)).map((proposal) => ({
-      name: proposal.proposal_id,
-      dataPiece: +proposal.no_with_veto_percent,
-    })).reverse();
+    resp.reverse().forEach((prop) => {
+      setTurnouts((prev) => [...prev, { name: prop.proposal_id, dataPiece: prop.turnout }]);
+      if (prop.voters_total !== 0) {
+        setVoterActivity((prev) => [
+          ...prev,
+          {
+            name: prop.proposal_id,
+            voters: prop.voters_total,
+            validators: prop.validators_total,
+          }]);
+      }
+      if (Number(prop.no_with_veto_percent) !== 0) {
+        setVetoed((prev) => [
+          ...prev,
+          {
+            name: prop.proposal_id,
+            dataPiece: +prop.no_with_veto_percent,
+          }]);
+      }
+    });
   }, [resp]);
 
   return (
     <Container>
       <Row xs={1} xl={2}>
-        <ColStyled>
+        <ColMarginStandard>
           <ProposalTurnout
             isLoading={isLoading}
             data={turnouts}
           />
-        </ColStyled>
-        <ColStyled>
+        </ColMarginStandard>
+        <ColMarginStandard>
           <VoterActivity
             isLoading={isLoading}
             data={voterActivity}
           />
-        </ColStyled>
-        <ColStyled>
+        </ColMarginStandard>
+        <ColMarginStandard>
           <VotingPowerToVeto />
-        </ColStyled>
-        <ColStyled>
+        </ColMarginStandard>
+        <ColMarginStandard>
           <VetoedProposals
             isLoading={isLoading}
             data={vetoed}
           />
-        </ColStyled>
+        </ColMarginStandard>
       </Row>
     </Container>
   );
