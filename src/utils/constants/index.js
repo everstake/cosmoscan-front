@@ -3,7 +3,7 @@ import theme from '../theme';
 
 export const periodOpts = [
   {
-    name: 'Last day',
+    label: 'Last day',
     value: {
       by: 'hour',
       from: moment.utc().subtract(1, 'days').startOf('day').unix(),
@@ -11,7 +11,7 @@ export const periodOpts = [
     },
   },
   {
-    name: 'Last week',
+    label: 'Last week',
     value: {
       by: 'day',
       from: moment.utc().subtract(7, 'days').startOf('day').unix(),
@@ -19,7 +19,7 @@ export const periodOpts = [
     },
   },
   {
-    name: 'Last month',
+    label: 'Last month',
     value: {
       by: 'day',
       from: moment.utc().subtract(30, 'days').startOf('day').unix(),
@@ -27,13 +27,25 @@ export const periodOpts = [
     },
   },
   {
-    name: 'Last 3 months',
+    label: 'Last 3 months',
     value: {
       by: 'day',
       from: moment.utc().subtract(60, 'days').startOf('day').unix(),
       to: moment.utc().startOf('day').unix(),
     },
   },
+];
+
+export const numsOfProposals = [
+  { label: 'Last 3', value: 3 },
+  { label: 'Last 10', value: 10 },
+  { label: 'All proposals', value: Infinity },
+];
+
+export const voterTypes = [
+  { label: 'All voters', value: 'all' },
+  { label: 'Validators', value: 'validators' },
+  { label: 'Individual addresses', value: 'addresses' },
 ];
 
 export const selectStyles = {

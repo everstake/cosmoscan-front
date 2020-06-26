@@ -4,18 +4,14 @@ import { ThemeContext } from 'styled-components';
 import ChartContainer from '../../../layouts/ChartContainer';
 import BarChart from '../../chart-types/BarChart';
 import { formatId, formatNum } from '../../../utils';
-import SelectNumOfProposals from '../../SelectNumOfProposals';
+import SelectCustom from '../../SelectCustom';
+import { voterTypes } from '../../../utils/constants';
 
 
 const chartName = 'Voter activity';
 const yAxisWidth = 40;
 const yAxisTickCount = 10;
 const barName = '# of addresses that cast a vote';
-const voterTypes = [
-  { label: 'All voters', value: 'all' },
-  { label: 'Validators', value: 'validators' },
-  { label: 'Individual addresses', value: 'addresses' },
-];
 const tooltipLabelFormatter = (val) => `Proposal ${formatId(val)}`;
 const filterVoterActivity = (votersType, proposal) => {
   switch (votersType) {
@@ -27,12 +23,10 @@ const filterVoterActivity = (votersType, proposal) => {
       return proposal.voters;
   }
 };
-const handleProposals = (proposals, voterType) => {
-  return proposals.map((proposal) => ({
-    name: proposal.name,
-    dataPiece: filterVoterActivity(voterType, proposal),
-  }));
-};
+const handleProposals = (proposals, voterType) => proposals.map((proposal) => ({
+  name: proposal.name,
+  dataPiece: filterVoterActivity(voterType, proposal),
+}));
 
 
 const VoterActivity = ({ isLoading, data }) => {
@@ -45,14 +39,14 @@ const VoterActivity = ({ isLoading, data }) => {
   }, [data, currVoterType]);
 
   const handleChange = (opt) => {
-    setCurrVoterType(opt);
+    setCurrVoterType(opt.value);
   };
 
   return (
     <ChartContainer
       title={chartName}
       select={(
-        <SelectNumOfProposals
+        <SelectCustom
           opts={voterTypes}
           defaultOpt={voterTypes[0]}
           onChange={handleChange}

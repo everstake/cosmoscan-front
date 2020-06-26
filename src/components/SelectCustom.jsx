@@ -1,25 +1,23 @@
 import React, { useState } from 'react';
 import Select from 'react-select';
 import PropTypes from 'prop-types';
-// import ValueContainer from './CustomValueContainer';
+import ValueContainer from './CustomValueContainer';
 import { selectStyles } from '../utils/constants';
 
 
-const numsOfProposals = [
-  { label: 'Last 3', value: 3 },
-  { label: 'Last 10', value: 10 },
-  { label: 'All proposals', value: Infinity },
-];
-
-
-const SelectNumOfProposals = ({
-  opts, defaultOpt, onChange, isDisabled, className,
+const SelectCustom = ({
+  opts,
+  defaultOpt,
+  onChange,
+  isDisabled,
+  className,
+  isWithIcon,
+  icon,
 }) => {
   const [currOpt, setCurrOpt] = useState(defaultOpt);
   const handleChange = (opt) => {
     setCurrOpt(opt);
-    // TODO: Refactor. The component is bound to the specific onChange method.
-    onChange(opt.value);
+    onChange(opt);
   };
 
   return (
@@ -31,28 +29,32 @@ const SelectNumOfProposals = ({
       isSearchable={false}
       getOptionLabel={(opt) => opt.label}
       styles={selectStyles}
-      // components={{ ValueContainer }}
+      components={isWithIcon && { ValueContainer }}
       isDisabled={isDisabled}
       className={className}
-      // icon=""
+      icon={isWithIcon && icon}
     />
   );
 };
 
-SelectNumOfProposals.propTypes = {
+SelectCustom.propTypes = {
   opts: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object])),
   defaultOpt: PropTypes.oneOfType([PropTypes.object]),
   isDisabled: PropTypes.bool,
   onChange: PropTypes.func,
   className: PropTypes.string,
+  isWithIcon: PropTypes.bool,
+  icon: PropTypes.string,
 };
-SelectNumOfProposals.defaultProps = {
-  opts: numsOfProposals,
-  defaultOpt: numsOfProposals[2],
+SelectCustom.defaultProps = {
+  opts: [],
+  defaultOpt: {},
   isDisabled: false,
   onChange: () => null,
   className: '',
+  isWithIcon: false,
+  icon: '',
 };
 
 
-export default SelectNumOfProposals;
+export default SelectCustom;
