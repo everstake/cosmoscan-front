@@ -11,7 +11,8 @@ import { numsOfProposals } from '../../../utils/constants';
 const chartName = 'Proposal turnout';
 const yAxisWidth = 40;
 const yAxisTickCount = 10;
-const barName = 'Total % of ATOM participating in voting';
+const barName = chartName;
+const tooltipTxt = 'Total % of ATOM participating in voting';
 const tooltipLabelFormatter = (val) => `Proposal ${formatId(val)}`;
 
 
@@ -38,13 +39,14 @@ const ProposalTurnout = ({ isLoading, data }) => {
   return (
     <ChartContainer
       title={chartName}
+      titleTooltip={tooltipTxt}
       select={(
         <SelectCustom
           opts={numsOfProposals}
           defaultOpt={numsOfProposals[2]}
           onChange={handleChange}
         />
-      )}
+          )}
       chart={(
         <BarChart
           isLoading={isLoading}
@@ -58,7 +60,7 @@ const ProposalTurnout = ({ isLoading, data }) => {
           barColor={theme.blue}
           barName={barName}
         />
-      )}
+          )}
     />
   );
 };

@@ -10,9 +10,10 @@ import API from '../../../api';
 
 
 const chartName = 'Voting power to veto';
-const yAxisWidth = 20;
+const yAxisWidth = 40;
 const yTickCount = 10;
-const areaName = '# of top validators who hold 33.4% of total voting power and can veto a proposal';
+const areaName = chartName;
+const tooltipTxt = '# of top validators who hold 33.4% of total voting power and can veto a proposal';
 const defaultPeriod = periodOpts[1];
 
 
@@ -25,6 +26,7 @@ const VotingPowerToVeto = () => {
   return (
     <ChartContainer
       title={chartName}
+      titleTooltip={tooltipTxt}
       chart={(
         <AreaChart
           areaName={areaName}

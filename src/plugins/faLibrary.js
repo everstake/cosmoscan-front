@@ -3,7 +3,7 @@ import {
   faTwitter, faTelegramPlane, faMediumM, faRedditAlien,
 } from '@fortawesome/free-brands-svg-icons';
 import {
-  faBars, faTimes, faChevronDown, faChevronUp, faCalendarAlt,
+  faBars, faTimes, faChevronDown, faChevronUp, faCalendarAlt, faQuestionCircle
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
@@ -16,4 +16,5 @@ library.add(
   faTwitter,
   faMediumM,
   faRedditAlien,
+  faQuestionCircle,
 );
