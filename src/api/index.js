@@ -69,7 +69,10 @@ const API = {
   },
   getValidatorsVotingPower(params = {}) {
     const { by = 'day' } = params;
-    return APIService.get(`/validators/33power/agg${formatParams({ by, ...params })}`)
+    return APIService.get(`/validators/33power/agg${formatParams({ by, ...params })}`);
+  },
+  getValidatorsList() {
+    return APIService.get('/validators');
   },
 };
 
