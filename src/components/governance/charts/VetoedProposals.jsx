@@ -9,7 +9,8 @@ import { formatId, formatPercentValue } from '../../../utils';
 const chartName = 'Most vetoed proposals';
 const yAxisWidth = 40;
 const yAxisTickCount = 10;
-const barName = 'The proposals that received the highest amount of \'No with veto\' votes';
+const barName = chartName;
+const tooltipTxt = 'The proposals that received the highest amount of \'No with veto\' votes';
 const tooltipLabelFormatter = (val) => `Proposal ${formatId(val)}`;
 
 
@@ -19,6 +20,7 @@ const VetoedProposals = ({ isLoading, data }) => {
   return (
     <ChartContainer
       title={chartName}
+      titleTooltip={tooltipTxt}
       chart={(
         <BarChart
           isLoading={isLoading}

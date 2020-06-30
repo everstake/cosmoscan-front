@@ -10,7 +10,6 @@ const SelectCustom = ({
   defaultOpt,
   onChange,
   isDisabled,
-  className,
   isWithIcon,
   icon,
 }) => {
@@ -31,7 +30,6 @@ const SelectCustom = ({
       styles={selectStyles}
       components={isWithIcon && { ValueContainer }}
       isDisabled={isDisabled}
-      className={className}
       icon={isWithIcon && icon}
     />
   );
@@ -42,7 +40,6 @@ SelectCustom.propTypes = {
   defaultOpt: PropTypes.oneOfType([PropTypes.object]),
   isDisabled: PropTypes.bool,
   onChange: PropTypes.func,
-  className: PropTypes.string,
   isWithIcon: PropTypes.bool,
   icon: PropTypes.string,
 };
@@ -51,7 +48,6 @@ SelectCustom.defaultProps = {
   defaultOpt: {},
   isDisabled: false,
   onChange: () => null,
-  className: '',
   isWithIcon: false,
   icon: '',
 };

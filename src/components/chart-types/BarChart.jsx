@@ -17,17 +17,17 @@ const BarChartStyled = styled(BarChartDefault)`
   font-family: 'Montserrat', sans-serif;
   font-size: 12px;
   
-  .recharts-tooltip-wrapper {
-    max-width: 200px;
-    word-break: break-all;
-    word-wrap: break-word;
-  }
+  //.recharts-tooltip-wrapper {
+  //  max-width: 250px;
+  //  word-break: break-all;
+  //  word-wrap: break-word;
+  //}
   
-  .recharts-default-tooltip {
-    max-width: 200px;
-    word-wrap: break-word;
-    white-space: initial !important;
-  }
+  //.recharts-default-tooltip {
+  //  max-width: 200px;
+  //  word-wrap: break-word;
+  //  white-space: initial !important;
+  //}
 `;
 
 const BarChart = ({
@@ -121,9 +121,25 @@ const BarChart = ({
 BarChart.propTypes = {
   data: PropTypes.arrayOf(PropTypes.object).isRequired,
   isLoading: PropTypes.bool,
+  yAxisWidth: PropTypes.number,
+  yAxisTickCount: PropTypes.number,
+  yAxisLabelsFormatter: PropTypes.func,
+  xAxisTickFormatter: PropTypes.func,
+  tooltipFormatter: PropTypes.func,
+  tooltipLabelFormatter: PropTypes.func,
+  barName: PropTypes.string,
+  barColor: PropTypes.string,
 };
 BarChart.defaultProps = {
   isLoading: false,
+  yAxisWidth: 40,
+  yAxisTickCount: 10,
+  yAxisLabelsFormatter: () => null,
+  xAxisTickFormatter: () => null,
+  tooltipFormatter: () => null,
+  tooltipLabelFormatter: () => null,
+  barName: 'Bar name',
+  barColor: '#476eeb',
 };
 
 export default BarChart;

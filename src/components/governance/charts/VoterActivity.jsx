@@ -11,7 +11,8 @@ import { voterTypes } from '../../../utils/constants';
 const chartName = 'Voter activity';
 const yAxisWidth = 40;
 const yAxisTickCount = 10;
-const barName = '# of addresses that cast a vote';
+const barName = chartName;
+const tooltipTxt = '# of addresses that cast a vote';
 const tooltipLabelFormatter = (val) => `Proposal ${formatId(val)}`;
 const filterVoterActivity = (votersType, proposal) => {
   switch (votersType) {
@@ -45,6 +46,7 @@ const VoterActivity = ({ isLoading, data }) => {
   return (
     <ChartContainer
       title={chartName}
+      titleTooltip={tooltipTxt}
       select={(
         <SelectCustom
           opts={voterTypes}
