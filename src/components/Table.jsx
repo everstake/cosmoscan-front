@@ -9,7 +9,7 @@ import Spinner from './Spinner';
 const TableResp = styled.div`
   width: 100%;
   overflow-x: auto;
-  max-height: 517px;
+  max-height: ${({ maxHeight }) => `${maxHeight}px`};
   border-radius: 8px;
 `;
 
@@ -32,7 +32,7 @@ const Th = styled.th`
 `;
 
 const CellVal = styled.span`
-  max-width: 300px;
+  max-width: 200px;
   overflow: hidden;
   text-overflow: ellipsis;
   display: inline-block;
@@ -85,7 +85,7 @@ const orderRowsData = (rows, cols, colValueKey) => {
 
 // callback
 const Table = ({
-  cols, rows, colLabelKey, colValueKey, isLoading,
+  cols, rows, colLabelKey, colValueKey, isLoading, maxHeight
 }) => {
   const rowsOrdered = useMemo(() => orderRowsData(rows, cols, colValueKey), [cols, rows, colValueKey]);
 
@@ -102,7 +102,7 @@ const Table = ({
 
   return (
     <Card>
-      <TableResp id="tableWrap">
+      <TableResp id="tableWrap" maxHeight={maxHeight}>
         <Tbl
           striped
           hover
@@ -133,7 +133,7 @@ const Table = ({
                   <Tr key={`row-${rowIndex}`}>
                     {Object.keys(row).map((cell, cellIndex) => (
                       <td key={`cell-${cellIndex}`}>
-                        <CellVal color={row[cell].color}>
+                        <CellVal color={row[cell] && row[cell].color}>
                           {typeof row[cell] === 'object' ? row[cell].value : row[cell]}
                         </CellVal>
                       </td>
@@ -163,6 +163,7 @@ Table.propTypes = {
   colLabelKey: PropTypes.string,
   colValueKey: PropTypes.string,
   isLoading: PropTypes.bool,
+  maxHeight: PropTypes.number,
   // callback: PropTypes.func,
 };
 Table.defaultProps = {
@@ -171,6 +172,7 @@ Table.defaultProps = {
   colLabelKey: 'label',
   colValueKey: 'value',
   isLoading: false,
+  maxHeight: 517,
   // callback: () => null,
 };
 

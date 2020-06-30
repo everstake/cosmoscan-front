@@ -30,6 +30,15 @@ const useRoutes = () => {
         },
       ],
     },
+    {
+      name: 'Validators',
+      paths: [
+        {
+          name: 'Stats',
+          path: '/validators-stats',
+        },
+      ],
+    },
     // { name: 'Trading', path: '/trading' },
     // { name: 'Validator', path: '/validator' },
   ]);
