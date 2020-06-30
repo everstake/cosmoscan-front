@@ -167,14 +167,14 @@ const VotingTable = ({ proposalId, className }) => {
   // }, [currentVotesSet, offset]);
 
   const votesCalcs = useMemo(() => {
-    if (!votesAll || !votesAll.length) return 0;
+    if (!currentVotesSet || !currentVotesSet.length) return 0;
     let all = 0;
     let yes = 0;
     let no = 0;
     let noVeto = 0;
     let abstain = 0;
 
-    votesAll.forEach((vote) => {
+    currentVotesSet.forEach((vote) => {
       if (vote.vote.value) {
         all += 1;
       }
@@ -198,7 +198,7 @@ const VotingTable = ({ proposalId, className }) => {
       noVeto: `${formatNum(noVeto)}(${calculatePercent(all, noVeto)})`,
       abstain: `${formatNum(abstain)}(${calculatePercent(all, abstain)})`,
     };
-  }, [votesAll]);
+  }, [currentVotesSet]);
 
   return (
     <>

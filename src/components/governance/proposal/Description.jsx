@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ReactDOMServer from 'react-dom/server';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import { Accordion } from 'react-bootstrap';
 import Linkify from 'react-linkify';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Card from '../../styled/Card';
 import TitleChart from '../../styled/TitleChart';
 // import { noString } from '../../../utils';
@@ -14,6 +15,8 @@ const AccordionToggle = styled(Accordion.Toggle)`
   text-align: left;
   cursor: pointer;
   transition: background-color 0.2s;
+  display: flex;
+  justify-content: space-between;
   
   ${({ theme: { blue4 } }) => css`
     &:hover {
@@ -47,25 +50,33 @@ const linkify = (text) => ReactDOMServer.renderToStaticMarkup(
   </Linkify>,
 );
 
-const Description = ({ title, desc, className }) => (
-  <Accordion className={className}>
-    <Card>
-      <Card.Header as={AccordionToggle} eventKey="0">
-        <TitleChart>
-          { title }
-        </TitleChart>
-      </Card.Header>
-      <Accordion.Collapse eventKey="0">
-        <Card.Body>
-          <div
-            dangerouslySetInnerHTML={{ __html: parseParagraphs(linkify(desc)) }}
-            className="w-75"
+const Description = ({ title, desc, className }) => {
+  const [currEventKey, setCurrEventKey] = useState(null);
+
+
+  return (
+    <Accordion className={className} onSelect={setCurrEventKey}>
+      <Card>
+        <Card.Header as={AccordionToggle} eventKey="0">
+          <TitleChart>
+            { title }
+          </TitleChart>
+          <FontAwesomeIcon
+            icon={currEventKey === '0' ? 'chevron-up' : 'chevron-down'}
           />
-        </Card.Body>
-      </Accordion.Collapse>
-    </Card>
-  </Accordion>
-);
+        </Card.Header>
+        <Accordion.Collapse eventKey="0">
+          <Card.Body>
+            <div
+              dangerouslySetInnerHTML={{ __html: parseParagraphs(linkify(desc)) }}
+              className="w-75"
+            />
+          </Card.Body>
+        </Accordion.Collapse>
+      </Card>
+    </Accordion>
+  );
+};
 
 Description.propTypes = {
   className: PropTypes.string,
