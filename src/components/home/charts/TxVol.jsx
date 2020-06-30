@@ -6,7 +6,9 @@ import ChartContainer from '../../../layouts/ChartContainer';
 import SelectPeriod from '../../SelectPeriod';
 import AreaChart from '../../chart-types/AreaChart';
 import { periodOpts } from '../../../utils/constants';
-import { formatATOM, formatATOMAmount, formatDate, formatDateWithTime } from '../../../utils';
+import {
+  formatATOM, formatATOMAmount, formatDate, formatDateWithTime,
+} from '../../../utils';
 import API from '../../../api';
 
 

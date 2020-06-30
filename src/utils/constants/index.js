@@ -111,3 +111,26 @@ export const selectStyles = {
     },
   }),
 };
+
+export const bluePalette = [
+  '#0C39D0',
+  '#234FE3',
+  '#476eeb',
+  '#6B8AF0',
+  '#97ADF5',
+  '#440BD2',
+  '#5921E4',
+  '#7646EC',
+  '#916AF0',
+  '#B296F6',
+  '#067ACB',
+  '#178DE0',
+  '#3DA1E9',
+  '#63B5EE',
+  '#91CBF4',
+  '#0C227C',
+  '#112DA0',
+  '#2946BA',
+  '#4861C4',
+  '#6D81D4',
+];

@@ -9,7 +9,7 @@ import GovernanceStats from '../pages/governance/Stats';
 import Proposal from '../pages/governance/Proposal';
 import GovernanceCharts from '../pages/governance/Charts';
 import ValidatorsStats from '../pages/validators/Stats';
-// import Trading from '../pages/Trading';
+import ValidatorsCharts from '../pages/validators/Charts';
 // import Validator from '../pages/Validator';
 import NotFound from '../pages/NotFound';
 
@@ -23,11 +23,6 @@ const Routes = () => (
         path="/"
         component={Home}
       />
-      {/* <Route */}
-      {/*  exact */}
-      {/*  path="/trading" */}
-      {/*  component={Trading} */}
-      {/* /> */}
       <Route
         exact
         path="/network-stats"
@@ -57,6 +52,11 @@ const Routes = () => (
         exact
         path="/validators-stats"
         component={ValidatorsStats}
+      />
+      <Route
+        exact
+        path="/validators-charts"
+        component={ValidatorsCharts}
       />
       {/* <Route */}
       {/*  exact */}

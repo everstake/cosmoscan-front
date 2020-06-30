@@ -8,6 +8,7 @@ import {
   YAxis,
   Tooltip,
   Legend,
+  Brush,
 } from 'recharts';
 import PropTypes from 'prop-types';
 import styled, { ThemeContext } from 'styled-components';
@@ -17,17 +18,9 @@ const BarChartStyled = styled(BarChartDefault)`
   font-family: 'Montserrat', sans-serif;
   font-size: 12px;
   
-  //.recharts-tooltip-wrapper {
-  //  max-width: 250px;
-  //  word-break: break-all;
-  //  word-wrap: break-word;
-  //}
-  
-  //.recharts-default-tooltip {
-  //  max-width: 200px;
-  //  word-wrap: break-word;
-  //  white-space: initial !important;
-  //}
+  .recharts-tooltip-wrapper {
+    z-index: 1;
+  }
 `;
 
 const BarChart = ({
@@ -37,10 +30,14 @@ const BarChart = ({
   yAxisTickCount,
   yAxisLabelsFormatter,
   xAxisTickFormatter,
+  yAxisDomain,
   tooltipFormatter,
   tooltipLabelFormatter,
   barName,
   barColor,
+  noLegend,
+  customTooltip,
+  isBrush
 }) => {
   const theme = useContext(ThemeContext);
 
@@ -83,21 +80,26 @@ const BarChart = ({
                   tickCount={yAxisTickCount}
                   tickFormatter={yAxisLabelsFormatter}
                   type="number"
+                  domain={yAxisDomain}
                 />
                 <Tooltip
                   formatter={tooltipFormatter}
                   labelFormatter={tooltipLabelFormatter}
+                  content={customTooltip || null}
                 />
-                <Legend
-                  align="left"
-                  iconType="circle"
-                  verticalAlign="top"
-                  height={50}
-                  wrapperStyle={{
-                    fontWeight: 700,
-                    textTransform: 'uppercase',
-                  }}
-                />
+                {!noLegend && (
+                  <Legend
+                    align="left"
+                    iconType="circle"
+                    verticalAlign="top"
+                    height={50}
+                    wrapperStyle={{
+                      fontWeight: 700,
+                      textTransform: 'uppercase',
+                    }}
+                  />
+                )}
+                {isBrush && <Brush dataKey="name" height={30} stroke={barColor} />}
                 <Bar
                   dataKey="dataPiece"
                   fill={barColor}
@@ -124,22 +126,34 @@ BarChart.propTypes = {
   yAxisWidth: PropTypes.number,
   yAxisTickCount: PropTypes.number,
   yAxisLabelsFormatter: PropTypes.func,
+  yAxisDomain: PropTypes.arrayOf(PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+    PropTypes.func,
+  ])),
   xAxisTickFormatter: PropTypes.func,
   tooltipFormatter: PropTypes.func,
   tooltipLabelFormatter: PropTypes.func,
   barName: PropTypes.string,
   barColor: PropTypes.string,
+  noLegend: PropTypes.bool,
+  customTooltip: PropTypes.node,
+  isBrush: PropTypes.bool,
 };
 BarChart.defaultProps = {
   isLoading: false,
   yAxisWidth: 40,
   yAxisTickCount: 10,
   yAxisLabelsFormatter: () => null,
+  yAxisDomain: [0, 'auto'],
   xAxisTickFormatter: () => null,
   tooltipFormatter: () => null,
   tooltipLabelFormatter: () => null,
   barName: 'Bar name',
   barColor: '#476eeb',
+  noLegend: false,
+  customTooltip: false,
+  isBrush: false,
 };
 
 export default BarChart;
