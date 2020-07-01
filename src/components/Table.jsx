@@ -9,7 +9,7 @@ import Spinner from './Spinner';
 const TableResp = styled.div`
   width: 100%;
   overflow-x: auto;
-  max-height: ${({ maxHeight }) => `${maxHeight}px`};
+  max-height: ${({ maxHeight }) => typeof maxHeight === 'number' ? `${maxHeight}px` : 'auto'};
   border-radius: 8px;
 `;
 
