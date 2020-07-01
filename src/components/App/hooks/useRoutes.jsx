@@ -37,9 +37,12 @@ const useRoutes = () => {
           name: 'Stats',
           path: '/validators-stats',
         },
+        {
+          name: 'Charts',
+          path: '/validators-charts',
+        },
       ],
     },
-    // { name: 'Trading', path: '/trading' },
     // { name: 'Validator', path: '/validator' },
   ]);
 

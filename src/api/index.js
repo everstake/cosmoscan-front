@@ -74,6 +74,18 @@ const API = {
   getValidatorsList() {
     return APIService.get('/validators');
   },
+  getBlocksProposed() {
+    return APIService.get('/validators/top/proposed');
+  },
+  getJailed() {
+    return APIService.get('/validators/top/jailed');
+  },
+  getFeeRanges() {
+    return APIService.get('/validators/fee/ranges');
+  },
+  getDelegators() {
+    return APIService.get('/validators/delegators/total');
+  }
 };
 
 export default API;

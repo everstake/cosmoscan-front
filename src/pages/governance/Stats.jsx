@@ -2,7 +2,7 @@ import React from 'react';
 import ColStyled from '../../components/styled/ColStyled';
 import useRequest from '../../hooks/useRequest';
 import { Container, Row } from '../../components/styled/CustomBsGrid';
-import CardProposal from '../../components/governance/stats/CardProposal';
+import CardProposal from '../../components/governance/CardProposal';
 import Spinner from '../../components/Spinner';
 import API from '../../api';
 

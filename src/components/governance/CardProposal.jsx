@@ -2,12 +2,12 @@ import React, { useMemo, useContext } from 'react';
 import PropTypes from 'prop-types';
 import styled, { css, ThemeContext } from 'styled-components';
 import { NavLink } from 'react-router-dom';
-import Card from '../../styled/Card';
-import TitleChart from '../../styled/TitleChart';
-import TitleMinor from '../../styled/TitleMinor';
-import BreakTxt from '../../styled/BreakTxt';
-import PieChart from '../../chart-types/PieChart';
-import Sparkline from '../../chart-types/Sparkline';
+import Card from '../styled/Card';
+import TitleChart from '../styled/TitleChart';
+import TitleMinor from '../styled/TitleMinor';
+import BreakTxt from '../styled/BreakTxt';
+import PieChart from '../chart-types/PieChart';
+import Sparkline from '../chart-types/Sparkline';
 import {
   noString,
   formatNum,
@@ -15,7 +15,7 @@ import {
   formatATOM,
   formatPercentDec2,
   formatChartData,
-} from '../../../utils';
+} from '../../utils';
 
 const Status = styled.div`
   ${({ status, theme: { success, danger } }) => css`

@@ -10,6 +10,7 @@ import {
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Spinner from '../Spinner';
+import { bluePalette } from '../../utils/constants';
 
 const PieChartStyled = styled(PieChartDefault)`
   font-family: 'Montserrat', sans-serif;
@@ -21,7 +22,7 @@ const ChartWrapper = styled.div`
    height: ${({ defaultHeight }) => `${defaultHeight}px`};
    
    @media(max-width: ${({ theme: { smDown } }) => smDown}) {
-     height: ${({ growOnMobile }) => growOnMobile ? '600px' : ''};
+     height: ${({ growOnMobile }) => (growOnMobile ? '600px' : '')};
    };
 `;
 
@@ -112,28 +113,7 @@ PieChart.defaultProps = {
   minAngle: 1.5,
   displayLegend: true,
   growOnMobile: true,
-  cellColors: [
-    '#0C39D0',
-    '#234FE3',
-    '#476eeb',
-    '#6B8AF0',
-    '#97ADF5',
-    '#440BD2',
-    '#5921E4',
-    '#7646EC',
-    '#916AF0',
-    '#B296F6',
-    '#067ACB',
-    '#178DE0',
-    '#3DA1E9',
-    '#63B5EE',
-    '#91CBF4',
-    '#0C227C',
-    '#112DA0',
-    '#2946BA',
-    '#4861C4',
-    '#6D81D4',
-  ],
+  cellColors: bluePalette,
 };
 
 export default PieChart;
