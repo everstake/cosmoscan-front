@@ -38,6 +38,7 @@ const CellVal = styled.span`
   display: inline-block;
   white-space: nowrap;
   color: ${({ color, theme }) => theme[color]} !important;
+  vertical-align: middle;
   
   @media(max-width: ${({ theme }) => theme.lgDown}) {
     max-width: 200px;
