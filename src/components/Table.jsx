@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
+import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 import { Table as BTable } from 'react-bootstrap';
 import Card from './styled/Card';
@@ -9,7 +10,8 @@ import Spinner from './Spinner';
 const TableResp = styled.div`
   width: 100%;
   overflow-x: auto;
-  max-height: ${({ maxHeight }) => typeof maxHeight === 'number' ? `${maxHeight}px` : 'auto'};
+  max-height: ${({ maxHeight }) => (typeof maxHeight === 'number' ? `${maxHeight}px` : 'auto')};
+  height: ${({ maxHeight, isHeightFixed }) => (typeof maxHeight === 'number' && isHeightFixed ? `${maxHeight}px` : 'auto')};
   border-radius: 8px;
 `;
 
@@ -86,9 +88,13 @@ const orderRowsData = (rows, cols, colValueKey) => {
 
 // callback
 const Table = ({
-  cols, rows, colLabelKey, colValueKey, isLoading, maxHeight
+  cols, rows, colLabelKey, colValueKey, isLoading, maxHeight, isHeightFixed,
 }) => {
   const rowsOrdered = useMemo(() => orderRowsData(rows, cols, colValueKey), [cols, rows, colValueKey]);
+  // const sortBy = (by) => {
+  //   console.log(rowsOrdered.sort((a, b) => +a[by] - +b[by]));
+  //   return;
+  // };
 
   // useEffect(() => {
   //   const list = document.getElementById('tableWrap');
@@ -103,7 +109,11 @@ const Table = ({
 
   return (
     <Card>
-      <TableResp id="tableWrap" maxHeight={maxHeight}>
+      <TableResp
+        id="tableWrap"
+        maxHeight={maxHeight}
+        isHeightFixed={isHeightFixed}
+      >
         <Tbl
           striped
           hover
@@ -123,6 +133,7 @@ const Table = ({
                 <Tr>
                   <td
                     colSpan={cols.length}
+                    rowSpan={10}
                     className="text-center"
                   >
                     <Spinner />
@@ -135,7 +146,23 @@ const Table = ({
                     {Object.keys(row).map((cell, cellIndex) => (
                       <td key={`cell-${cellIndex}`}>
                         <CellVal color={row[cell] && row[cell].color}>
-                          {typeof row[cell] === 'object' ? row[cell].value : row[cell]}
+                          {/* {typeof row[cell] === 'object' ? row[cell].value : row[cell]} */}
+                          {(() => {
+                            if (typeof row[cell] === 'object') {
+                              if ('link' in row[cell]) {
+                                return (
+                                  <NavLink
+                                    exact
+                                    to={row[cell].link}
+                                  >
+                                    { row[cell].value }
+                                  </NavLink>
+                                );
+                              }
+                              return row[cell].value;
+                            }
+                            return row[cell];
+                          })()}
                         </CellVal>
                       </td>
                     ))}
@@ -164,7 +191,8 @@ Table.propTypes = {
   colLabelKey: PropTypes.string,
   colValueKey: PropTypes.string,
   isLoading: PropTypes.bool,
-  maxHeight: PropTypes.number,
+  maxHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  isHeightFixed: PropTypes.bool,
   // callback: PropTypes.func,
 };
 Table.defaultProps = {
@@ -174,6 +202,7 @@ Table.defaultProps = {
   colValueKey: 'value',
   isLoading: false,
   maxHeight: 517,
+  isHeightFixed: false,
   // callback: () => null,
 };
 
