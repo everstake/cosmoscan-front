@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import Table from '../Table';
 import useRequest from '../../hooks/useRequest';
-import { formatNum, formatPercentValue } from '../../utils';
+import { formatNum, formatPercentValue, roundToPrecision,formatPercentDec2 } from '../../utils';
 import API from '../../api';
 
 
@@ -9,12 +9,13 @@ const cols = [
   { value: 'num', label: '#' },
   { value: 'title', label: 'Validator' },
   { value: 'power', label: 'Voting power (ATOM)' },
+  { value: 'percentPower', label: 'Voting power (%)' },
   { value: 'selfStake', label: 'Self-stake (ATOM)' },
   { value: 'fee', label: 'Fee' },
   { value: 'blocksProposed', label: 'Blocks proposed' },
   { value: 'delegators', label: 'Delegators' },
   { value: 'powerChange', label: 'Stake change (ATOM)' },
-  { value: 'votes', label: 'Governance votes n/all' },
+  { value: 'votes', label: 'Governance votes' },
 ];
 
 
@@ -30,8 +31,9 @@ const ValidatorsTable = () => {
       return {
         num: index + 1,
         title: validator.title,
-        power: formatNum(+validator.power),
-        selfStake: formatNum(+validator.self_stake),
+        power: formatNum(roundToPrecision(+validator.power, 0)),
+        percentPower: formatPercentDec2(+validator.percent_power ),
+        selfStake: formatNum(roundToPrecision(+validator.self_stake, 0)),
         fee: formatPercentValue(formatNum(validator.fee * 100)),
         blocksProposed: formatNum(validator.blocks_proposed),
         delegators: formatNum(validator.delegators),

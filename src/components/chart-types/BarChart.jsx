@@ -30,6 +30,8 @@ const BarChart = ({
   yAxisTickCount,
   yAxisLabelsFormatter,
   xAxisTickFormatter,
+  xAxisTickCount,
+  xAxisTickInterval,
   yAxisDomain,
   tooltipFormatter,
   tooltipLabelFormatter,
@@ -37,7 +39,7 @@ const BarChart = ({
   barColor,
   noLegend,
   customTooltip,
-  isBrush
+  isBrush,
 }) => {
   const theme = useContext(ThemeContext);
 
@@ -69,8 +71,11 @@ const BarChart = ({
                   dataKey="name"
                   tickLine={false}
                   tick={{ fill: theme.gray }}
+                  tickCount={xAxisTickCount}
                   axisLine={false}
                   tickFormatter={xAxisTickFormatter}
+                  interval={xAxisTickInterval}
+                  minTickGap={0}
                 />
                 <YAxis
                   axisLine={false}
@@ -99,7 +104,17 @@ const BarChart = ({
                     }}
                   />
                 )}
-                {isBrush && <Brush dataKey="name" height={30} stroke={barColor} />}
+                {isBrush && (
+                <Brush
+                  dataKey="name"
+                  height={15}
+                  stroke={barColor}
+                  gap={10}
+                  startIndex={data.length - 20}
+                  travellerWidth={8}
+                  className="mt-5"
+                />
+                )}
                 <Bar
                   dataKey="dataPiece"
                   fill={barColor}
@@ -132,6 +147,8 @@ BarChart.propTypes = {
     PropTypes.func,
   ])),
   xAxisTickFormatter: PropTypes.func,
+  xAxisTickCount: PropTypes.number,
+  xAxisTickInterval: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   tooltipFormatter: PropTypes.func,
   tooltipLabelFormatter: PropTypes.func,
   barName: PropTypes.string,
@@ -144,11 +161,13 @@ BarChart.defaultProps = {
   isLoading: false,
   yAxisWidth: 40,
   yAxisTickCount: 10,
-  yAxisLabelsFormatter: () => null,
+  yAxisLabelsFormatter: (val) => val,
   yAxisDomain: [0, 'auto'],
-  xAxisTickFormatter: () => null,
-  tooltipFormatter: () => null,
-  tooltipLabelFormatter: () => null,
+  xAxisTickFormatter: (val) => val,
+  xAxisTickCount: 10,
+  xAxisTickInterval: 'preserveEnd',
+  tooltipFormatter: (val) => val,
+  tooltipLabelFormatter: (val) => val,
   barName: 'Bar name',
   barColor: '#476eeb',
   noLegend: false,

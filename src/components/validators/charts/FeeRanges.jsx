@@ -12,8 +12,7 @@ const chartName = 'Fee ranges';
 const barName = chartName;
 const yAxisWidth = 40;
 const yAxisTickCount = 10;
-const xAxisTickFormatter = (val) => `Up to ${val}%`;
-const tooltipLabelFormatter = xAxisTickFormatter;
+const xAxisTickCount = 10;
 
 
 const CustomTooltip = (props) => {
@@ -39,7 +38,8 @@ const FeeRanges = () => {
     if (!resp || !resp.length) return [];
 
     return resp.map((el) => ({
-      name: formatNum(el.to * 100),
+      // name: formatNum(el.to * 100),
+      name:  `${formatNum(el.from * 100)}-${formatNum(el.to * 100)}%`,
       dataPiece: el.validators ? el.validators.length : 0,
       validators: el.validators ? el.validators : [],
     }));
@@ -55,9 +55,9 @@ const FeeRanges = () => {
           yAxisWidth={yAxisWidth}
           yAxisTickCount={yAxisTickCount}
           yAxisLabelsFormatter={formatNum}
-          xAxisTickFormatter={xAxisTickFormatter}
           yAxisDomain={['dataMin', 'dataMax']}
-          tooltipLabelFormatter={tooltipLabelFormatter}
+          xAxisTickInterval="preserveStartEnd"
+          xAxisTickCount={xAxisTickCount}
           tooltipFormatter={formatNum}
           customTooltip={<CustomTooltip />}
           barName={barName}

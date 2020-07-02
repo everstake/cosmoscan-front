@@ -5,7 +5,7 @@ import useRequest from '../../hooks/useRequest';
 import API from '../../api';
 import ProposalTurnout from '../../components/governance/charts/ProposalTurnout';
 import VoterActivity from '../../components/governance/charts/VoterActivity';
-import VotingPowerToVeto from '../../components/governance/charts/VotingPowerToVeto';
+// import VotingPowerToVeto from '../../components/governance/charts/VotingPowerToVeto';
 import VetoedProposals from '../../components/governance/charts/VetoedProposals';
 
 
@@ -54,9 +54,9 @@ const Charts = () => {
             data={voterActivity}
           />
         </ColMarginStandard>
-        <ColMarginStandard>
-          <VotingPowerToVeto />
-        </ColMarginStandard>
+        {/*<ColMarginStandard>*/}
+        {/*  <VotingPowerToVeto />*/}
+        {/*</ColMarginStandard>*/}
         <ColMarginStandard>
           <VetoedProposals
             isLoading={isLoading}
