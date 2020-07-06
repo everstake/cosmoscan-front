@@ -61,8 +61,8 @@ const API = {
     // const { limit = 0, offset = 0 } = params;
     return APIService.get(`/proposals${formatParams({ ...params })}`);
   },
-  getVotes(proposalId) {
-    return APIService.get(`/proposals/votes${formatParams({ proposal_id: proposalId })}`);
+  getVotes(params = {}) {
+    return APIService.get(`/proposals/votes${formatParams({ ...params })}`);
   },
   getProposalsCharts() {
     return APIService.get('/proposals/chart');
@@ -85,7 +85,26 @@ const API = {
   },
   getDelegators() {
     return APIService.get('/validators/delegators/total');
-  }
+  },
+  getValidatorInfo(address) {
+    return APIService.get(`/validator/${address}`);
+  },
+  getBalanceDistribution(address) {
+    return APIService.get(`/validator/${address}/balance`);
+  },
+  getDelegatedBalance(address) {
+    return APIService.get(`/validator/${address}/delegations/agg`);
+  },
+  getNumOfDelegators(address) {
+    return APIService.get(`/validator/${address}/delegators/agg`);
+  },
+  getValidatorStats(address) {
+    return APIService.get(`/validator/${address}/blocks/stats`);
+  },
+  getValidatorDelegators(params) {
+    const { limit = 10, offset = 0, address } = params;
+    return APIService.get(`/validator/${address}/delegators${formatParams({ limit, offset })}`);
+  },
 };
 
 export default API;

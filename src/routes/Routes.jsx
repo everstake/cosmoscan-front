@@ -10,7 +10,7 @@ import Proposal from '../pages/governance/Proposal';
 import GovernanceCharts from '../pages/governance/Charts';
 import ValidatorsStats from '../pages/validators/Stats';
 import ValidatorsCharts from '../pages/validators/Charts';
-// import Validator from '../pages/Validator';
+import Validator from '../pages/validators/Validator';
 import NotFound from '../pages/NotFound';
 
 const Routes = () => (
@@ -58,11 +58,11 @@ const Routes = () => (
         path="/validators-charts"
         component={ValidatorsCharts}
       />
-      {/* <Route */}
-      {/*  exact */}
-      {/*  path="/validator" */}
-      {/*  component={Validator} */}
-      {/* /> */}
+      <Route
+        exact
+        path="/validator/:address"
+        component={Validator}
+      />
       <Route
         component={NotFound}
       />

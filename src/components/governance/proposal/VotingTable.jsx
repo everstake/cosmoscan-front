@@ -5,6 +5,10 @@ import moment from 'moment';
 import { Button } from 'react-bootstrap';
 import Card from '../../styled/Card';
 import TitleMinor from '../../styled/TitleMinor';
+import StatsItemFlex from '../../styled/StatsItemFlex';
+import {
+  Green, Burgundy, Red, Blue,
+} from '../../styled/TxtColors';
 import Table from '../../Table';
 import Spinner from '../../Spinner';
 import useRequest from '../../../hooks/useRequest';
@@ -36,40 +40,6 @@ const BtnsContainer = styled.div`
 const StatsContainer = styled.div`
   ${FlexContainer};
   flex-wrap: wrap;
-`;
-
-const StatsItem = styled.div`
-  flex: 1 0 25%;
-  text-align: center;
-  
-  ${({ theme: { lgDown, smDown } }) => css`
-    @media(max-width: ${lgDown}) {
-      flex: 1 0 50%;
-      
-      &:first-child, &:nth-child(2) {
-        margin-bottom: 10px;
-      }
-    }
-  
-    @media(max-width: ${smDown}) {
-      flex: 1 0 100%;
-      margin-bottom: 10px;
-    }
-  `}
-`;
-
-
-const Green = styled.div`
-  color: ${({ theme: { success } }) => success}
-`;
-const Burgundy = styled.div`
-  color: ${({ theme: { burgundy } }) => burgundy}
-`;
-const Red = styled.div`
-  color: ${({ theme: { danger } }) => danger}
-`;
-const Blue = styled.div`
-  color: ${({ theme: { blue } }) => blue}
 `;
 
 const Btn = styled(Button)`
@@ -105,7 +75,7 @@ const cols = [
 const VotingTable = ({ proposalId, className }) => {
   const [validatorType, setValidatorType] = useState('all');
 
-  const res = useRequest(API.getVotes, proposalId);
+  const res = useRequest(API.getVotes, { proposal_id: proposalId });
 
   const isVotesEmpty = useMemo(() => Boolean(!res || !res.resp || !res.resp.length), [res]);
 
@@ -240,22 +210,22 @@ const VotingTable = ({ proposalId, className }) => {
             <Card style={{ marginBottom: '10px' }}>
               <Card.Body>
                 <StatsContainer>
-                  <StatsItem>
+                  <StatsItemFlex>
                     <TitleMinor>Yes: </TitleMinor>
                     <Green>{votesCalcs.yes}</Green>
-                  </StatsItem>
-                  <StatsItem>
+                  </StatsItemFlex>
+                  <StatsItemFlex>
                     <TitleMinor>No: </TitleMinor>
                     <Red>{votesCalcs.no}</Red>
-                  </StatsItem>
-                  <StatsItem>
+                  </StatsItemFlex>
+                  <StatsItemFlex>
                     <TitleMinor>No with veto: </TitleMinor>
                     <Burgundy>{votesCalcs.noVeto}</Burgundy>
-                  </StatsItem>
-                  <StatsItem>
+                  </StatsItemFlex>
+                  <StatsItemFlex>
                     <TitleMinor>Abstain: </TitleMinor>
                     <Blue>{votesCalcs.abstain}</Blue>
-                  </StatsItem>
+                  </StatsItemFlex>
                 </StatsContainer>
               </Card.Body>
             </Card>

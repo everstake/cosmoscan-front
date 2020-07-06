@@ -1,6 +1,13 @@
 import moment from 'moment';
 import numeral from 'numeral';
 
+
+export const removeProtocol = (url) => url.replace(/(^\w+:|^)\/\//, '');
+
+export const addProtocol = (url) => {
+  return `https://${removeProtocol(url)}`;
+};
+
 export const formatSec = (num) => `${num} sec`;
 
 export const formatUSD = (amount) => `$${numeral(amount).format('0,0[.][00]')}`;
@@ -33,7 +40,7 @@ export const formatDate = (val) => moment.unix(val).format('DD-MM-YYYY');
 
 export const formatGB = (val) => `${val} GB`;
 
-export const formatId = (val) => `#${val}`
+export const formatId = (val) => `#${val}`;
 
 export const formatNum = (num) => {
   if (typeof num !== 'number') return num;
@@ -43,9 +50,7 @@ export const formatNum = (num) => {
 
 export const formatDays = (val) => `${formatNum(val)} days`;
 
-export const calculatePercent = (total, knownVal, isKnownValPercent = false) => {
-  return formatPercentDec2((Number(knownVal) * 100) / Number(total));
-};
+export const calculatePercent = (total, knownVal, isKnownValPercent = false) => formatPercentDec2((Number(knownVal) * 100) / Number(total));
 
 export const formatStatuses = (status) => {
   // TODO: Pass transaltions keys

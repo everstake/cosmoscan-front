@@ -1,16 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Col } from 'react-bootstrap';
-import styled from 'styled-components';
 import Card from '../../styled/Card';
 import { Row } from '../../styled/CustomBsGrid';
 import TitleMinor from '../../styled/TitleMinor';
 import BreakTxt from '../../styled/BreakTxt';
+import StatsItem from '../../styled/StatsItem';
 import { formatATOM, noString } from '../../../utils';
-
-const StatsItem = styled.div`
-  margin-bottom: 5px;
-`;
 
 const Stats = ({
   stats: {

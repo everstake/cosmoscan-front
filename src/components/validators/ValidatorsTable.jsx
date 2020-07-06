@@ -30,7 +30,11 @@ const ValidatorsTable = () => {
 
       return {
         num: index + 1,
-        title: validator.title,
+        // title: <a href={validator.title}>{ validator.title }</a>,
+        title: {
+          value: validator.title,
+          link: `/validator/${validator.operator_address}`,
+        },
         power: formatNum(roundToPrecision(+validator.power, 0)),
         percentPower: formatPercentDec2(+validator.percent_power ),
         selfStake: formatNum(roundToPrecision(+validator.self_stake, 0)),
