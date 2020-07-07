@@ -17,7 +17,7 @@ const TopStatsStyled = styled.div`
   box-shadow: ${({ theme }) => theme.shadow};
   padding-top: 5px;
   padding-bottom: 5px;
-  z-index: 2;
+  z-index: 4;
   
   @media(max-width: ${({ theme }) => theme.xlDown}) {
     position: relative;

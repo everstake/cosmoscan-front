@@ -10,7 +10,7 @@ const Header = styled.header`
   position: sticky;
   top: 0;
   width: 100%;
-  z-index: 3;
+  z-index: 5;
   background-color: ${({ theme }) => theme.white};
   border-bottom: ${({ theme: { border } }) => border};
 `;
