@@ -26,6 +26,10 @@ const API = {
     const { by = 'day' } = params;
     return APIService.get(`/transactions/fee/agg${formatParams({ by, ...params })}`);
   },
+  getBondedRatio(params = {}) {
+    const { by = 'day' } = params;
+    return APIService.get(`/bonded-ratio/agg${formatParams({ by, ...params })}`);
+  },
   getBlocks(params = {}) {
     const { by = 'day' } = params;
     return APIService.get(`/blocks/count/agg${formatParams({ by, ...params })}`);
@@ -49,6 +53,10 @@ const API = {
   getUndelegationVol(params = {}) {
     const { by = 'day' } = params;
     return APIService.get(`/undelegations/volume/agg${formatParams({ by, ...params })}`);
+  },
+  getUnbondingVol(params={}) {
+    const { by = 'day' } = params;
+    return APIService.get(`/unbonding/volume/agg${formatParams({ by, ...params })}`);
   },
   getNetworkStats(params = {}) {
     const { to = moment().startOf('day').unix() } = params;

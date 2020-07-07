@@ -1,26 +1,26 @@
 import React, { useContext } from 'react';
 import { ThemeContext } from 'styled-components';
-import useRequest from '../../../hooks/useRequest';
-import useChartFormatter from '../../../hooks/useChartFormatter';
 import ChartContainer from '../../../layouts/ChartContainer';
 import SelectPeriod from '../../SelectPeriod';
 import AreaChart from '../../chart-types/AreaChart';
-import { periodOpts } from '../../../utils/constants';
-import { formatATOM, formatATOMAmount, formatDate, formatDateWithTime } from '../../../utils';
+import { formatPercentValue, formatDate, formatDateWithTime,
+} from '../../../utils';
+import useRequest from '../../../hooks/useRequest';
 import API from '../../../api';
+import useChartFormatter from '../../../hooks/useChartFormatter';
+import { periodOpts } from '../../../utils/constants';
 
-
-const chartName = 'Initiated unbonding per day/hour volume (ATOM)';
-const yAxisWidth = 70;
+const chartName = 'Bonded ratio';
+const yAxisWidth = 60;
 const yTickCount = 10;
-const areaName = 'Unbonding volume';
+const areaName = chartName;
 const defaultPeriod = periodOpts[2];
 
-const UndelegationVol = () => {
+const BondedRatio = () => {
   const theme = useContext(ThemeContext);
-  const color = theme.danger;
-  const res = useRequest(API.getUndelegationVol, defaultPeriod.value);
-  const undelegationVolComp = useChartFormatter(res.resp);
+  const color = theme.navyBlue;
+  const res = useRequest(API.getBondedRatio, defaultPeriod.value);
+  const bondedRatio = useChartFormatter(res.resp);
 
   return (
     <ChartContainer
@@ -36,13 +36,13 @@ const UndelegationVol = () => {
         <AreaChart
           areaName={areaName}
           isLoading={res.isLoading}
-          data={undelegationVolComp}
-          yAxisLabelsFormatter={formatATOMAmount}
+          data={bondedRatio}
+          yAxisLabelsFormatter={formatPercentValue}
           yAxisWidth={yAxisWidth}
           yTickCount={yTickCount}
-          yAxisDomain={[(dataMin) => Math.round(dataMin), (dataMax) => Math.round(dataMax)]}
+          yAxisDomain={['dataMin', 'dataMax']}
           xAxisTickFormatter={formatDate}
-          tooltipFormatter={formatATOM}
+          tooltipFormatter={formatPercentValue}
           tooltipLabelFormatter={formatDateWithTime}
           color={color}
         />
@@ -51,4 +51,4 @@ const UndelegationVol = () => {
   );
 };
 
-export default UndelegationVol;
+export default BondedRatio;

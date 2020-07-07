@@ -3,11 +3,13 @@ import { Container, Row } from '../../components/styled/CustomBsGrid';
 import ColMarginStandard from '../../components/styled/ColMarginStabdard';
 import Blocks from '../../components/network/charts/Blocks';
 import BlockDelay from '../../components/network/charts/BlockDelay';
+import FeeVol from '../../components/network/charts/FeeVol';
 import Validators from '../../components/network/charts/Validators';
 import Operations from '../../components/network/charts/Operations';
 // import OperationsPerBlock from '../../../components/network/charts/OperationsPerBlock';
 import DelegationVol from '../../components/network/charts/DelegationVol';
-import UndelegationVol from '../../components/network/charts/UndelegationVol';
+import UnbondingInitVol from '../../components/network/charts/UnbondingInitVol';
+import UnbondingVol from '../../components/network/charts/UnbondingVol';
 
 const Charts = () => (
   <Container>
@@ -19,6 +21,9 @@ const Charts = () => (
         <BlockDelay />
       </ColMarginStandard>
       <ColMarginStandard>
+        <FeeVol />
+      </ColMarginStandard>
+      <ColMarginStandard>
         <Validators />
       </ColMarginStandard>
       <ColMarginStandard>
@@ -28,7 +33,10 @@ const Charts = () => (
         <DelegationVol />
       </ColMarginStandard>
       <ColMarginStandard>
-        <UndelegationVol />
+        <UnbondingInitVol />
+      </ColMarginStandard>
+      <ColMarginStandard>
+        <UnbondingVol />
       </ColMarginStandard>
     </Row>
   </Container>
