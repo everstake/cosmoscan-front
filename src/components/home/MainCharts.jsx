@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import TxVol from './charts/TxVol';
-import FeeVol from './charts/FeeVol';
+import BondedRatio from './charts/BondedRatio';
 
 const MainChartsItem = styled.div`
  flex: 0 0 50%;
@@ -21,7 +21,7 @@ const MainCharts = () => (
       <TxVol />
     </MainChartsItem>
     <MainChartsItem>
-      <FeeVol />
+      <BondedRatio />
     </MainChartsItem>
   </MainChartsContainer>
 );

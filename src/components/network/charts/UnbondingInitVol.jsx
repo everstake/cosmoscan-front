@@ -6,23 +6,21 @@ import ChartContainer from '../../../layouts/ChartContainer';
 import SelectPeriod from '../../SelectPeriod';
 import AreaChart from '../../chart-types/AreaChart';
 import { periodOpts } from '../../../utils/constants';
-import {
-  formatATOM, formatATOMAmount, formatDate, formatDateWithTime,
-} from '../../../utils';
+import { formatATOM, formatATOMAmount, formatDate, formatDateWithTime } from '../../../utils';
 import API from '../../../api';
 
 
-const chartName = 'Fee volume (ATOM)';
-const yAxisWidth = 40;
+const chartName = 'Initiated unbonding per day/hour volume (ATOM)';
+const yAxisWidth = 70;
 const yTickCount = 10;
-const areaName = 'Fee volume';
+const areaName = 'Initiated unbonding volume';
 const defaultPeriod = periodOpts[2];
 
-const FeeVol = () => {
+const UnbondingInitVol = () => {
   const theme = useContext(ThemeContext);
-  const color = theme.navyBlue;
-  const res = useRequest(API.getFeeVol, defaultPeriod.value);
-  const feeVolComp = useChartFormatter(res.resp);
+  const color = theme.danger;
+  const res = useRequest(API.getUndelegationVol, defaultPeriod.value);
+  const undelegationVolComp = useChartFormatter(res.resp);
 
   return (
     <ChartContainer
@@ -38,10 +36,11 @@ const FeeVol = () => {
         <AreaChart
           areaName={areaName}
           isLoading={res.isLoading}
-          data={feeVolComp}
+          data={undelegationVolComp}
           yAxisLabelsFormatter={formatATOMAmount}
           yAxisWidth={yAxisWidth}
           yTickCount={yTickCount}
+          yAxisDomain={[(dataMin) => Math.round(dataMin), (dataMax) => Math.round(dataMax)]}
           xAxisTickFormatter={formatDate}
           tooltipFormatter={formatATOM}
           tooltipLabelFormatter={formatDateWithTime}
@@ -52,4 +51,4 @@ const FeeVol = () => {
   );
 };
 
-export default FeeVol;
+export default UnbondingInitVol;
