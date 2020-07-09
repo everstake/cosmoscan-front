@@ -45,7 +45,7 @@ const Stats = () => {
             {/*  </BreakTxt>*/}
             {/*</StatsItemFlex>*/}
             <StatsItemFlex>
-              <TitleMinor>Revenue generated in hub-3: </TitleMinor>
+              <TitleMinor>ATOM generated in hub-3: </TitleMinor>
               <BreakTxt>
                 <Blue>
                   { formatATOM(resp.revenue) }
