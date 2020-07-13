@@ -83,12 +83,12 @@ const Proposal = () => {
   const votingEnds = useMemo(() => {
     if (!isData) return '-----';
 
-    const end = moment(votingEnd);
-    const start = moment(votingStart);
-    const diff = end.diff(start, 'days');
+    const end = moment.unix(votingEnd);
+    const now = moment();
+    const diff = end.diff(now, 'days');
 
-    return diff === 0 ? 'Voting has ended' : `${diff} days`;
-  }, [isData, votingEnd, votingStart]);
+    return end < now ? 'Voting has ended' : `${diff} days`;
+  }, [isData, votingEnd]);
 
   const stats = useMemo(() => {
     if (!isData) return {};
