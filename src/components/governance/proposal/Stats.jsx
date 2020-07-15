@@ -1,4 +1,5 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { Col } from 'react-bootstrap';
 import Card from '../../styled/Card';
@@ -13,6 +14,7 @@ const Stats = ({
     id,
     title,
     proposer,
+    proposerAddress,
     hash,
     type,
     submitted,
@@ -58,7 +60,16 @@ const Stats = ({
               Proposer:
             </TitleMinor>
             <BreakTxt>
-              {noString(proposer)}
+              {proposer.length !== 45
+                ? (
+                  <NavLink
+                    exact
+                    to={`/validator/${proposerAddress}`}
+                  >
+                    { noString(proposer) }
+                  </NavLink>
+                )
+                : noString(proposer) }
             </BreakTxt>
           </StatsItem>
           )}
@@ -154,6 +165,7 @@ Stats.propTypes = {
     id: PropTypes.number,
     title: PropTypes.string,
     proposer: PropTypes.string,
+    proposerAddress: PropTypes.string,
     hash: PropTypes.string,
     type: PropTypes.string,
     submitted: PropTypes.string,
@@ -169,6 +181,7 @@ Stats.defaultProps = {
     id: '-----',
     title: '-----',
     proposer: '',
+    proposerAddress: '',
     hash: '-----',
     type: '-----',
     submitted: '-----',
