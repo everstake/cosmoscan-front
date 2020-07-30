@@ -4,12 +4,12 @@ import moment from 'moment';
 import { useParams } from 'react-router-dom';
 import { Pagination } from 'react-bootstrap';
 import Table from '../../../Table';
-import { formatATOM } from '../../../../utils';
+import { formatATOM, formatATOMWithFixedFractional } from '../../../../utils';
 import useRequest from '../../../../hooks/useRequest';
 import API from '../../../../api';
 
 
-const PagoinationStyled = styled(Pagination)`
+const PaginationStyled = styled(Pagination)`
   ${({ theme: { blue, blue4 } }) => css`
     .page-link {
       color: ${blue};
@@ -105,7 +105,7 @@ const Delegators = () => {
 
     return resp.items.map((delegator) => ({
       address: delegator.delegator,
-      amount: formatATOM(delegator.amount),
+      amount: formatATOMWithFixedFractional(delegator.amount, 2),
       since: moment.unix(delegator.since).format('DD-MM-YYYY'),
       delta: {
         value: formatATOM(delegator.delta),
@@ -122,25 +122,25 @@ const Delegators = () => {
         cols={cols}
         rows={delegators}
       />
-      <PagoinationStyled className="justify-content-end mt-3 mr-3">
-        <PagoinationStyled.First
+      <PaginationStyled className="justify-content-end mt-3 mr-3">
+        <PaginationStyled.First
           onClick={() => jump(1)}
           disabled={currPage === 1 || isLoading}
         />
-        <PagoinationStyled.Prev
+        <PaginationStyled.Prev
           onClick={prev}
           disabled={currPage === 1 || isLoading}
         />
         {currPageItems.map((el) => el)}
-        <PagoinationStyled.Next
+        <PaginationStyled.Next
           onClick={next}
           disabled={currPage >= totalPages || isLoading}
         />
-        <PagoinationStyled.Last
+        <PaginationStyled.Last
           onClick={() => jump(totalPages)}
           disabled={currPage >= totalPages || isLoading}
         />
-      </PagoinationStyled>
+      </PaginationStyled>
     </>
   );
 };

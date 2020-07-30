@@ -4,15 +4,22 @@ import numeral from 'numeral';
 
 export const removeProtocol = (url) => url.replace(/(^\w+:|^)\/\//, '');
 
-export const addProtocol = (url) => {
-  return `https://${removeProtocol(url)}`;
-};
+export const addProtocol = (url) => `https://${removeProtocol(url)}`;
 
 export const formatSec = (num) => `${num} sec`;
 
 export const formatUSD = (amount) => `$${numeral(amount).format('0,0[.][00]')}`;
 
 export const formatATOM = (amount) => `${numeral(amount).format('0,0[.][00000]')} ATOM`;
+
+export const formatATOMWithFixedFractional = (amount, precision = 5) => {
+  let fractionalSize = '';
+  for (let i = 0; i < precision; i += 1) {
+    fractionalSize += '0';
+  }
+
+  return `${numeral(amount).format(`0,0.${fractionalSize}`)} ATOM`;
+};
 
 export const formatATOMAmount = (amount) => `${numeral(amount).format('0,0[.][00000]')}`;
 
@@ -50,6 +57,7 @@ export const formatNum = (num) => {
 
 export const formatDays = (val) => `${formatNum(val)} days`;
 
+// eslint-disable-next-line no-unused-vars
 export const calculatePercent = (total, knownVal, isKnownValPercent = false) => formatPercentDec2((Number(knownVal) * 100) / Number(total));
 
 export const formatStatuses = (status) => {
