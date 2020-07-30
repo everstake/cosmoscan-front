@@ -20,10 +20,10 @@ module.exports = {
   },
   plugins: [
     'react',
-    "react-hooks",
+    'react-hooks',
   ],
   rules: {
-    "react-hooks/rules-of-hooks": "error",
-    "react-hooks/exhaustive-deps": "warn"
+    'react-hooks/rules-of-hooks': 'error',
+    'react-hooks/exhaustive-deps': 'warn'
   },
 };
