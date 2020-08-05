@@ -18,13 +18,16 @@ const DescriptionStyled = styled(Description)`
 `;
 
 const VotingTableStyled = styled(VotingTable)`
-  margin-top: ${({ theme: { marginSectionsStandard } }) => marginSectionsStandard};
+  margin-top: ${({ theme: { marginSectionsStandard } }) =>
+    marginSectionsStandard};
 `;
 
 const Proposal = () => {
   const { id: proposalIdFromRoute } = useParams();
   const res = useRequest(API.getProposals, { id: proposalIdFromRoute });
-  const isData = useMemo(() => Boolean(res && res.resp && res.resp.length), [res]);
+  const isData = useMemo(() => Boolean(res && res.resp && res.resp.length), [
+    res,
+  ]);
 
   const {
     votes_yes: yes,
@@ -54,13 +57,7 @@ const Proposal = () => {
     if (!isData) return 0;
 
     return Number(yes) + Number(no) + Number(veto) + Number(abstain);
-  }, [
-    yes,
-    no,
-    veto,
-    abstain,
-    isData,
-  ]);
+  }, [yes, no, veto, abstain, isData]);
 
   // TODO: Refactor. Duplicated logic. The same can be found in the CardProposal.jsx
   const chartData = useMemo(() => {
@@ -72,14 +69,7 @@ const Proposal = () => {
       { value: (Number(veto) * 100) / totalATOMVoted, title: 'No with veto' },
       { value: (Number(abstain) * 100) / totalATOMVoted, title: 'Abstain' },
     ];
-  }, [
-    yes,
-    no,
-    veto,
-    abstain,
-    totalATOMVoted,
-    isData,
-  ]);
+  }, [yes, no, veto, abstain, totalATOMVoted, isData]);
 
   const votingEnds = useMemo(() => {
     if (!isData) return '-----';
@@ -88,7 +78,8 @@ const Proposal = () => {
     const now = moment();
     const diff = end.diff(now, 'days');
 
-    return end < now ? 'Voting has ended' : `${diff} days`;
+    // eslint-disable-next-line no-nested-ternary
+    return end < 0 ? '----' : end < now ? 'Voting has ended' : `${diff} days`;
   }, [isData, votingEnd]);
 
   const stats = useMemo(() => {
@@ -102,8 +93,10 @@ const Proposal = () => {
       hash: txHash,
       type,
       submitted: moment.unix(submitTime).format('DD-MM-YYYY'),
-      votingStart: moment.unix(votingStart).format('DD-MM-YYYY'),
-      votingEnd: moment.unix(votingEnd).format('DD-MM-YYYY'),
+      votingStart:
+        votingStart > 0 ? moment.unix(votingStart).format('DD-MM-YYYY') : '',
+      votingEnd:
+        votingEnd > 0 ? moment.unix(votingEnd).format('DD-MM-YYYY') : '',
       depositEnd: moment.unix(depositEnd).format('DD-MM-YYYY'),
       turnout: formatPercentValue(turnout),
       totalATOMVoted,
@@ -127,25 +120,16 @@ const Proposal = () => {
   return (
     <Container>
       <section>
-        <TopStatus
-          status={status}
-          votingEnds={votingEnds}
-        />
+        <TopStatus status={status} votingEnds={votingEnds} />
         <Row>
           <Col xl={6}>
-            <VotingChart
-              isLoading={res.isLoading}
-              data={chartData}
-            />
+            <VotingChart isLoading={res.isLoading} data={chartData} />
           </Col>
           <Col xl={6}>
             <Stats stats={stats} />
           </Col>
         </Row>
-        <DescriptionStyled
-          title={title}
-          desc={description}
-        />
+        <DescriptionStyled title={title} desc={description} />
       </section>
       <VotingTableStyled proposalId={proposalIdFromRoute} />
     </Container>
