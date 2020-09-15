@@ -24,6 +24,7 @@ const Stats = () => {
     total_staking_balance: stakingBal,
     number_delegators: delegators,
     number_multi_delegators: multiDelegators,
+    total_delegators: totalDelegators,
     network_size: networkSize,
     // Accounts
     total_accounts: accs,
@@ -42,26 +43,32 @@ const Stats = () => {
   return (
     <Container>
       <SectionChart />
-      <DatePickerStyled onChange={(date) => res.request({ to: moment(date).unix() })} />
-      <SectionNetwork stats={{
-        stakingBal,
-        delegators,
-        multiDelegators,
-        networkSize,
-      }}
+      <DatePickerStyled
+        onChange={(date) => res.request({ to: moment(date).unix() })}
       />
-      <SectionAccounts stats={{
-        accs,
-        whales,
-        smallAccs,
-      }}
+      <SectionNetwork
+        stats={{
+          stakingBal,
+          delegators,
+          multiDelegators,
+          totalDelegators,
+          networkSize,
+        }}
       />
-      <SectionBalances stats={{
-        txVol,
-        feeVol,
-        unbond,
-        highestFee,
-      }}
+      <SectionAccounts
+        stats={{
+          accs,
+          whales,
+          smallAccs,
+        }}
+      />
+      <SectionBalances
+        stats={{
+          txVol,
+          feeVol,
+          unbond,
+          highestFee,
+        }}
       />
       <SectionHealth stats={{ blockDelay, jailers }} />
     </Container>
