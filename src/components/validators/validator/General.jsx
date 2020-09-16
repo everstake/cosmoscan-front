@@ -5,9 +5,11 @@ import StatsItem from '../../styled/StatsItem';
 import TitleMinor from '../../styled/TitleMinor';
 import BreakTxt from '../../styled/BreakTxt';
 import {
-  noString, formatPercentValue, removeProtocol, formatNum,
+  noString,
+  formatPercentValue,
+  removeProtocol,
+  formatNum,
 } from '../../../utils';
-
 
 const General = ({
   info: {
@@ -23,43 +25,28 @@ const General = ({
   <Card modifiers="height100">
     <Card.Body>
       <StatsItem>
-        <TitleMinor as="span">
-          Name:
-        </TitleMinor>
-        <BreakTxt className="ml-1">
-          {noString(title)}
-        </BreakTxt>
+        <TitleMinor as="span">Name: </TitleMinor>
+        <BreakTxt className="ml-1">{noString(title)}</BreakTxt>
+      </StatsItem>
+
+      <StatsItem>
+        <TitleMinor as="span">Account address: </TitleMinor>
+        <BreakTxt className="ml-1">{noString(accAddress)}</BreakTxt>
+      </StatsItem>
+
+      <StatsItem>
+        <TitleMinor as="span">Validator address: </TitleMinor>
+        <BreakTxt className="ml-1">{noString(valAddress)}</BreakTxt>
+      </StatsItem>
+
+      <StatsItem>
+        <TitleMinor as="span">Consensus address: </TitleMinor>
+        <BreakTxt className="ml-1">{noString(consAddress)}</BreakTxt>
       </StatsItem>
 
       <StatsItem>
         <TitleMinor as="span">
-          Account address:
-        </TitleMinor>
-        <BreakTxt className="ml-1">
-          {noString(accAddress)}
-        </BreakTxt>
-      </StatsItem>
-
-      <StatsItem>
-        <TitleMinor as="span">
-          Validator address:
-        </TitleMinor>
-        <BreakTxt className="ml-1">
-          {noString(valAddress)}
-        </BreakTxt>
-      </StatsItem>
-      <StatsItem>
-        <TitleMinor as="span">
-          Consensus address:
-        </TitleMinor>
-        <BreakTxt className="ml-1">
-          {noString(consAddress)}
-        </BreakTxt>
-      </StatsItem>
-
-      <StatsItem>
-        <TitleMinor as="span">
-          Voting power in % of overall network:
+          Voting power in % of overall network:{' '}
         </TitleMinor>
         <BreakTxt className="ml-1">
           {noString(formatPercentValue(votingPower))}
@@ -67,18 +54,14 @@ const General = ({
       </StatsItem>
 
       <StatsItem>
-        <TitleMinor as="span">
-          Fee:
-        </TitleMinor>
+        <TitleMinor as="span">Fee: </TitleMinor>
         <BreakTxt className="ml-1">
           {noString(formatPercentValue(formatNum(fee * 100)))}
         </BreakTxt>
       </StatsItem>
 
       <StatsItem>
-        <TitleMinor as="span">
-          Website:
-        </TitleMinor>
+        <TitleMinor as="span">Website: </TitleMinor>
         <BreakTxt className="ml-1">
           <a
             href={`//${website ? removeProtocol(website) : '#'}`}
@@ -99,6 +82,5 @@ General.propTypes = {
 General.defaultProps = {
   info: {},
 };
-
 
 export default General;

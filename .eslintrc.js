@@ -2,12 +2,14 @@ module.exports = {
   env: {
     browser: true,
     es6: true,
+    node: true,
   },
   extends: [
-    'plugin:react/recommended',
     'airbnb',
     'airbnb/hooks',
+    'plugin:react/recommended',
     'plugin:prettier/recommended',
+    'prettier/react',
   ],
   globals: {
     Atomics: 'readonly',

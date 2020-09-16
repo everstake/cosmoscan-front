@@ -1,4 +1,5 @@
 import React from 'react';
+import Helmet from 'react-helmet';
 import { Tab, Nav } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 import ColStyled from '../../components/styled/ColStyled';
@@ -20,6 +21,26 @@ const Validator = () => {
 
   return (
     <Container>
+      <Helmet>
+        <title>Cosmos validator | Cosmoscan</title>
+        <meta
+          name="description"
+          content="View information on the individual Cosmos validator."
+        />
+        <meta
+          itemProp="description"
+          content="View information on the individual Cosmos validator."
+        />
+        <meta
+          property="og:description"
+          content="View information on the individual Cosmos validator."
+        />
+        <meta
+          name="twitter:description"
+          content="View information on the individual Cosmos validator."
+        />
+      </Helmet>
+
       <Row xs={1} xl={2}>
         <ColStyled>
           <General info={resp || {}} />
@@ -44,10 +65,7 @@ const Validator = () => {
       <Row>
         <ColStyled>
           <Card>
-            <Tab.Container
-              id="left-tabs-example"
-              defaultActiveKey="delegators"
-            >
+            <Tab.Container id="left-tabs-example" defaultActiveKey="delegators">
               <Card.Header style={{ padding: 0, border: 'none' }}>
                 <Nav fill variant="tabs">
                   <Nav.Item>
@@ -59,32 +77,27 @@ const Validator = () => {
                 </Nav>
               </Card.Header>
 
-              <Card.Body style={{
-                borderLeft: '1px solid #dee2e6',
-                borderRight: '1px solid #dee2e6 ',
-                borderBottom: '1px solid #dee2e6 ',
-                paddingLeft: 0,
-                paddingRight: 0,
-                paddingBottom: 0,
-                paddingTop: 0,
-              }}
+              <Card.Body
+                style={{
+                  borderLeft: '1px solid #dee2e6',
+                  borderRight: '1px solid #dee2e6 ',
+                  borderBottom: '1px solid #dee2e6 ',
+                  paddingLeft: 0,
+                  paddingRight: 0,
+                  paddingBottom: 0,
+                  paddingTop: 0,
+                }}
               >
                 <Tab.Content>
-                  <Tab.Pane
-                    eventKey="delegators"
-                  >
+                  <Tab.Pane eventKey="delegators">
                     <DelegatorsTable />
                   </Tab.Pane>
-                  <Tab.Pane
-                    eventKey="votes"
-                  >
-                    { resp && resp.acc_address
-                      ? (
-                        <VotesTable
-                          accAddress={resp.acc_address}
-                        />
-                      )
-                      : <div>No data</div>}
+                  <Tab.Pane eventKey="votes">
+                    {resp && resp.acc_address ? (
+                      <VotesTable accAddress={resp.acc_address} />
+                    ) : (
+                      <div>No data</div>
+                    )}
                   </Tab.Pane>
                 </Tab.Content>
               </Card.Body>

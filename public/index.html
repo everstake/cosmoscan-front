@@ -1,36 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <!-- Google Tag Manager -->
-  <script>(function (w, d, s, l, i) {
-    w[l] = w[l] || [];
-    w[l].push({
-      'gtm.start':
-        new Date().getTime(), event: 'gtm.js'
-    });
-    var f = d.getElementsByTagName(s)[0],
-      j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : '';
-    j.async = true;
-    j.src =
-      'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
-    f.parentNode.insertBefore(j, f);
-  })(window, document, 'script', 'dataLayer', 'GTM-KX6RPKS');</script>
-  <!-- End Google Tag Manager -->
-  <meta charset="utf-8"/>
-  <link rel="icon" href="%PUBLIC_URL%/favicon.ico"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <meta name="theme-color" content="#000000"/>
-  <meta
-    name="description"
-    content="Web site created using create-react-app"
-  />
-  <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png"/>
-  <!--
+  <head>
+    <!-- Google Tag Manager -->
+    <script>
+      (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({
+          'gtm.start': new Date().getTime(),
+          event: 'gtm.js',
+        });
+        var f = d.getElementsByTagName(s)[0],
+          j = d.createElement(s),
+          dl = l != 'dataLayer' ? '&l=' + l : '';
+        j.async = true;
+        j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+        f.parentNode.insertBefore(j, f);
+      })(window, document, 'script', 'dataLayer', 'GTM-KX6RPKS');
+    </script>
+    <!-- End Google Tag Manager -->
+    <meta charset="utf-8" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta
+      name="description"
+      content="Cosmoscan is the first data and statistics explorer for the Cosmos network. It provides information on the overall network operations, governance details, validators and much more."
+      data-react-helmet="true"
+    />
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+    <!--
     manifest.json provides metadata used when your web App is installed on a
     user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
   -->
-  <link rel="manifest" href="%PUBLIC_URL%/manifest.json"/>
-  <!--
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <!--
     Notice the use of %PUBLIC_URL% in the tags above.
     It will be replaced with the URL of the `public` folder during the build.
     Only files inside the `public` folder can be referenced from the HTML.
@@ -39,19 +42,56 @@
     work correctly both with client-side routing and a non-root public URL.
     Learn how to configure a non-root public URL by running `npm run build`.
   -->
-  <title>Cosmoscan</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
-</head>
-<body>
-<!-- Google Tag Manager (noscript) -->
-<noscript>
-  <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KX6RPKS"
-          height="0" width="0" style="display:none;visibility:hidden"></iframe>
-</noscript>
-<!-- End Google Tag Manager (noscript) -->
-<noscript>You need to enable JavaScript to run this app.</noscript>
-<div id="root"></div>
-<!--
+    <title>Cosmoscan</title>
+
+    <!-- Google / Search Engine Tags -->
+    <meta itemprop="name" content="Cosmoscan" />
+    <meta
+      itemprop="description"
+      content="Cosmoscan is the first data and statistics explorer for the Cosmos network. It provides information on the overall network operations, governance details, validators and much more."
+      data-react-helmet="true"
+    />
+    <meta itemprop="image" content="%PUBLIC_URL%/og-image.jpg" />
+
+    <!-- Facebook Meta Tags -->
+    <meta property="og:url" content="https://cosmoscan.net" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Cosmoscan" />
+    <meta
+      property="og:description"
+      content="Cosmoscan is the first data and statistics explorer for the Cosmos network. It provides information on the overall network operations, governance details, validators and much more."
+      data-react-helmet="true"
+    />
+    <meta property="og:image" content="%PUBLIC_URL%/og-image.jpg" />
+
+    <!-- Twitter Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Cosmoscan" />
+    <meta
+      name="twitter:description"
+      content="Cosmoscan is the first data and statistics explorer for the Cosmos network. It provides information on the overall network operations, governance details, validators and much more."
+      data-react-helmet="true"
+    />
+    <meta name="twitter:image" content="%PUBLIC_URL%/og-image.jpg" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript>
+      <iframe
+        src="https://www.googletagmanager.com/ns.html?id=GTM-KX6RPKS"
+        height="0"
+        width="0"
+        style="display: none; visibility: hidden;"
+      ></iframe>
+    </noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+    <!--
   This HTML file is a template.
   If you open it directly in the browser, you will see an empty page.
 
@@ -61,5 +101,5 @@
   To begin the development, run `npm start` or `yarn start`.
   To create a production bundle, use `npm run build` or `yarn build`.
 -->
-</body>
+  </body>
 </html>

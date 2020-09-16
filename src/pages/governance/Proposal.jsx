@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
 import styled from 'styled-components';
+import Helmet from 'react-helmet';
 import { useParams } from 'react-router-dom';
 import moment from 'moment';
 import { Col } from 'react-bootstrap';
@@ -119,6 +120,26 @@ const Proposal = () => {
 
   return (
     <Container>
+      <Helmet>
+        <title>Cosmos governance proposal | Cosmoscan</title>
+        <meta
+          name="description"
+          content="Stats of the individual Cosmoshub governance proposal."
+        />
+        <meta
+          itemProp="description"
+          content="Stats of the individual Cosmoshub governance proposal."
+        />
+        <meta
+          property="og:description"
+          content="Stats of the individual Cosmoshub governance proposal."
+        />
+        <meta
+          name="twitter:description"
+          content="Stats of the individual Cosmoshub governance proposal."
+        />
+      </Helmet>
+
       <section>
         <TopStatus status={status} votingEnds={votingEnds} />
         <Row>

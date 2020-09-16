@@ -9,11 +9,10 @@ import { periodOpts } from '../../../utils/constants';
 import { formatDate, formatDateWithTime, formatNum } from '../../../utils';
 import API from '../../../api';
 
-
-const chartName = '# of operations per day/hour';
+const chartName = '# of transactions per day/hour';
 const yAxisWidth = 50;
 const yTickCount = 10;
-const areaName = '# of operations';
+const areaName = '# of transactions';
 const defaultPeriod = periodOpts[2];
 
 const Operations = () => {
@@ -25,14 +24,14 @@ const Operations = () => {
   return (
     <ChartContainer
       title={chartName}
-      select={(
+      select={
         <SelectPeriod
           defaultPeriod={defaultPeriod}
           isDisabled={res.isLoading}
           onChange={res.request}
         />
-      )}
-      chart={(
+      }
+      chart={
         <AreaChart
           areaName={areaName}
           isLoading={res.isLoading}
@@ -46,7 +45,7 @@ const Operations = () => {
           tooltipLabelFormatter={formatDateWithTime}
           color={color}
         />
-      )}
+      }
     />
   );
 };
