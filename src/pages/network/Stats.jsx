@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import moment from 'moment';
+import Helmet from 'react-helmet';
 import useRequest from '../../hooks/useRequest';
 import { Container } from '../../components/styled/CustomBsGrid';
 import SectionChart from '../../components/network/stats/SectionChart';
@@ -42,6 +43,26 @@ const Stats = () => {
 
   return (
     <Container>
+      <Helmet>
+        <title>Cosmos network statistics | Cosmoscan</title>
+        <meta
+          name="description"
+          content="Overall data and stats of Cosmoshub."
+        />
+        <meta
+          itemProp="description"
+          content="Overall data and stats of Cosmoshub."
+        />
+        <meta
+          property="og:description"
+          content="Overall data and stats of Cosmoshub."
+        />
+        <meta
+          name="twitter:description"
+          content="Overall data and stats of Cosmoshub."
+        />
+      </Helmet>
+
       <SectionChart />
       <DatePickerStyled
         onChange={(date) => res.request({ to: moment(date).unix() })}

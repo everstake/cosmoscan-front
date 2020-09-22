@@ -1,4 +1,5 @@
 import React from 'react';
+import Helmet from 'react-helmet';
 import { Container, Row } from '../../components/styled/CustomBsGrid';
 import ColMarginStandard from '../../components/styled/ColMarginStabdard';
 import Blocks from '../../components/network/charts/Blocks';
@@ -13,6 +14,26 @@ import UnbondingVol from '../../components/network/charts/UnbondingVol';
 
 const Charts = () => (
   <Container>
+    <Helmet>
+      <title>Cosmos network charts | Cosmoscan</title>
+      <meta
+        name="description"
+        content="Cosmoshub general data aggregated and displayed through charts."
+      />
+      <meta
+        itemProp="description"
+        content="Cosmoshub general data aggregated and displayed through charts."
+      />
+      <meta
+        property="og:description"
+        content="Cosmoshub general data aggregated and displayed through charts."
+      />
+      <meta
+        name="twitter:description"
+        content="Cosmoshub general data aggregated and displayed through charts."
+      />
+    </Helmet>
+
     <Row xs={1} xl={2}>
       <ColMarginStandard>
         <Blocks />
