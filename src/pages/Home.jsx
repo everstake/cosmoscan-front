@@ -3,6 +3,7 @@ import Helmet from 'react-helmet';
 import { Container } from '../components/styled/CustomBsGrid';
 import MainStats from '../components/home/MainStats';
 import MainCharts from '../components/home/MainCharts';
+import Banner from '../components/Banner';
 
 const Home = () => (
   <Container>
@@ -25,6 +26,8 @@ const Home = () => (
         content="Cosmoscan is the first data and statistics explorer for the Cosmos network. It provides information on the overall network operations, governance details, validators and much more."
       />
     </Helmet>
+
+    <Banner />
 
     <MainStats />
 
