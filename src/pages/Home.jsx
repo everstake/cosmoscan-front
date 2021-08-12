@@ -3,7 +3,7 @@ import Helmet from 'react-helmet';
 import { Container } from '../components/styled/CustomBsGrid';
 import MainStats from '../components/home/MainStats';
 import MainCharts from '../components/home/MainCharts';
-import Banner from '../components/Banner';
+// import Banner from '../components/Banner';
 
 const Home = () => (
   <Container>
@@ -27,7 +27,7 @@ const Home = () => (
       />
     </Helmet>
 
-    <Banner />
+    {/* <Banner /> */}
 
     <MainStats />
 
