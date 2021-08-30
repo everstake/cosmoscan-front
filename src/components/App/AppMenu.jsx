@@ -5,6 +5,8 @@ import { NavLink } from 'react-router-dom';
 import useRoutes from './hooks/useRoutes';
 import Dropdown from '../styled/Dropdown';
 import A from '../styled/A';
+import { useChainsStateContext } from '../../store/chainContext';
+import SelectChain from '../SelectChain';
 
 const BtnReset = css`
   background-color: transparent;
@@ -13,9 +15,9 @@ const BtnReset = css`
 `;
 
 const MenuToggler = styled.button`
-    ${BtnReset};
-    color: ${({ theme, isOpen }) => (isOpen ? theme.danger : theme.black)};
-  `;
+  ${BtnReset};
+  color: ${({ theme, isOpen }) => (isOpen ? theme.danger : theme.white)};
+`;
 
 const AppMenuContainer = styled.div`
   position: fixed;
@@ -32,10 +34,12 @@ const AppMenuContainer = styled.div`
   background-color: ${({ theme }) => theme.whiteGrey2};
   align-items: center;
   padding: 15px;
-  
-  ${({ isOpen }) => isOpen && css`
-     transform: translateX(0);
-  `}
+
+  ${({ isOpen }) =>
+    isOpen &&
+    css`
+      transform: translateX(0);
+    `}
 `;
 
 const AppMenuUl = styled.ul`
@@ -43,15 +47,15 @@ const AppMenuUl = styled.ul`
   text-align: center;
   padding-left: 0;
   margin: 40px 0;
-  
+
   li:not(:last-child) {
     margin-bottom: 20px;
   }
 `;
 
-const AppMenuLink = styled(NavLink)` 
+const AppMenuLink = styled(NavLink)`
   &:hover {
-   text-decoration: none;
+    text-decoration: none;
   }
 `;
 
@@ -66,18 +70,18 @@ const DropdownMenuStatic = styled(Dropdown.Menu)`
   float: none;
   transform: translate3d(0, 10px, 0) !important;
   border: none;
-  
+
   .dropdown-item {
     text-align: center;
   }
 `;
-
 
 const currentYear = new Date().getFullYear();
 
 const AppMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
   const routes = useRoutes();
+  const { chain } = useChainsStateContext();
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -89,10 +93,7 @@ const AppMenu = () => {
   return (
     <div>
       <MenuToggler onClick={toggleMenu} isOpen={isOpen}>
-        <FontAwesomeIcon
-          icon={isOpen ? 'times' : 'bars'}
-          size="2x"
-        />
+        <FontAwesomeIcon icon={isOpen ? 'times' : 'bars'} size="2x" />
       </MenuToggler>
 
       <AppMenuContainer isOpen={isOpen}>
@@ -101,57 +102,45 @@ const AppMenu = () => {
             <AppMenuUl>
               {routes.map((route) => (
                 <li key={route.name}>
-                  {
-                    route.path
-                      ? (
-                        <AppMenuLink
-                          to={route.path}
-                          onClick={closeMenu}
-                          exact
-                        >
-                          {route.name}
-                        </AppMenuLink>
-                      )
+                  {route.path ? (
+                    <AppMenuLink
+                      to={`${route.path}${chain}`}
+                      onClick={closeMenu}
+                      exact
+                    >
+                      {route.name}
+                    </AppMenuLink>
+                  ) : (
+                    <Dropdown navbar>
+                      <Dropdown.Toggle variant="link" as={BtnLink}>
+                        {route.name}
+                      </Dropdown.Toggle>
 
-                      : (
-                        <Dropdown navbar>
-                          <Dropdown.Toggle
-                            variant="link"
-                            as={BtnLink}
+                      <DropdownMenuStatic>
+                        {route.paths.map((e) => (
+                          <Dropdown.Item
+                            key={e.name}
+                            as={NavLink}
+                            to={`/${chain}${e.path}`}
+                            onClick={closeMenu}
                           >
-                            { route.name }
-                          </Dropdown.Toggle>
-
-                          <DropdownMenuStatic>
-                            {
-                              route.paths.map((e) => (
-                                <Dropdown.Item
-                                  key={e.name}
-                                  as={NavLink}
-                                  to={e.path}
-                                  onClick={closeMenu}
-                                >
-                                  {e.name}
-                                </Dropdown.Item>
-                              ))
-                            }
-                          </DropdownMenuStatic>
-                        </Dropdown>
-                      )
-                  }
+                            {e.name}
+                          </Dropdown.Item>
+                        ))}
+                      </DropdownMenuStatic>
+                    </Dropdown>
+                  )}
                 </li>
               ))}
             </AppMenuUl>
+
+            <SelectChain />
           </nav>
 
-          <div>
-            {/*  TODO: Settings buttons  */}
-          </div>
+          <div>{/*  TODO: Settings buttons  */}</div>
         </div>
 
-        <div className="mt-auto">
-          {`© ${currentYear} All rights reserved`}
-        </div>
+        <div className="mt-auto">{`© ${currentYear} All rights reserved`}</div>
       </AppMenuContainer>
     </div>
   );
