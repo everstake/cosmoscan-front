@@ -12,62 +12,44 @@ import ValidatorsStats from '../pages/validators/Stats';
 import ValidatorsCharts from '../pages/validators/Charts';
 import Validator from '../pages/validators/Validator';
 import NotFound from '../pages/NotFound';
+import { networkList } from '../utils/constants';
+import { useChainsStateContext } from '../store/chainContext';
 
-const Routes = () => (
-  <>
-    <ScrollToTop />
-    <Switch>
-      {/* TODO: Create routes config */}
-      <Route
-        exact
-        path="/"
-        component={Home}
-      />
-      <Route
-        exact
-        path="/network-stats"
-        component={NetworkStats}
-      />
-      <Route
-        exact
-        path="/network-charts"
-        component={NetworkCharts}
-      />
-      <Route
-        exact
-        path="/governance-stats"
-        component={GovernanceStats}
-      />
-      <Route
-        exact
-        path="/proposal/:id"
-        component={Proposal}
-      />
-      <Route
-        exact
-        path="/governance-charts"
-        component={GovernanceCharts}
-      />
-      <Route
-        exact
-        path="/validators-stats"
-        component={ValidatorsStats}
-      />
-      <Route
-        exact
-        path="/validators-charts"
-        component={ValidatorsCharts}
-      />
-      <Route
-        exact
-        path="/validator/:address"
-        component={Validator}
-      />
-      <Route
-        component={NotFound}
-      />
-    </Switch>
-  </>
-);
+const Routes = () => {
+  const { chain } = useChainsStateContext();
+  return (
+    <>
+      <ScrollToTop />
+      <Switch>
+        {/* TODO: Create routes config */}
+        {/* <Route exact path="/" component={Home} /> */}
+        {networkList.map((e) => (
+          <Route exact key={e.value} path={`/${e.value}`} component={Home} />
+        ))}
+        <Route path={`/${chain}/network-stats`} component={NetworkStats} />
+        <Route path={`/${chain}/network-charts`} component={NetworkCharts} />
+        <Route
+          path={`/${chain}/governance-stats`}
+          component={GovernanceStats}
+        />
+        <Route path={`/${chain}/proposal/:id`} component={Proposal} />
+        <Route
+          path={`/${chain}/governance-charts`}
+          component={GovernanceCharts}
+        />
+        <Route
+          path={`/${chain}/validators-stats`}
+          component={ValidatorsStats}
+        />
+        <Route
+          path={`/${chain}/validators-charts`}
+          component={ValidatorsCharts}
+        />
+        <Route path={`/${chain}/validator/:address`} component={Validator} />
+        <Route component={NotFound} />
+      </Switch>
+    </>
+  );
+};
 
 export default Routes;

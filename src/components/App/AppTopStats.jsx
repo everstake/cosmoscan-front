@@ -3,7 +3,11 @@ import styled from 'styled-components';
 import useRequest from '../../hooks/useRequest';
 import API from '../../api';
 import {
-  noString, formatNum, formatUSD, formatSec, formatPercentDec,
+  noString,
+  formatNum,
+  formatUSD,
+  formatSec,
+  formatPercentDec,
 } from '../../utils';
 // import Spinner from '../Spinner';
 import { Container } from '../styled/CustomBsGrid';
@@ -18,8 +22,8 @@ const TopStatsStyled = styled.div`
   padding-top: 5px;
   padding-bottom: 5px;
   z-index: 4;
-  
-  @media(max-width: ${({ theme }) => theme.xlDown}) {
+
+  @media (max-width: ${({ theme }) => theme.xlDown}) {
     position: relative;
     top: initial;
   }
@@ -36,12 +40,12 @@ const TopStatsContainer = styled.div`
 const TopStatsItem = styled.div`
   flex: 1 0 150px;
   margin: 5px;
-  
-  @media(max-width: ${({ theme }) => theme.xlDown}) {
+
+  @media (max-width: ${({ theme }) => theme.xlDown}) {
     flex: 1 0 230px;
   }
-  
-  @media(max-width: ${({ theme }) => theme.lgDown}) {
+
+  @media (max-width: ${({ theme }) => theme.lgDown}) {
     flex: 1 0 220px;
   }
 `;
@@ -54,7 +58,6 @@ const TxtEllipsis = styled.span`
   max-width: 180px;
   display: inline-block;
 `;
-
 
 const statTitles = {
   height: 'Block height',
@@ -75,6 +78,7 @@ const transformMetaStats = (stats) => {
 
 const AppTopStats = () => {
   const res = useRequest(API.getMetaStats, {});
+
   useEffect(() => {
     const interval = setInterval(() => {
       res.request();
@@ -101,33 +105,33 @@ const AppTopStats = () => {
             //   </div>
             // )
             // :
-           !metaStatsComp || !metaStatsComp.length
-             ? <div className="text-center w-100">-----</div>
-             : metaStatsComp.map((stat) => (
-               <TopStatsItem key={stat.title}>
-                 <div className="text-center">
-                   <TitleMinor>
-                     { stat.title }
-                   </TitleMinor>
-                   <TxtEllipsis>
-                     {/* eslint-disable-next-line no-nested-ternary */}
-                     { stat.title === 'Current price'
-                       ? formatUSD(stat.value)
-                     // eslint-disable-next-line no-nested-ternary
-                       : stat.title === 'Block time'
-                         ? formatSec(stat.value)
-                       // eslint-disable-next-line no-nested-ternary
-                         : stat.title === 'Avg validator fee'
-                           ? formatPercentDec(stat.value)
-                           : stat.title === 'Latest proposal'
-                           // TODO: Refactor
-                             ? `#${stat.value.id}: ${stat.value.name}`
-                             : noString(formatNum(stat.value)) }
-                   </TxtEllipsis>
-                 </div>
-               </TopStatsItem>
-             ))
-}
+            !metaStatsComp || !metaStatsComp.length ? (
+              <div className="text-center w-100">-----</div>
+            ) : (
+              metaStatsComp.map((stat) => (
+                <TopStatsItem key={stat.title}>
+                  <div className="text-center">
+                    <TitleMinor>{stat.title}</TitleMinor>
+                    <TxtEllipsis>
+                      {/* eslint-disable-next-line no-nested-ternary */}
+                      {stat.title === 'Current price'
+                        ? formatUSD(stat.value)
+                        : // eslint-disable-next-line no-nested-ternary
+                        stat.title === 'Block time'
+                        ? formatSec(stat.value)
+                        : // eslint-disable-next-line no-nested-ternary
+                        stat.title === 'Avg validator fee'
+                        ? formatPercentDec(stat.value)
+                        : stat.title === 'Latest proposal'
+                        ? // TODO: Refactor
+                          `#${stat.value.id}: ${stat.value.name}`
+                        : noString(formatNum(stat.value))}
+                    </TxtEllipsis>
+                  </div>
+                </TopStatsItem>
+              ))
+            )
+          }
         </TopStatsContainer>
       </Container>
     </TopStatsStyled>

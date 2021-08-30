@@ -4,6 +4,7 @@ import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 import { Container } from '../components/styled/CustomBsGrid';
 import Title from '../components/styled/Title';
+import { useChainsStateContext } from '../store/chainContext';
 
 // TODO: Extract if reused. Make a modifier
 const LinkBtn = styled(NavLink)`
@@ -37,25 +38,28 @@ const LinkBtn = styled(NavLink)`
   }
 `;
 
-const NotFound = () => (
-  <Container className="text-center">
-    <Helmet>
-      <title>404 Not found | Cosmoscan</title>
-      <meta name="description" content="Oops, nothing here." />
-      <meta itemProp="description" content="Oops, nothing here." />
-      <meta property="og:description" content="Oops, nothing here." />
-      <meta name="twitter:description" content="Oops, nothing here." />
-    </Helmet>
+const NotFound = () => {
+  const { chain } = useChainsStateContext();
+  return (
+    <Container className="text-center">
+      <Helmet>
+        <title>404 Not found | Cosmoscan</title>
+        <meta name="description" content="Oops, nothing here." />
+        <meta itemProp="description" content="Oops, nothing here." />
+        <meta property="og:description" content="Oops, nothing here." />
+        <meta name="twitter:description" content="Oops, nothing here." />
+      </Helmet>
 
-    <Title>404 Not found | Cosmoscan</Title>
-    <p>
-      Oops! <br />
-      Unfortunately, the page you are looking for is not found... &#128577;
-    </p>
-    <div>
-      <LinkBtn to="/">Home</LinkBtn>
-    </div>
-  </Container>
-);
+      <Title>404 Not found | Cosmoscan</Title>
+      <p>
+        Oops! <br />
+        Unfortunately, the page you are looking for is not found... &#128577;
+      </p>
+      <div>
+        <LinkBtn to={`/${chain}`}>Home</LinkBtn>
+      </div>
+    </Container>
+  );
+};
 
 export default NotFound;

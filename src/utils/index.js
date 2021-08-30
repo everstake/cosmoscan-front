@@ -1,6 +1,6 @@
 import moment from 'moment';
 import numeral from 'numeral';
-
+import { coinCodes } from './constants';
 
 export const removeProtocol = (url) => url.replace(/(^\w+:|^)\/\//, '');
 
@@ -10,7 +10,10 @@ export const formatSec = (num) => `${num} sec`;
 
 export const formatUSD = (amount) => `$${numeral(amount).format('0,0[.][00]')}`;
 
-export const formatATOM = (amount) => `${numeral(amount).format('0,0[.][00000]')} ATOM`;
+export const formatATOM = (amount) =>
+  `${numeral(amount).format('0,0[.][00000]')} ${
+    coinCodes[sessionStorage.getItem('chain')]
+  }`;
 
 export const formatATOMWithFixedFractional = (amount, precision = 5) => {
   let fractionalSize = '';
@@ -18,10 +21,13 @@ export const formatATOMWithFixedFractional = (amount, precision = 5) => {
     fractionalSize += '0';
   }
 
-  return `${numeral(amount).format(`0,0.${fractionalSize}`)} ATOM`;
+  return `${numeral(amount).format(`0,0.${fractionalSize}`)} ${
+    coinCodes[sessionStorage.getItem('chain')]
+  }`;
 };
 
-export const formatATOMAmount = (amount) => `${numeral(amount).format('0,0[.][00000]')}`;
+export const formatATOMAmount = (amount) =>
+  `${numeral(amount).format('0,0[.][00000]')}`;
 
 export const formatPercentValue = (val) => `${val}%`;
 
@@ -41,7 +47,8 @@ export const formatPercentDec2 = (val) => {
   return `${res}%`;
 };
 
-export const formatDateWithTime = (val) => moment.unix(val).format('DD-MM-YYYY HH:mm');
+export const formatDateWithTime = (val) =>
+  moment.unix(val).format('DD-MM-YYYY HH:mm');
 
 export const formatDate = (val) => moment.unix(val).format('DD-MM-YYYY');
 
@@ -58,7 +65,8 @@ export const formatNum = (num) => {
 export const formatDays = (val) => `${formatNum(val)} days`;
 
 // eslint-disable-next-line no-unused-vars
-export const calculatePercent = (total, knownVal, isKnownValPercent = false) => formatPercentDec2((Number(knownVal) * 100) / Number(total));
+export const calculatePercent = (total, knownVal, isKnownValPercent = false) =>
+  formatPercentDec2((Number(knownVal) * 100) / Number(total));
 
 export const formatStatuses = (status) => {
   // TODO: Pass transaltions keys
@@ -72,7 +80,8 @@ export const formatStatuses = (status) => {
   return statusMap[status.toLowerCase()];
 };
 
-export const removeTrailingSlash = (string) => String(string).replace(/\/+$/, '');
+export const removeTrailingSlash = (string) =>
+  String(string).replace(/\/+$/, '');
 
 export const noString = (string) => string || '-----';
 
@@ -107,9 +116,18 @@ export const formatSeconds = (seconds) => {
 export const lastThirtyDays = (() => {
   const thirtyDaysAgo = moment.utc().startOf('day').subtract(29, 'days');
 
-  return [...new Array(30)]
-    .map((i, idx) => moment
-      .utc(thirtyDaysAgo)
-      .add(idx, 'days')
-      .format('DD-MM-YYYY'));
+  return [...new Array(30)].map((i, idx) =>
+    moment.utc(thirtyDaysAgo).add(idx, 'days').format('DD-MM-YYYY'),
+  );
 })();
+
+export const changeChain = () => {
+  switch (sessionStorage.getItem('chain')) {
+    case 'cosmos':
+      return process.env.REACT_APP_API_COSMOS;
+    case 'persistence':
+      return process.env.REACT_APP_API_PERSISTENCE;
+    default:
+      return process.env.REACT_APP_API_COSMOS;
+  }
+};

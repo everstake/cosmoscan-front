@@ -5,12 +5,16 @@ import useChartFormatter from '../../../hooks/useChartFormatter';
 import ChartContainer from '../../../layouts/ChartContainer';
 import SelectPeriod from '../../SelectPeriod';
 import AreaChart from '../../chart-types/AreaChart';
-import { periodOpts } from '../../../utils/constants';
-import { formatATOM, formatATOMAmount, formatDate, formatDateWithTime } from '../../../utils';
+import { periodOpts, coinCodes } from '../../../utils/constants';
+import {
+  formatATOM,
+  formatATOMAmount,
+  formatDate,
+  formatDateWithTime,
+} from '../../../utils';
 import API from '../../../api';
+import { useChainsStateContext } from '../../../store/chainContext';
 
-
-const chartName = 'Delegations per day/hour volume (ATOM)';
 const yAxisWidth = 60;
 const yTickCount = 10;
 const areaName = 'Delegations volume';
@@ -18,21 +22,23 @@ const defaultPeriod = periodOpts[2];
 
 const DelegationVol = () => {
   const theme = useContext(ThemeContext);
+  const { chain } = useChainsStateContext();
   const color = theme.success;
   const res = useRequest(API.getDelegationVol, defaultPeriod.value);
   const delegationVolComp = useChartFormatter(res.resp);
+  const chartName = `Delegations per day/hour volume (${coinCodes[chain]})`;
 
   return (
     <ChartContainer
       title={chartName}
-      select={(
+      select={
         <SelectPeriod
           defaultPeriod={defaultPeriod}
           isDisabled={res.isLoading}
           onChange={res.request}
         />
-      )}
-      chart={(
+      }
+      chart={
         <AreaChart
           areaName={areaName}
           isLoading={res.isLoading}
@@ -40,13 +46,16 @@ const DelegationVol = () => {
           yAxisLabelsFormatter={formatATOMAmount}
           yAxisWidth={yAxisWidth}
           yTickCount={yTickCount}
-          yAxisDomain={[(dataMin) => Math.round(dataMin), (dataMax) => Math.round(dataMax)]}
+          yAxisDomain={[
+            (dataMin) => Math.round(dataMin),
+            (dataMax) => Math.round(dataMax),
+          ]}
           xAxisTickFormatter={formatDate}
           tooltipFormatter={formatATOM}
           tooltipLabelFormatter={formatDateWithTime}
           color={color}
         />
-      )}
+      }
     />
   );
 };

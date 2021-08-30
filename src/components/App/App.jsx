@@ -9,17 +9,19 @@ import Routes from '../../routes';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../plugins/faLibrary';
 import { StateProvider } from '../../store';
+import { ChainsProvider } from '../../store/chainContext';
 
 const App = () => (
   <Router>
     <ThemeProvider theme={theme}>
       <Normalize />
       <GlobalStyles />
-  
       <StateProvider>
-        <LayoutDefault>
-          <Routes />
-        </LayoutDefault>
+        <ChainsProvider>
+          <LayoutDefault>
+            <Routes />
+          </LayoutDefault>
+        </ChainsProvider>
       </StateProvider>
     </ThemeProvider>
   </Router>

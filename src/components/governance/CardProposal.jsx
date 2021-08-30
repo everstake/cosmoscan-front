@@ -16,6 +16,8 @@ import {
   formatPercentDec2,
   formatChartData,
 } from '../../utils';
+import { useChainsStateContext } from '../../store/chainContext';
+import { coinCodes } from '../../utils/constants';
 
 const Status = styled.div`
   ${({ status, theme: { success, danger } }) => css`
@@ -49,6 +51,7 @@ const NavLinkStyled = styled(NavLink)`
 
 const CardProposal = ({ proposal }) => {
   const theme = useContext(ThemeContext);
+  const { chain } = useChainsStateContext();
   const {
     id,
     status,
@@ -63,7 +66,8 @@ const CardProposal = ({ proposal }) => {
     activity,
     turnout,
   } = proposal;
-  const totalATOMVoted = Number(yes) + Number(no) + Number(veto) + Number(abstain);
+  const totalATOMVoted =
+    Number(yes) + Number(no) + Number(veto) + Number(abstain);
   const votingChartData = [
     { value: (Number(yes) * 100) / totalATOMVoted, title: 'Yes' },
     { value: (Number(no) * 100) / totalATOMVoted, title: 'No' },
@@ -75,91 +79,65 @@ const CardProposal = ({ proposal }) => {
 
     return formatChartData(activity);
   }, [activity]);
-
   return (
     <Card modifiers="height100" as={NavLinkStyled} to={`proposal/${id}`}>
       <Card.Header>
         <Flex>
           <div>
-            <TitleChart as="span">
-              {`# ${id} `}
-            </TitleChart>
+            <TitleChart as="span">{`# ${id} `}</TitleChart>
           </div>
-          <Status status={status}>
-            {status}
-          </Status>
+          <Status status={status}>{status}</Status>
         </Flex>
       </Card.Header>
 
       <Card.Body>
         <div>
-          <TitleMinor as="span">
-            Title:
-          </TitleMinor>
-          <BreakTxt className="ml-1">
-            {noString(title)}
-          </BreakTxt>
+          <TitleMinor as="span">Title:</TitleMinor>
+          <BreakTxt className="ml-1">{noString(title)}</BreakTxt>
         </div>
 
         {proposer && (
-        <div>
-          <TitleMinor as="span">
-            Proposer:
-          </TitleMinor>
-          <BreakTxt className="ml-1">
-            {noString(proposer)}
-          </BreakTxt>
-        </div>
+          <div>
+            <TitleMinor as="span">Proposer:</TitleMinor>
+            <BreakTxt className="ml-1">{noString(proposer)}</BreakTxt>
+          </div>
         )}
 
         <StatsGrid>
           <div>
             {/* TODO: Define why the value is not converted to bool */}
             {Boolean(voters) && (
-            <div className="mb-1">
-              <TitleMinor className="mb-0">
-                Number of voters:
-              </TitleMinor>
-              <div>
-                {/* {voters ? `${formatNum(voters)}(${formatPercentValue(partRate)})` : '-----'} */}
-                {`${formatNum(voters)}(${formatPercentValue(partRate)})`}
+              <div className="mb-1">
+                <TitleMinor className="mb-0">Number of voters:</TitleMinor>
+                <div>
+                  {/* {voters ? `${formatNum(voters)}(${formatPercentValue(partRate)})` : '-----'} */}
+                  {`${formatNum(voters)}(${formatPercentValue(partRate)})`}
+                </div>
               </div>
-            </div>
             )}
 
             <div className="mb-1">
               <TitleMinor className="mb-0">
-                Amount of ATOM voted:
+                Amount of {coinCodes[chain]} voted:
               </TitleMinor>
-              <div>
-                {formatATOM(totalATOMVoted)}
-              </div>
+              <div>{formatATOM(totalATOMVoted)}</div>
             </div>
 
             <div className="mb-1">
-              <TitleMinor className="mb-0">
-                Turnout:
-              </TitleMinor>
-              <div>
-                {formatPercentValue(turnout)}
-              </div>
+              <TitleMinor className="mb-0">Turnout:</TitleMinor>
+              <div>{formatPercentValue(turnout)}</div>
             </div>
 
             {/* TODO: Define why the value is not converted to bool */}
             {Boolean(activityComp && activityComp.length) && (
-            <div className="mb-1">
-              <TitleMinor className="mb-0">
-                Voter activity:
-              </TitleMinor>
-              {activityComp && activityComp.length
-                ? (
-                  <Sparkline
-                    data={activityComp}
-                    color={theme.success}
-                  />
-                )
-                : '-----'}
-            </div>
+              <div className="mb-1">
+                <TitleMinor className="mb-0">Voter activity:</TitleMinor>
+                {activityComp && activityComp.length ? (
+                  <Sparkline data={activityComp} color={theme.success} />
+                ) : (
+                  '-----'
+                )}
+              </div>
             )}
           </div>
 
@@ -172,7 +150,12 @@ const CardProposal = ({ proposal }) => {
               minAngle={3}
               legendType="none"
               displayLegend={false}
-              cellColors={[theme.blue, theme.danger, theme.burgundy, theme.grey]}
+              cellColors={[
+                theme.blue,
+                theme.danger,
+                theme.burgundy,
+                theme.grey,
+              ]}
               growOnMobile={false}
             />
           </div>
@@ -183,7 +166,9 @@ const CardProposal = ({ proposal }) => {
 };
 
 CardProposal.propTypes = {
-  proposal: PropTypes.objectOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.array])).isRequired,
+  proposal: PropTypes.objectOf(
+    PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.array]),
+  ).isRequired,
 };
 
 export default CardProposal;
