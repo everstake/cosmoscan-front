@@ -31,7 +31,7 @@ const useChainsDispatchContext = () => {
 };
 
 const ChainsProvider = ({ children }) => {
-  const [chain, setChain] = useState('');
+  const [chain, setChain] = useState('cosmos');
   const history = useHistory();
 
   const currentChain = useMemo(() => {
