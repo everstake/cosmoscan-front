@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import Helmet from 'react-helmet';
 import ColStyled from '../../components/styled/ColStyled';
 import useRequest from '../../hooks/useRequest';
@@ -6,9 +6,15 @@ import { Container, Row } from '../../components/styled/CustomBsGrid';
 import CardProposal from '../../components/governance/CardProposal';
 import Spinner from '../../components/Spinner';
 import API from '../../api';
+import { useChainsStateContext } from '../../store/chainContext';
 
 const Stats = () => {
   const { isLoading, resp } = useRequest(API.getProposals);
+  const { chain } = useChainsStateContext();
+
+  const noProposals = useMemo(() => {
+    return chain === 'persistence' ? 'No Proposals' : 'No data';
+  }, [chain]);
 
   return (
     <Container>
@@ -45,7 +51,7 @@ const Stats = () => {
             </ColStyled>
           ))
         ) : (
-          <div className="text-center w-100">No data</div>
+          <div className="text-center w-100">{noProposals}</div>
         )}
       </Row>
     </Container>

@@ -112,6 +112,16 @@ export const selectStyles = {
   }),
 };
 
+export const networkList = [
+  { label: 'COSMOS', value: 'cosmos' },
+  { label: 'PERSISTENCE', value: 'persistence' },
+];
+
+export const coinCodes = {
+  cosmos: 'ATOM',
+  persistence: 'XPRT',
+};
+
 export const bluePalette = [
   '#0C39D0',
   '#234FE3',

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import queryString from 'querystring';
 import moment from 'moment';
-import { removeTrailingSlash } from '../utils';
+import { changeChain } from '../utils';
 
 const formatParams = (params) =>
   params && Object.keys(params).length
@@ -9,10 +9,18 @@ const formatParams = (params) =>
     : '';
 
 const APIService = axios.create({
-  baseURL: removeTrailingSlash(process.env.REACT_APP_API_HOST),
   timeout: 30000,
   responseType: 'json',
 });
+
+APIService.interceptors.request.use(
+  async (config) => {
+    // eslint-disable-next-line no-param-reassign
+    config.baseURL = await changeChain();
+    return config;
+  },
+  (error) => Promise.reject(error),
+);
 
 const API = {
   getMetaStats() {

@@ -7,6 +7,7 @@ import { Container } from '../styled/CustomBsGrid';
 import Dropdown from '../styled/Dropdown';
 import Title from '../styled/Title';
 import useRoutes from './hooks/useRoutes';
+import { useChainsStateContext } from '../../store/chainContext';
 
 const Footer = styled.footer`
   flex-shrink: 0;
@@ -29,7 +30,7 @@ const FooterUl = styled.ul`
   padding: 0;
   list-style-type: none;
   margin-bottom: 0;
-  
+
   li:not(:last-child) {
     margin-bottom: 25px;
   }
@@ -40,13 +41,15 @@ const FooterNavLink = styled(NavLink)`
   text-transform: uppercase;
   font-weight: 600;
   transition: color 0.2s;
-  
+
   &:hover {
     text-decoration: none;
   }
-   &:hover, &.active, &:focus {
+  &:hover,
+  &.active,
+  &:focus {
     color: ${({ theme }) => theme.blue};
-   }
+  }
 `;
 
 const FooterButtonNavLink = styled(FooterNavLink).attrs({
@@ -68,8 +71,8 @@ const FooterTitle = styled.h3`
 `;
 
 const FooterItem = styled.div`
-   max-width: 265px;
-   margin-bottom: 40px;
+  max-width: 265px;
+  margin-bottom: 40px;
 `;
 
 // TODO: Extract if reused. Make a modifier
@@ -77,7 +80,6 @@ const P = styled.p`
   color: ${({ theme }) => theme.grey};
   font-weight: 500;
 `;
-
 
 const currentYear = new Date().getFullYear();
 const socials = [
@@ -119,6 +121,7 @@ const behind = [
 
 const AppFooter = () => {
   const routes = useRoutes();
+  const { chain } = useChainsStateContext();
 
   return (
     <Footer>
@@ -137,48 +140,34 @@ const AppFooter = () => {
 
             <Col md={6} lg={3}>
               <FooterItem>
-                <FooterTitle>
-                  Pages
-                </FooterTitle>
+                <FooterTitle>Pages</FooterTitle>
 
                 <FooterUl>
                   {routes.map((route) => (
                     <li key={route.name}>
-                      {
-                        route.path
-                          ? (
-                            <FooterNavLink
-                              exact
-                              to={route.path}
-                            >
-                              {route.name}
-                            </FooterNavLink>
-                          )
-                          : (
-                            <Dropdown>
-                              <Dropdown.Toggle
-                                exact
-                                as={FooterButtonNavLink}
-                              >
-                                { route.name }
-                              </Dropdown.Toggle>
+                      {route.path ? (
+                        <FooterNavLink exact to={`${route.path}${chain}`}>
+                          {route.name}
+                        </FooterNavLink>
+                      ) : (
+                        <Dropdown>
+                          <Dropdown.Toggle exact as={FooterButtonNavLink}>
+                            {route.name}
+                          </Dropdown.Toggle>
 
-                              <Dropdown.Menu>
-                                {
-                              route.paths.map((e) => (
-                                <Dropdown.Item
-                                  key={e.name}
-                                  as={NavLink}
-                                  to={e.path}
-                                >
-                                  {e.name}
-                                </Dropdown.Item>
-                              ))
-                            }
-                              </Dropdown.Menu>
-                            </Dropdown>
-                          )
-                        }
+                          <Dropdown.Menu>
+                            {route.paths.map((e) => (
+                              <Dropdown.Item
+                                key={e.name}
+                                as={NavLink}
+                                to={`/${chain}${e.path}`}
+                              >
+                                {e.name}
+                              </Dropdown.Item>
+                            ))}
+                          </Dropdown.Menu>
+                        </Dropdown>
+                      )}
                     </li>
                   ))}
                 </FooterUl>
@@ -187,9 +176,7 @@ const AppFooter = () => {
 
             <Col md={6} lg={3}>
               <FooterItem>
-                <FooterTitle>
-                  Behind Cosmoscan
-                </FooterTitle>
+                <FooterTitle>Behind Cosmoscan</FooterTitle>
 
                 <FooterUl>
                   {behind.map((link) => (
@@ -209,9 +196,7 @@ const AppFooter = () => {
 
             <Col md={6} lg={3}>
               <FooterItem>
-                <FooterTitle>
-                  Socials
-                </FooterTitle>
+                <FooterTitle>Socials</FooterTitle>
 
                 <FooterUl>
                   {socials.map((social) => (
@@ -232,9 +217,7 @@ const AppFooter = () => {
           </Row>
         </Container>
       </FooterTop>
-      <FooterBottom>
-        {`© ${currentYear} All rights reserved`}
-      </FooterBottom>
+      <FooterBottom>{`© ${currentYear} All rights reserved`}</FooterBottom>
     </Footer>
   );
 };

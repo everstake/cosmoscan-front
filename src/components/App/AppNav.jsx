@@ -3,6 +3,8 @@ import styled, { css } from 'styled-components';
 import { NavLink } from 'react-router-dom';
 import Dropdown from '../styled/Dropdown';
 import useRoutes from './hooks/useRoutes';
+import SelectChain from '../SelectChain';
+import { useChainsStateContext } from '../../store/chainContext';
 
 const AppNavWrapper = styled.nav`
   align-items: center;
@@ -14,25 +16,27 @@ const AppNavUl = styled.ul`
   list-style-type: none;
   display: flex;
   margin-bottom: 0;
-  
+
   li {
     margin-right: 40px;
-    
-    @media(max-width: ${({ theme }) => theme.xlDown}) {
+
+    @media (max-width: ${({ theme }) => theme.xlDown}) {
       margin-right: 15px;
     }
   }
 `;
 
 const AppNavLinkStyles = css`
-  color: ${({ theme }) => theme.black};
+  color: ${({ theme }) => theme.white};
   font-weight: 500;
   font-size: ${({ theme }) => theme.fs14};
   transition: color 0.2s;
 
-  &:hover, &:focus, &.active {
-   color: ${({ theme }) => theme.blue};
-   text-decoration: none;
+  &:hover,
+  &:focus,
+  &.active {
+    color: ${({ theme }) => theme.blue};
+    text-decoration: none;
   }
 `;
 
@@ -45,55 +49,45 @@ const AppNavButtonLink = styled.button`
   background-color: transparent;
   border: none;
   padding: 0;
+  color: ${({ theme }) => theme.white};
 `;
 
 const AppNav = () => {
   const routes = useRoutes();
+  const { chain } = useChainsStateContext();
 
   return (
     <AppNavWrapper>
       <AppNavUl>
         {routes.map((route) => (
           <li key={route.name}>
-            {
-              route.path
-                ? (
-                  <AppNavLink
-                    to={route.path}
-                    exact
-                  >
-                    {route.name}
-                  </AppNavLink>
-                )
+            {route.path ? (
+              <AppNavLink to={`${route.path}${chain}`} exact>
+                {route.name}
+              </AppNavLink>
+            ) : (
+              <Dropdown navbar>
+                <Dropdown.Toggle variant="link" as={AppNavButtonLink}>
+                  {route.name}
+                </Dropdown.Toggle>
 
-                : (
-                  <Dropdown navbar>
-                    <Dropdown.Toggle
-                      variant="link"
-                      as={AppNavButtonLink}
+                <Dropdown.Menu>
+                  {route.paths.map((e) => (
+                    <Dropdown.Item
+                      key={e.name}
+                      as={NavLink}
+                      to={`/${chain}${e.path}`}
                     >
-                      { route.name }
-                    </Dropdown.Toggle>
-
-                    <Dropdown.Menu>
-                      {
-                        route.paths.map((e) => (
-                          <Dropdown.Item
-                            key={e.name}
-                            as={NavLink}
-                            to={e.path}
-                          >
-                            {e.name}
-                          </Dropdown.Item>
-                        ))
-                      }
-                    </Dropdown.Menu>
-                  </Dropdown>
-                )
-            }
+                      {e.name}
+                    </Dropdown.Item>
+                  ))}
+                </Dropdown.Menu>
+              </Dropdown>
+            )}
           </li>
         ))}
       </AppNavUl>
+      <SelectChain />
     </AppNavWrapper>
   );
 };

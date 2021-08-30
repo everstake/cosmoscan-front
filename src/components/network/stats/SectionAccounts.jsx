@@ -6,48 +6,52 @@ import ColStyled from '../../styled/ColStyled';
 import Section from './Section';
 import WidgetStats from '../../../layouts/WidgetStats';
 import { formatNum } from '../../../utils';
+import { useChainsStateContext } from '../../../store/chainContext';
+import { coinCodes } from '../../../utils/constants';
 
 const SectionAccounts = ({ stats }) => {
   const { accs, whales, smallAccs } = stats;
-  return (
-  <Section>
-    <Title>
-      Accounts
-    </Title>
+  const { chain } = useChainsStateContext();
 
-    <Row
-      xs={1}
-      md={2}
-      lg={3}
-      xl={4}
-    >
-      <ColStyled>
-        <WidgetStats
-          title="# of accounts"
-          isVertical
-          mainInfo={accs ? formatNum(Number(accs[accs.length - 1])) : '---'}
-          sparklineData={accs ? accs.map((e) => ({ y: +e })) : []}
-        />
-      </ColStyled>
-      <ColStyled>
-        <WidgetStats
-          title="# of whale accounts (over 1m $)"
-          isVertical
-          mainInfo={whales ? formatNum(Number(whales[whales.length - 1])) : '---'}
-          sparklineData={whales ? whales.map((e) => ({ y: +e })) : []}
-        />
-      </ColStyled>
-      <ColStyled>
-        <WidgetStats
-          title="# of small accounts (under 1 ATOM)"
-          isVertical
-          mainInfo={smallAccs ? formatNum(Number(smallAccs[smallAccs.length - 1])) : '---'}
-          sparklineData={smallAccs ? smallAccs.map((e) => ({ y: +e })) : []}
-        />
-      </ColStyled>
-    </Row>
-  </Section>
-)};
+  return (
+    <Section>
+      <Title>Accounts</Title>
+
+      <Row xs={1} md={2} lg={3} xl={4}>
+        <ColStyled>
+          <WidgetStats
+            title="# of accounts"
+            isVertical
+            mainInfo={accs ? formatNum(Number(accs[accs.length - 1])) : '---'}
+            sparklineData={accs ? accs.map((e) => ({ y: +e })) : []}
+          />
+        </ColStyled>
+        <ColStyled>
+          <WidgetStats
+            title="# of whale accounts (over 1m $)"
+            isVertical
+            mainInfo={
+              whales ? formatNum(Number(whales[whales.length - 1])) : '---'
+            }
+            sparklineData={whales ? whales.map((e) => ({ y: +e })) : []}
+          />
+        </ColStyled>
+        <ColStyled>
+          <WidgetStats
+            title={`# of small accounts (under 1 ${coinCodes[chain]})`}
+            isVertical
+            mainInfo={
+              smallAccs
+                ? formatNum(Number(smallAccs[smallAccs.length - 1]))
+                : '---'
+            }
+            sparklineData={smallAccs ? smallAccs.map((e) => ({ y: +e })) : []}
+          />
+        </ColStyled>
+      </Row>
+    </Section>
+  );
+};
 
 SectionAccounts.propTypes = {
   stats: PropTypes.objectOf(PropTypes.array),

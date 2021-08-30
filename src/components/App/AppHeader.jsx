@@ -4,6 +4,7 @@ import { Container } from '../styled/CustomBsGrid';
 import AppNav from './AppNav';
 import AppLogo from './AppLogo';
 import AppMenu from './AppMenu';
+import { useChainsStateContext } from '../../store/chainContext';
 
 const Header = styled.header`
   height: ${({ theme }) => theme.heightHeader};
@@ -11,7 +12,7 @@ const Header = styled.header`
   top: 0;
   width: 100%;
   z-index: 5;
-  background-color: ${({ theme }) => theme.white};
+  background-color: ${({ theme, bg }) => theme.bgHeaderColor[bg]};
   border-bottom: ${({ theme: { border } }) => border};
 `;
 
@@ -25,32 +26,34 @@ const Inner = styled(Container)`
 
 const LogoWrapper = styled.div`
   margin-right: 75px;
-  
-  @media(max-width: ${({ theme }) => theme.xlDown}) {
-      margin-right: 45px;
-    }
+
+  @media (max-width: ${({ theme }) => theme.xlDown}) {
+    margin-right: 45px;
+  }
 `;
 
-const AppHeader = () => (
-  <Header>
-    <Inner>
-      <div className="d-flex">
-        <LogoWrapper>
-          <AppLogo />
-        </LogoWrapper>
+const AppHeader = () => {
+  const { chain } = useChainsStateContext();
 
-        <div className="d-none d-md-flex">
-          <AppNav />
+  return (
+    <Header bg={chain}>
+      <Inner>
+        <div className="d-flex">
+          <LogoWrapper>
+            <AppLogo />
+          </LogoWrapper>
+
+          <div className="d-none d-md-flex">
+            <AppNav />
+          </div>
         </div>
-      </div>
-      <div className="d-none d-md-flex">
-        {/*  TODO: Settings buttons  */}
-      </div>
-      <div className="d-md-none">
-        <AppMenu />
-      </div>
-    </Inner>
-  </Header>
-);
+        <div className="d-none d-md-flex">{/*  TODO: Settings buttons  */}</div>
+        <div className="d-md-none">
+          <AppMenu />
+        </div>
+      </Inner>
+    </Header>
+  );
+};
 
 export default AppHeader;

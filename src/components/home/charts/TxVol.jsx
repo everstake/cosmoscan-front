@@ -5,14 +5,16 @@ import useChartFormatter from '../../../hooks/useChartFormatter';
 import ChartContainer from '../../../layouts/ChartContainer';
 import SelectPeriod from '../../SelectPeriod';
 import AreaChart from '../../chart-types/AreaChart';
-import { periodOpts } from '../../../utils/constants';
+import { periodOpts, coinCodes } from '../../../utils/constants';
 import {
-  formatATOM, formatATOMAmount, formatDate, formatDateWithTime,
+  formatATOM,
+  formatATOMAmount,
+  formatDate,
+  formatDateWithTime,
 } from '../../../utils';
 import API from '../../../api';
+import { useChainsStateContext } from '../../../store/chainContext';
 
-
-const chartName = 'Transfer volume (ATOM)';
 const yAxisWidth = 60;
 const yTickCount = 10;
 const areaName = 'Transfer volume';
@@ -21,7 +23,9 @@ const isDotClickable = false;
 
 const TxVol = () => {
   const res = useRequest(API.getTxVol, defaultPeriod.value);
+  const { chain } = useChainsStateContext();
   const txVolComp = useChartFormatter(res.resp);
+  const chartName = `Transfer volume (${coinCodes[chain]})`;
   // TODO: Configure right navigation
   // const history = useHistory();
   // const onDotClick = () => history.push('/network');
@@ -29,14 +33,14 @@ const TxVol = () => {
   return (
     <ChartContainer
       title={chartName}
-      select={(
+      select={
         <SelectPeriod
           defaultPeriod={defaultPeriod}
           isDisabled={res.isLoading}
           onChange={res.request}
         />
-      )}
-      chart={(
+      }
+      chart={
         <AreaChart
           areaName={areaName}
           isLoading={res.isLoading}
@@ -44,13 +48,16 @@ const TxVol = () => {
           yAxisLabelsFormatter={formatATOMAmount}
           yAxisWidth={yAxisWidth}
           yTickCount={yTickCount}
-          yAxisDomain={[(dataMin) => Math.round(dataMin), (dataMax) => Math.round(dataMax)]}
+          yAxisDomain={[
+            (dataMin) => Math.round(dataMin),
+            (dataMax) => Math.round(dataMax),
+          ]}
           xAxisTickFormatter={formatDate}
           tooltipFormatter={formatATOM}
           tooltipLabelFormatter={formatDateWithTime}
           isDotClickable={isDotClickable}
         />
-        )}
+      }
     />
   );
 };

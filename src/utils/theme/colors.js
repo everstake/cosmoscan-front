@@ -22,4 +22,9 @@ export default {
   burgundy2: '#ff5050',
   navyBlue: '#051e3e',
   navyBlue2: '#04192f',
+
+  bgHeaderColor: {
+    cosmos: '#332E59',
+    persistence: '#383838',
+  },
 };
