@@ -9,6 +9,8 @@ import { useChainsStateContext } from '../../store/chainContext';
 const AppNavWrapper = styled.nav`
   align-items: center;
   display: flex;
+  justify-content: space-between;
+  width: 100%;
 `;
 
 const AppNavUl = styled.ul`
@@ -37,6 +39,7 @@ const AppNavLinkStyles = css`
   &.active {
     color: ${({ theme }) => theme.blue};
     text-decoration: none;
+    outline: none;
   }
 `;
 
