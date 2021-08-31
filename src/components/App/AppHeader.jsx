@@ -12,7 +12,8 @@ const Header = styled.header`
   top: 0;
   width: 100%;
   z-index: 5;
-  background-color: ${({ theme, bg }) => theme.bgHeaderColor[bg]};
+  background-color: ${({ theme, bg }) =>
+    !bg ? theme.bgHeaderColor.cosmos : theme.bgHeaderColor[bg]};
   border-bottom: ${({ theme: { border } }) => border};
 `;
 
