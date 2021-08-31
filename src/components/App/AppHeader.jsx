@@ -22,6 +22,7 @@ const Inner = styled(Container)`
   align-items: center;
   height: 100%;
   margin: 0 auto;
+  width: 100%;
 `;
 
 const LogoWrapper = styled.div`
@@ -38,12 +39,12 @@ const AppHeader = () => {
   return (
     <Header bg={chain}>
       <Inner>
-        <div className="d-flex">
+        <div className="d-flex w-100">
           <LogoWrapper>
             <AppLogo />
           </LogoWrapper>
 
-          <div className="d-none d-md-flex">
+          <div className="d-none d-md-flex w-100">
             <AppNav />
           </div>
         </div>
