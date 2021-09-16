@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 import { NavLink } from 'react-router-dom';
 import Dropdown from '../styled/Dropdown';
 import useRoutes from './hooks/useRoutes';
-// import SelectChain from '../SelectChain';
+import SelectChain from '../SelectChain';
 import { useChainsStateContext } from '../../store/chainContext';
 
 const AppNavWrapper = styled.nav`
@@ -90,7 +90,7 @@ const AppNav = () => {
           </li>
         ))}
       </AppNavUl>
-      {/* <SelectChain /> */}
+      <SelectChain />
     </AppNavWrapper>
   );
 };
