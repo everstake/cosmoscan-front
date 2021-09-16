@@ -6,7 +6,7 @@ import useRoutes from './hooks/useRoutes';
 import Dropdown from '../styled/Dropdown';
 import A from '../styled/A';
 import { useChainsStateContext } from '../../store/chainContext';
-// import SelectChain from '../SelectChain';
+import SelectChain from '../SelectChain';
 
 const BtnReset = css`
   background-color: transparent;
@@ -134,7 +134,7 @@ const AppMenu = () => {
               ))}
             </AppMenuUl>
 
-            {/* <SelectChain /> */}
+            <SelectChain />
           </nav>
 
           <div>{/*  TODO: Settings buttons  */}</div>
