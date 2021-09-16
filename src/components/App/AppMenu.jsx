@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome/index';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styled, { css } from 'styled-components';
 import { NavLink } from 'react-router-dom';
 import useRoutes from './hooks/useRoutes';
 import Dropdown from '../styled/Dropdown';
 import A from '../styled/A';
 import { useChainsStateContext } from '../../store/chainContext';
-import SelectChain from '../SelectChain';
+// import SelectChain from '../SelectChain';
 
 const BtnReset = css`
   background-color: transparent;
@@ -134,7 +134,7 @@ const AppMenu = () => {
               ))}
             </AppMenuUl>
 
-            <SelectChain />
+            {/* <SelectChain /> */}
           </nav>
 
           <div>{/*  TODO: Settings buttons  */}</div>

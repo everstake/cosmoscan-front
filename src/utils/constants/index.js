@@ -114,7 +114,7 @@ export const selectStyles = {
 
 export const networkList = [
   { label: 'COSMOS', value: 'cosmos' },
-  { label: 'PERSISTENCE', value: 'persistence' },
+  // { label: 'PERSISTENCE', value: 'persistence' },
 ];
 
 export const coinCodes = {
