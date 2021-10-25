@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import ScrollToTop from './ScrollToTop';
 // TODO: Add dynamic imports
 import Home from '../pages/Home';
@@ -22,30 +22,47 @@ const Routes = () => {
       <ScrollToTop />
       <Switch>
         {/* TODO: Create routes config */}
-        {/* <Route exact path="/" component={Home} /> */}
+        <Route exact path={`${chain}`} component={Home} />
         {networkList.map((e) => (
           <Route exact key={e.value} path={`/${e.value}`} component={Home} />
         ))}
-        <Route path={`/${chain}/network-stats`} component={NetworkStats} />
-        <Route path={`/${chain}/network-charts`} component={NetworkCharts} />
         <Route
+          exact
+          path={`/${chain}/network-stats`}
+          component={NetworkStats}
+        />
+        <Route
+          exact
+          path={`/${chain}/network-charts`}
+          component={NetworkCharts}
+        />
+        <Route
+          exact
           path={`/${chain}/governance-stats`}
           component={GovernanceStats}
         />
-        <Route path={`/${chain}/proposal/:id`} component={Proposal} />
+        <Route exact path={`/${chain}/proposal/:id`} component={Proposal} />
         <Route
+          exact
           path={`/${chain}/governance-charts`}
           component={GovernanceCharts}
         />
         <Route
+          exact
           path={`/${chain}/validators-stats`}
           component={ValidatorsStats}
         />
         <Route
+          exact
           path={`/${chain}/validators-charts`}
           component={ValidatorsCharts}
         />
-        <Route path={`/${chain}/validator/:address`} component={Validator} />
+        <Route
+          exact
+          path={`/${chain}/validator/:address`}
+          component={Validator}
+        />
+        <Redirect exact from="/" to={`/${chain}`} />
         <Route component={NotFound} />
       </Switch>
     </>
