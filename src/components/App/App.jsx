@@ -12,19 +12,19 @@ import { StateProvider } from '../../store';
 import { ChainsProvider } from '../../store/chainContext';
 
 const App = () => (
-  <Router>
-    <ThemeProvider theme={theme}>
-      <Normalize />
-      <GlobalStyles />
-      <StateProvider>
-        <ChainsProvider>
+  <ChainsProvider>
+    <Router>
+      <ThemeProvider theme={theme}>
+        <Normalize />
+        <GlobalStyles />
+        <StateProvider>
           <LayoutDefault>
             <Routes />
           </LayoutDefault>
-        </ChainsProvider>
-      </StateProvider>
-    </ThemeProvider>
-  </Router>
+        </StateProvider>
+      </ThemeProvider>
+    </Router>
+  </ChainsProvider>
 );
 
 export default App;
