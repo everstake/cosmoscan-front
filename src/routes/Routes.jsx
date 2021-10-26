@@ -22,7 +22,10 @@ const Routes = () => {
       <ScrollToTop />
       <Switch>
         {/* TODO: Create routes config */}
-        <Route exact path={`${chain}`} component={Home} />
+        <Route exact path={`/${chain}`} component={Home} />
+
+        <Redirect exact from="/" to={`/${chain}`} />
+
         {networkList.map((e) => (
           <Route exact key={e.value} path={`/${e.value}`} component={Home} />
         ))}
@@ -62,7 +65,6 @@ const Routes = () => {
           path={`/${chain}/validator/:address`}
           component={Validator}
         />
-        <Redirect exact from="/" to={`/${chain}`} />
         <Route component={NotFound} />
       </Switch>
     </>

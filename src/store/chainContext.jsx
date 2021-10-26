@@ -1,6 +1,5 @@
 import React, { useState, useMemo, createContext, useContext } from 'react';
 import PropTypes from 'prop-types';
-import { useHistory } from 'react-router-dom';
 
 const ChainsStateContext = createContext(undefined);
 ChainsStateContext.displayName = 'ChainsStateContext';
@@ -32,13 +31,12 @@ const useChainsDispatchContext = () => {
 
 const ChainsProvider = ({ children }) => {
   const [chain, setChain] = useState('cosmos');
-  const history = useHistory();
 
   const currentChain = useMemo(() => {
     if (!sessionStorage.getItem('chain')) {
       sessionStorage.setItem('chain', 'cosmos');
       setChain(sessionStorage.getItem('cosmos'));
-      history.replace('/cosmos');
+      window.location.replace('/cosmos');
       return {
         label: sessionStorage.getItem('chain').toLocaleUpperCase(),
         value: sessionStorage.getItem('chain'),
@@ -50,7 +48,7 @@ const ChainsProvider = ({ children }) => {
       label: sessionStorage.getItem('chain').toLocaleUpperCase(),
       value: sessionStorage.getItem('chain'),
     };
-  }, [history]);
+  }, []);
 
   const handleSwitchChain = (e) => {
     switch (e.value) {
@@ -64,7 +62,7 @@ const ChainsProvider = ({ children }) => {
         break;
       default:
     }
-    history.replace(`/${e.value}`);
+    window.location.replace(`/${e.value}`);
   };
 
   const stateValue = useMemo(() => {
