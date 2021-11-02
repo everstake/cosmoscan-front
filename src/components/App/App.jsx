@@ -9,22 +9,19 @@ import Routes from '../../routes';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../plugins/faLibrary';
 import { StateProvider } from '../../store';
-import { ChainsProvider } from '../../store/chainContext';
 
 const App = () => (
-  <ChainsProvider>
-    <Router>
-      <ThemeProvider theme={theme}>
-        <Normalize />
-        <GlobalStyles />
-        <StateProvider>
-          <LayoutDefault>
-            <Routes />
-          </LayoutDefault>
-        </StateProvider>
-      </ThemeProvider>
-    </Router>
-  </ChainsProvider>
+  <Router>
+    <ThemeProvider theme={theme}>
+      <Normalize />
+      <GlobalStyles />
+      <StateProvider>
+        <LayoutDefault>
+          <Routes />
+        </LayoutDefault>
+      </StateProvider>
+    </ThemeProvider>
+  </Router>
 );
 
 export default App;

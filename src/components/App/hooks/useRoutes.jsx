@@ -4,6 +4,8 @@ import { useState } from 'react';
 const useRoutes = () => {
   const [routes] = useState([
     { name: 'Home', path: '/' },
+    { name: 'Blocks', path: '/blocks' },
+    { name: 'Transactions', path: '/transactions' },
     {
       name: 'Network',
       paths: [

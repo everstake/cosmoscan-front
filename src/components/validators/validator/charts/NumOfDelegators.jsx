@@ -8,12 +8,10 @@ import ChartContainer from '../../../../layouts/ChartContainer';
 import AreaChart from '../../../chart-types/AreaChart';
 import { formatNum, formatDate, formatDateWithTime } from '../../../../utils';
 
-
 const chartName = '# of delegators';
 const yAxisWidth = 40;
 const yTickCount = 10;
 const areaName = chartName;
-
 
 const NumOfDelegators = () => {
   const { address } = useParams();
@@ -25,7 +23,7 @@ const NumOfDelegators = () => {
   return (
     <ChartContainer
       title={chartName}
-      chart={(
+      chart={
         <AreaChart
           areaName={areaName}
           isLoading={isLoading}
@@ -39,7 +37,7 @@ const NumOfDelegators = () => {
           tooltipLabelFormatter={formatDateWithTime}
           color={color}
         />
-      )}
+      }
     />
   );
 };

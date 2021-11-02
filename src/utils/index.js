@@ -1,6 +1,6 @@
 import moment from 'moment';
 import numeral from 'numeral';
-import { coinCodes } from './constants';
+import { networkList } from './constants';
 
 export const removeProtocol = (url) => url.replace(/(^\w+:|^)\/\//, '');
 
@@ -10,23 +10,25 @@ export const formatSec = (num) => `${num} sec`;
 
 export const formatUSD = (amount) => `$${numeral(amount).format('0,0[.][00]')}`;
 
-export const formatATOM = (amount) =>
+export const formatToken = (amount) =>
   `${numeral(amount).format('0,0[.][00000]')} ${
-    coinCodes[sessionStorage.getItem('chain')]
+    networkList.find((e) => e.value === sessionStorage.getItem('chain'))
+      .coinCode
   }`;
 
-export const formatATOMWithFixedFractional = (amount, precision = 5) => {
+export const formatTokenWithFixedFractional = (amount, precision = 5) => {
   let fractionalSize = '';
   for (let i = 0; i < precision; i += 1) {
     fractionalSize += '0';
   }
 
   return `${numeral(amount).format(`0,0.${fractionalSize}`)} ${
-    coinCodes[sessionStorage.getItem('chain')]
+    networkList.find((e) => e.value === sessionStorage.getItem('chain'))
+      .coinCode
   }`;
 };
 
-export const formatATOMAmount = (amount) =>
+export const formatTokenAmount = (amount) =>
   `${numeral(amount).format('0,0[.][00000]')}`;
 
 export const formatPercentValue = (val) => `${val}%`;

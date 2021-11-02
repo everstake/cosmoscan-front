@@ -5,7 +5,7 @@ import { Row } from '../../styled/CustomBsGrid';
 import ColStyled from '../../styled/ColStyled';
 import Section from './Section';
 import WidgetStats from '../../../layouts/WidgetStats';
-import { formatATOM, formatNum, formatGB } from '../../../utils';
+import { formatToken, formatNum, formatGB } from '../../../utils';
 
 // const networkStats = [
 //   { title: 'Proposal voting', value: '40%' },
@@ -29,7 +29,9 @@ const SectionNetwork = ({ stats }) => {
             title="Total bonded balance"
             isVertical
             mainInfo={
-              stakingBal ? formatATOM(stakingBal[stakingBal.length - 1]) : '---'
+              stakingBal
+                ? formatToken(stakingBal[stakingBal.length - 1])
+                : '---'
             }
             sparklineData={stakingBal ? stakingBal.map((e) => ({ y: +e })) : []}
           />

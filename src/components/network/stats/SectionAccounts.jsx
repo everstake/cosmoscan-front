@@ -6,12 +6,11 @@ import ColStyled from '../../styled/ColStyled';
 import Section from './Section';
 import WidgetStats from '../../../layouts/WidgetStats';
 import { formatNum } from '../../../utils';
-import { useChainsStateContext } from '../../../store/chainContext';
-import { coinCodes } from '../../../utils/constants';
+import useCoinFormatter from '../../../hooks/useCoinFormatter';
 
 const SectionAccounts = ({ stats }) => {
   const { accs, whales, smallAccs } = stats;
-  const { chain } = useChainsStateContext();
+  const coin = useCoinFormatter();
 
   return (
     <Section>
@@ -38,7 +37,7 @@ const SectionAccounts = ({ stats }) => {
         </ColStyled>
         <ColStyled>
           <WidgetStats
-            title={`# of small accounts (under 1 ${coinCodes[chain]})`}
+            title={`# of small accounts (under 1 ${coin})`}
             isVertical
             mainInfo={
               smallAccs

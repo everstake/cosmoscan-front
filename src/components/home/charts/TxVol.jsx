@@ -5,15 +5,15 @@ import useChartFormatter from '../../../hooks/useChartFormatter';
 import ChartContainer from '../../../layouts/ChartContainer';
 import SelectPeriod from '../../SelectPeriod';
 import AreaChart from '../../chart-types/AreaChart';
-import { periodOpts, coinCodes } from '../../../utils/constants';
+import { periodOpts } from '../../../utils/constants';
 import {
-  formatATOM,
-  formatATOMAmount,
+  formatToken,
+  formatTokenAmount,
   formatDate,
   formatDateWithTime,
 } from '../../../utils';
 import API from '../../../api';
-import { useChainsStateContext } from '../../../store/chainContext';
+import useCoinFormatter from '../../../hooks/useCoinFormatter';
 
 const yAxisWidth = 60;
 const yTickCount = 10;
@@ -23,9 +23,9 @@ const isDotClickable = false;
 
 const TxVol = () => {
   const res = useRequest(API.getTxVol, defaultPeriod.value);
-  const { chain } = useChainsStateContext();
+  const coin = useCoinFormatter();
   const txVolComp = useChartFormatter(res.resp);
-  const chartName = `Transfer volume (${coinCodes[chain]})`;
+  const chartName = `Transfer volume (${coin})`;
   // TODO: Configure right navigation
   // const history = useHistory();
   // const onDotClick = () => history.push('/network');
@@ -45,7 +45,7 @@ const TxVol = () => {
           areaName={areaName}
           isLoading={res.isLoading}
           data={txVolComp}
-          yAxisLabelsFormatter={formatATOMAmount}
+          yAxisLabelsFormatter={formatTokenAmount}
           yAxisWidth={yAxisWidth}
           yTickCount={yTickCount}
           yAxisDomain={[
@@ -53,7 +53,7 @@ const TxVol = () => {
             (dataMax) => Math.round(dataMax),
           ]}
           xAxisTickFormatter={formatDate}
-          tooltipFormatter={formatATOM}
+          tooltipFormatter={formatToken}
           tooltipLabelFormatter={formatDateWithTime}
           isDotClickable={isDotClickable}
         />
