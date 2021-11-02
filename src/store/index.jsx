@@ -1,56 +1,66 @@
-// import React, {createContext, useContext, useReducer} from 'react';
-// export const StateContext = createContext();
-// export const StateProvider = ({reducer, initialState, children}) =>(
-//   <StateContext.Provider value={useReducer(reducer, initialState)}>
-//     {children}
-//   </StateContext.Provider>
-// );
-// export const useStateValue = () => useContext(StateContext);
-
-
-import React, { createContext, useReducer } from 'react';
+import React, { createContext, useReducer, useMemo } from 'react';
 import PropTypes from 'prop-types';
+import { useHistory } from 'react-router-dom';
 
 const initialState = {
-  stateValue: 'Hui value',
+  chain: 'cosmos',
 };
 
 const actions = {
-  SET_STATE_VALUE: 'SET_STATE_VALUE',
+  SET_CHAIN: 'SET_CHAIN',
 };
 
 const reducer = (state, action) => {
   switch (action.type) {
-    case actions.SET_STATE_VALUE:
-      return { ...state, stateValue: action.payload };
+    case actions.SET_CHAIN:
+      console.log(action.payload);
+      return {
+        ...state,
+        chain: action.payload,
+      };
     default:
-      throw new Error();
+      return state;
   }
 };
 
-const Store = createContext(initialState);
-
-// export const StateProvider = ({ children }) => (
-//   <Store.Provider value={useReducer(reducer, initialState)}>
-//     {children}
-//   </Store.Provider>
-// );
+const Store = createContext();
 
 export const StateProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
+  const history = useHistory();
 
-  const providerData = {
-    ...state,
-    setStateValue: (payload) => {
-      dispatch({ type: 'SET_STATE_VALUE', payload });
-    },
-  };
-  return (
-    <Store.Provider value={providerData}>
-      {children}
-    </Store.Provider>
+  const currentChain = useMemo(() => {
+    if (!sessionStorage.getItem('chain')) {
+      sessionStorage.setItem('chain', 'cosmos');
+      window.location.replace('/cosmos');
+      return {
+        label: sessionStorage.getItem('chain').toLocaleUpperCase(),
+        value: sessionStorage.getItem('chain'),
+      };
+    }
+
+    dispatch({ type: 'SET_CHAIN', payload: sessionStorage.getItem('chain') });
+    return {
+      label: sessionStorage.getItem('chain').toLocaleUpperCase(),
+      value: sessionStorage.getItem('chain'),
+    };
+  }, []);
+
+  const providerData = useMemo(
+    () => ({
+      ...state,
+      currentChain,
+      setCurrentChain: (payload) => {
+        dispatch({ type: 'SET_CHAIN', payload: payload.value });
+        sessionStorage.setItem('chain', payload.value);
+        history.replace(`/${payload.value}`);
+      },
+    }),
+    [currentChain, history, state],
   );
+  return <Store.Provider value={providerData}>{children}</Store.Provider>;
 };
+
 StateProvider.propTypes = {
   children: PropTypes.node.isRequired,
 };

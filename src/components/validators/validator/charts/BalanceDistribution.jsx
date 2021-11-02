@@ -3,16 +3,14 @@ import { useParams } from 'react-router-dom';
 import { ThemeContext } from 'styled-components';
 import ChartContainer from '../../../../layouts/ChartContainer';
 import PieChart from '../../../chart-types/PieChart';
-import { formatATOM, formatPercentDec2 } from '../../../../utils';
+import { formatToken, formatPercentDec2 } from '../../../../utils';
 import useRequest from '../../../../hooks/useRequest';
 import API from '../../../../api';
 
-
 const chartTitle = 'Balance distribution';
 const formatVal = (val, total) => {
-  return `${formatATOM(val)}(${(formatPercentDec2((val * 100) / total))})`;
+  return `${formatToken(val)}(${formatPercentDec2((val * 100) / total)})`;
 };
-
 
 const BalanceDistribution = () => {
   const theme = useContext(ThemeContext);
@@ -21,7 +19,11 @@ const BalanceDistribution = () => {
   const totalBal = useMemo(() => {
     if (!resp || !Object.keys(resp).length) return 0;
 
-    return Number(resp.other_delegated) + Number(resp.self_delegated) + Number(resp.available);
+    return (
+      Number(resp.other_delegated) +
+      Number(resp.self_delegated) +
+      Number(resp.available)
+    );
   }, [resp]);
   const balDist = useMemo(() => {
     if (!resp || !Object.keys(resp).length) return [];
@@ -36,18 +38,18 @@ const BalanceDistribution = () => {
   return (
     <ChartContainer
       title={chartTitle}
-      chart={(
+      chart={
         <PieChart
           isLoading={isLoading}
           data={balDist}
-          // valFormatter={formatATOM}
+          // valFormatter={formatToken}
           valFormatter={(val) => formatVal(val, totalBal)}
           labelFormatter={false}
           height={300}
           isAnimationActive={false}
           cellColors={[theme.blue, theme.violet, theme.burgundy, theme.grey]}
         />
-      )}
+      }
     />
   );
 };

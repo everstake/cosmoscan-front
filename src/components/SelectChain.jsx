@@ -1,11 +1,8 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Select from 'react-select';
 import { networkList } from '../utils/constants';
-import {
-  useChainsDispatchContext,
-  useChainsStateContext,
-} from '../store/chainContext';
 import theme from '../utils/theme';
+import Store from '../store';
 
 const stylesChain = {
   container: (base) => ({
@@ -49,15 +46,16 @@ const stylesChain = {
 };
 
 const SelectChain = () => {
-  const { currentChain } = useChainsStateContext();
-  const { handleSwitchChain } = useChainsDispatchContext();
+  const { setCurrentChain, currentChain } = useContext(Store);
 
   return (
     <>
       <Select
         options={networkList}
         defaultValue={currentChain}
-        onChange={(e) => handleSwitchChain(e)}
+        onChange={(e) => {
+          setCurrentChain(e);
+        }}
         isSearchable={false}
         styles={stylesChain}
       />

@@ -1,8 +1,8 @@
-import { useState, useEffect } from 'react';
-import { useChainsStateContext } from '../store/chainContext';
+import { useState, useEffect, useContext } from 'react';
+import Store from '../store';
 
 const useRequest = (reqFunc, opts) => {
-  const { chain } = useChainsStateContext();
+  const { chain } = useContext(Store);
   const [resp, setResp] = useState(null);
   // TODO: May be needed to change the initial value
   const [isLoading, setIsLoading] = useState(true);

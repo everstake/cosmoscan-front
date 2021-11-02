@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useContext, useMemo } from 'react';
 import Helmet from 'react-helmet';
 import ColStyled from '../../components/styled/ColStyled';
 import useRequest from '../../hooks/useRequest';
@@ -6,11 +6,11 @@ import { Container, Row } from '../../components/styled/CustomBsGrid';
 import CardProposal from '../../components/governance/CardProposal';
 import Spinner from '../../components/Spinner';
 import API from '../../api';
-import { useChainsStateContext } from '../../store/chainContext';
+import Store from '../../store';
 
 const Stats = () => {
   const { isLoading, resp } = useRequest(API.getProposals);
-  const { chain } = useChainsStateContext();
+  const { chain } = useContext(Store);
 
   const noProposals = useMemo(() => {
     return chain === 'persistence' ? 'No Proposals' : 'No data';

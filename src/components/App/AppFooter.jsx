@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { Row, Col } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom';
@@ -7,7 +7,7 @@ import { Container } from '../styled/CustomBsGrid';
 import Dropdown from '../styled/Dropdown';
 import Title from '../styled/Title';
 import useRoutes from './hooks/useRoutes';
-import { useChainsStateContext } from '../../store/chainContext';
+import Store from '../../store';
 
 const Footer = styled.footer`
   flex-shrink: 0;
@@ -121,7 +121,7 @@ const behind = [
 
 const AppFooter = () => {
   const routes = useRoutes();
-  const { chain } = useChainsStateContext();
+  const { chain } = useContext(Store);
 
   return (
     <Footer>
@@ -146,7 +146,7 @@ const AppFooter = () => {
                   {routes.map((route) => (
                     <li key={route.name}>
                       {route.path ? (
-                        <FooterNavLink exact to={`${route.path}${chain}`}>
+                        <FooterNavLink exact to={`/${chain}${route.path}`}>
                           {route.name}
                         </FooterNavLink>
                       ) : (

@@ -5,15 +5,15 @@ import useChartFormatter from '../../../hooks/useChartFormatter';
 import ChartContainer from '../../../layouts/ChartContainer';
 import SelectPeriod from '../../SelectPeriod';
 import AreaChart from '../../chart-types/AreaChart';
-import { periodOpts, coinCodes } from '../../../utils/constants';
+import { periodOpts } from '../../../utils/constants';
 import {
-  formatATOM,
-  formatATOMAmount,
+  formatToken,
+  formatTokenAmount,
   formatDate,
   formatDateWithTime,
 } from '../../../utils';
 import API from '../../../api';
-import { useChainsStateContext } from '../../../store/chainContext';
+import useCoinFormatter from '../../../hooks/useCoinFormatter';
 
 const yAxisWidth = 60;
 const yTickCount = 10;
@@ -22,11 +22,11 @@ const defaultPeriod = periodOpts[2];
 
 const DelegationVol = () => {
   const theme = useContext(ThemeContext);
-  const { chain } = useChainsStateContext();
   const color = theme.success;
   const res = useRequest(API.getDelegationVol, defaultPeriod.value);
   const delegationVolComp = useChartFormatter(res.resp);
-  const chartName = `Delegations per day/hour volume (${coinCodes[chain]})`;
+  const coin = useCoinFormatter();
+  const chartName = `Delegations per day/hour volume (${coin})`;
 
   return (
     <ChartContainer
@@ -43,7 +43,7 @@ const DelegationVol = () => {
           areaName={areaName}
           isLoading={res.isLoading}
           data={delegationVolComp}
-          yAxisLabelsFormatter={formatATOMAmount}
+          yAxisLabelsFormatter={formatTokenAmount}
           yAxisWidth={yAxisWidth}
           yTickCount={yTickCount}
           yAxisDomain={[
@@ -51,7 +51,7 @@ const DelegationVol = () => {
             (dataMax) => Math.round(dataMax),
           ]}
           xAxisTickFormatter={formatDate}
-          tooltipFormatter={formatATOM}
+          tooltipFormatter={formatToken}
           tooltipLabelFormatter={formatDateWithTime}
           color={color}
         />

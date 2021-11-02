@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { Container } from '../styled/CustomBsGrid';
 import AppNav from './AppNav';
 import AppLogo from './AppLogo';
 import AppMenu from './AppMenu';
-import { useChainsStateContext } from '../../store/chainContext';
+import Store from '../../store';
 
 const Header = styled.header`
   height: ${({ theme }) => theme.heightHeader};
@@ -35,7 +35,7 @@ const LogoWrapper = styled.div`
 `;
 
 const AppHeader = () => {
-  const { chain } = useChainsStateContext();
+  const { chain } = useContext(Store);
 
   return (
     <Header bg={chain}>
