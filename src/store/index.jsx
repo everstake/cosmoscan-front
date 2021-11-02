@@ -13,7 +13,6 @@ const actions = {
 const reducer = (state, action) => {
   switch (action.type) {
     case actions.SET_CHAIN:
-      console.log(action.payload);
       return {
         ...state,
         chain: action.payload,

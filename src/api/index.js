@@ -154,6 +154,12 @@ const API = {
   getTransactionList(params) {
     return APIService.get(`/transactions${formatParams(params)}`);
   },
+  getBlockDetails(height) {
+    return APIService.get(`/block/${height}`);
+  },
+  getTransactionDetails(hash) {
+    return APIService.get(`/transaction/${hash}`);
+  },
 };
 
 export default API;

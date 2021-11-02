@@ -60,12 +60,7 @@ const TransactionsTable = () => {
 
   return (
     <>
-      <Table
-        cols={cols}
-        rows={transactions}
-        isLoading={isLoading}
-        isHeightFixed
-      />
+      <Table cols={cols} rows={transactions} isLoading={isLoading} />
       <LayoutPagination isLoading={isLoading} request={request} resp={resp} />
     </>
   );

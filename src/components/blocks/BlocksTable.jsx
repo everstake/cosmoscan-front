@@ -42,11 +42,8 @@ const BlocksTable = () => {
     if (!resp || !Object.keys(resp).length) return [];
 
     return resp.items.map((block) => ({
-      height: block.height,
-      hash: {
-        link: `/${chain}/block/${block.hash}`,
-        value: block.hash,
-      },
+      height: { value: block.height, link: `/${chain}/block/${block.height}` },
+      hash: block.hash,
       proposer: block.proposer,
       proposer_address: block.proposer_address,
       created_at: moment.unix(block.created_at).format('DD-MM-YYYY LTS'),
@@ -55,7 +52,7 @@ const BlocksTable = () => {
 
   return (
     <>
-      <Table cols={cols} rows={blocks} isLoading={isLoading} isHeightFixed />
+      <Table cols={cols} rows={blocks} isLoading={isLoading} />
       <LayoutPagination request={request} isLoading={isLoading} resp={resp} />
     </>
   );
