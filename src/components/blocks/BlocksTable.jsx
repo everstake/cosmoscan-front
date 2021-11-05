@@ -1,10 +1,10 @@
 import React, { useContext, useMemo } from 'react';
 import moment from 'moment';
-import Table from '../Table';
+import Table from '../reusable/Table';
 import Store from '../../store';
 import useRequest from '../../hooks/useRequest';
 import API from '../../api';
-import LayoutPagination from '../LayoutPagination';
+import LayoutPagination from '../reusable/LayoutPagination';
 
 const cols = [
   {
@@ -52,8 +52,13 @@ const BlocksTable = () => {
 
   return (
     <>
-      <Table cols={cols} rows={blocks} isLoading={isLoading} />
-      <LayoutPagination request={request} isLoading={isLoading} resp={resp} />
+      <Table cols={cols} rows={blocks} isLoading={isLoading} maxHeight="100%" />
+      <LayoutPagination
+        request={request}
+        isLoading={isLoading}
+        resp={resp}
+        limit={limit}
+      />
     </>
   );
 };

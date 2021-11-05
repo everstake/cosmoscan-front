@@ -1,11 +1,11 @@
 import React from 'react';
 import { Container } from '../../components/styled/CustomBsGrid';
-import TransactionsTable from '../../components/transactions/TransactionsTable';
+import TransactionList from '../../components/transactions/TransactionList';
 
 const Transactions = () => {
   return (
     <Container>
-      <TransactionsTable />
+      <TransactionList />
     </Container>
   );
 };

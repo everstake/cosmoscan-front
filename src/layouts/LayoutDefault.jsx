@@ -22,9 +22,7 @@ const LayoutDefault = ({ children }) => (
     <AppHeader />
     <AppTopStats />
 
-    <AppContent>
-      {children}
-    </AppContent>
+    <AppContent>{children}</AppContent>
 
     <AppFooter />
   </AppWrapper>

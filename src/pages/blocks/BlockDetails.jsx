@@ -4,7 +4,10 @@ import { NavLink, useParams } from 'react-router-dom';
 import useRequest from '../../hooks/useRequest';
 import API from '../../api';
 import Store from '../../store';
-import TemplateCard from '../../components/TemplateCard';
+import TemplateCard from '../../components/reusable/TemplateCard';
+import TransactionsTable from '../../components/transactions/TransactionsTable';
+import { Container } from '../../components/styled/CustomBsGrid';
+import Subtitle from '../../components/styled/Subtitle';
 
 const BlockDetails = () => {
   const { chain } = useContext(Store);
@@ -15,6 +18,13 @@ const BlockDetails = () => {
     if (!resp || !Object.keys(resp).length) return [];
 
     return resp;
+  }, [resp]);
+
+  const txs = useMemo(() => {
+    if (!resp || !resp.txs) return {};
+
+    return { items: resp.txs };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [resp]);
 
   const items = useMemo(() => {
@@ -61,11 +71,18 @@ const BlockDetails = () => {
   }, [blockDetails]);
 
   return (
-    <TemplateCard
-      title={`Block Details #${blockDetails.height}`}
-      items={items}
-      isLoading={isLoading}
-    />
+    <Container>
+      <TemplateCard
+        title={`Block Details #${blockDetails.height}`}
+        items={items}
+        isLoading={isLoading}
+      />
+
+      <div className="mt-5">
+        <Subtitle p="10px">Transaction</Subtitle>
+        <TransactionsTable resp={txs} isLoading={isLoading} />
+      </div>
+    </Container>
   );
 };
 

@@ -1,10 +1,11 @@
 import React, { useContext, useMemo } from 'react';
+import PropTypes from 'prop-types';
 import moment from 'moment';
-import Table from '../Table';
+import Table from '../reusable/Table';
 import Store from '../../store';
-import useRequest from '../../hooks/useRequest';
-import API from '../../api';
-import LayoutPagination from '../LayoutPagination';
+import LayoutPagination from '../reusable/LayoutPagination';
+import Icon from '../styled/Icon';
+import { formatToken } from '../../utils';
 
 const cols = [
   {
@@ -33,14 +34,8 @@ const cols = [
   },
 ];
 
-const limit = 10;
-
-const TransactionsTable = () => {
+const TransactionsTable = ({ resp, isLoading, request }) => {
   const { chain } = useContext(Store);
-  const { resp, isLoading, request } = useRequest(API.getTransactionList, {
-    limit,
-    offset: 0,
-  });
 
   const transactions = useMemo(() => {
     if (!resp || !Object.keys(resp).length) return [];
@@ -50,8 +45,21 @@ const TransactionsTable = () => {
         link: `/${chain}/transaction/${transaction.hash}`,
         value: transaction.hash,
       },
-      status: transaction.status ? 'success' : 'fail',
-      fee: transaction.fee,
+      status: {
+        process() {
+          return (
+            <div>
+              <Icon
+                icon={transaction.status ? 'check' : 'times'}
+                color={transaction.status ? 'success' : 'danger'}
+                className="mr-1"
+              />
+              {transaction.status ? 'Success' : 'Fail'}
+            </div>
+          );
+        },
+      },
+      fee: formatToken(transaction.fee),
       height: transaction.height,
       messages: transaction.messages,
       created_at: moment.unix(transaction.created_at).format('DD-MM-YYYY LTS'),
@@ -61,9 +69,24 @@ const TransactionsTable = () => {
   return (
     <>
       <Table cols={cols} rows={transactions} isLoading={isLoading} />
-      <LayoutPagination isLoading={isLoading} request={request} resp={resp} />
+
+      {!!resp.total && (
+        <LayoutPagination isLoading={isLoading} request={request} resp={resp} />
+      )}
     </>
   );
+};
+
+TransactionsTable.propTypes = {
+  resp: PropTypes.objectOf(PropTypes.any),
+  request: PropTypes.func,
+  isLoading: PropTypes.bool,
+};
+
+TransactionsTable.defaultProps = {
+  resp: {},
+  request: () => null,
+  isLoading: false,
 };
 
 export default TransactionsTable;

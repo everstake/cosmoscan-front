@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { periodOpts } from '../utils/constants';
 import SelectCustom from './SelectCustom';
 
-
 const SelectPeriod = ({ defaultPeriod, onChange, isDisabled }) => {
   const handleChange = (opt) => {
     onChange(opt.value);
