@@ -1,11 +1,11 @@
 import React, { useMemo } from 'react';
 import moment from 'moment';
 import { useParams } from 'react-router-dom';
-import Table from '../../../Table';
+import Table from '../../../reusable/Table';
 import { formatToken, formatTokenWithFixedFractional } from '../../../../utils';
 import useRequest from '../../../../hooks/useRequest';
 import API from '../../../../api';
-import LayoutPagination from '../../../LayoutPagination';
+import LayoutPagination from '../../../reusable/LayoutPagination';
 
 const cols = [
   { value: 'address', label: 'Address' },
@@ -61,8 +61,8 @@ const Delegators = () => {
       <LayoutPagination
         isLoading={isLoading}
         request={request}
-        resp={resp}
         address={address}
+        resp={resp}
       />
     </>
   );

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 import { Table as BTable } from 'react-bootstrap';
-import Card from './styled/Card';
+import Card from '../styled/Card';
 import Spinner from './Spinner';
 
 const TableResp = styled.div`
@@ -34,7 +34,7 @@ const Th = styled.th`
   top: -1px;
 `;
 
-const CellVal = styled.span`
+const CellVal = styled.div`
   max-width: 200px;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -101,6 +101,7 @@ const Table = ({
     rows,
     colValueKey,
   ]);
+
   // const sortBy = (by) => {
   //   console.log(rowsOrdered.sort((a, b) => +a[by] - +b[by]));
   //   return;
@@ -135,6 +136,7 @@ const Table = ({
               ))}
             </tr>
           </THead>
+
           <tbody>
             {/* eslint-disable-next-line no-nested-ternary */}
             {isLoading ? (
@@ -150,22 +152,25 @@ const Table = ({
                   {Object.keys(row).map((cell, cellIndex) => (
                     // eslint-disable-next-line react/no-array-index-key
                     <td key={`cell-${cellIndex}`}>
-                      <CellVal color={row[cell] && row[cell].color}>
-                        {/* {typeof row[cell] === 'object' ? row[cell].value : row[cell]} */}
-                        {(() => {
-                          if (typeof row[cell] === 'object') {
-                            if ('link' in row[cell]) {
-                              return (
-                                <NavLink exact to={row[cell].link}>
-                                  {row[cell].value}
-                                </NavLink>
-                              );
+                      {row[cell].process ? (
+                        row[cell].process()
+                      ) : (
+                        <CellVal color={row[cell] && row[cell].color}>
+                          {(() => {
+                            if (typeof row[cell] === 'object') {
+                              if ('link' in row[cell]) {
+                                return (
+                                  <NavLink exact to={row[cell].link}>
+                                    {row[cell].value}
+                                  </NavLink>
+                                );
+                              }
+                              return row[cell].value;
                             }
-                            return row[cell].value;
-                          }
-                          return row[cell];
-                        })()}
-                      </CellVal>
+                            return row[cell];
+                          })()}
+                        </CellVal>
+                      )}
                     </td>
                   ))}
                 </Tr>

@@ -1,11 +1,16 @@
 import React, { useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Pagination } from 'react-bootstrap';
-import PaginationStyled from './styled/Pagination';
+import PaginationStyled from '../styled/Pagination';
 
-const maxTotalPage = 4000;
-
-const LayoutPagination = ({ resp, request, isLoading, limit, address }) => {
+const LayoutPagination = ({
+  resp,
+  request,
+  isLoading,
+  limit,
+  address,
+  maxTotalPage,
+}) => {
   const [currPage, setCurrPage] = useState(1);
 
   const totalPages = useMemo(() => {
@@ -15,7 +20,7 @@ const LayoutPagination = ({ resp, request, isLoading, limit, address }) => {
       return Math.ceil(maxTotalPage / limit);
     }
     return Math.ceil(resp.total / limit);
-  }, [limit, resp]);
+  }, [limit, maxTotalPage, resp]);
 
   const jump = (page) => {
     const pageNumber = Math.max(1, page);
@@ -111,12 +116,14 @@ LayoutPagination.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   limit: PropTypes.number,
   address: PropTypes.string,
+  maxTotalPage: PropTypes.number,
 };
 
 LayoutPagination.defaultProps = {
   limit: 10,
   resp: {},
   address: '',
+  maxTotalPage: 4000,
 };
 
 export default LayoutPagination;

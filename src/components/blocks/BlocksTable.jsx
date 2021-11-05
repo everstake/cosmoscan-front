@@ -1,10 +1,10 @@
 import React, { useContext, useMemo } from 'react';
 import moment from 'moment';
-import Table from '../Table';
+import Table from '../reusable/Table';
 import Store from '../../store';
 import useRequest from '../../hooks/useRequest';
 import API from '../../api';
-import LayoutPagination from '../LayoutPagination';
+import LayoutPagination from '../reusable/LayoutPagination';
 
 const cols = [
   {
@@ -42,11 +42,8 @@ const BlocksTable = () => {
     if (!resp || !Object.keys(resp).length) return [];
 
     return resp.items.map((block) => ({
-      height: block.height,
-      hash: {
-        link: `/${chain}/block/${block.hash}`,
-        value: block.hash,
-      },
+      height: { value: block.height, link: `/${chain}/block/${block.height}` },
+      hash: block.hash,
       proposer: block.proposer,
       proposer_address: block.proposer_address,
       created_at: moment.unix(block.created_at).format('DD-MM-YYYY LTS'),
@@ -55,8 +52,13 @@ const BlocksTable = () => {
 
   return (
     <>
-      <Table cols={cols} rows={blocks} isLoading={isLoading} isHeightFixed />
-      <LayoutPagination request={request} isLoading={isLoading} resp={resp} />
+      <Table cols={cols} rows={blocks} isLoading={isLoading} maxHeight="100%" />
+      <LayoutPagination
+        request={request}
+        isLoading={isLoading}
+        resp={resp}
+        limit={limit}
+      />
     </>
   );
 };

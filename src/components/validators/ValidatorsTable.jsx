@@ -1,5 +1,5 @@
 import React, { useContext, useMemo } from 'react';
-import Table from '../Table';
+import Table from '../reusable/Table';
 import useRequest from '../../hooks/useRequest';
 import {
   formatNum,

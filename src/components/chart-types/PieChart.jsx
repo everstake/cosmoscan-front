@@ -9,7 +9,7 @@ import {
 } from 'recharts';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import Spinner from '../Spinner';
+import Spinner from '../reusable/Spinner';
 import { bluePalette } from '../../utils/constants';
 
 const PieChartStyled = styled(PieChartDefault)`
@@ -18,12 +18,12 @@ const PieChartStyled = styled(PieChartDefault)`
 `;
 
 const ChartWrapper = styled.div`
-   width: 100%;
-   height: ${({ defaultHeight }) => `${defaultHeight}px`};
-   
-   @media(max-width: ${({ theme: { smDown } }) => smDown}) {
-     height: ${({ growOnMobile }) => (growOnMobile ? '600px' : '')};
-   };
+  width: 100%;
+  height: ${({ defaultHeight }) => `${defaultHeight}px`};
+
+  @media (max-width: ${({ theme: { smDown } }) => smDown}) {
+    height: ${({ growOnMobile }) => (growOnMobile ? '600px' : '')};
+  }
 `;
 
 const PieChart = ({
@@ -40,55 +40,48 @@ const PieChart = ({
 }) => (
   <ChartWrapper defaultHeight={height} growOnMobile={growOnMobile}>
     {/* eslint-disable-next-line no-nested-ternary */}
-    {isLoading
-      ? (
-        <div
-          className="d-flex justify-content-center align-items-center h-100"
-        >
-          <Spinner />
-        </div>
-      )
-      : data && data.length
-        ? (
-          <ResponsiveContainer>
-            <PieChartStyled>
-              <Tooltip formatter={valFormatter} />
-              {displayLegend && (
-                <Legend
-                  align="left"
-                  iconType="circle"
-                  verticalAlign="top"
-                  wrapperStyle={{
-                    fontWeight: 700,
-                    textTransform: 'uppercase',
-                  }}
-                />
-              )}
-              <Pie
-                data={data}
-                dataKey="value"
-                nameKey="title"
-                minAngle={minAngle}
-                label={labelFormatter}
-                unit=" %"
-                isAnimationActive={isAnimationActive}
-              >
-                {
-                   data.map((entry, index) => (
-                     <Cell key={entry.title} fill={cellColors[index % cellColors.length]} />
-                   ))
-                 }
-              </Pie>
-            </PieChartStyled>
-          </ResponsiveContainer>
-        )
-        : (
-          <div
-            className="d-flex justify-content-center align-items-center h-100"
+    {isLoading ? (
+      <div className="d-flex justify-content-center align-items-center h-100">
+        <Spinner />
+      </div>
+    ) : data && data.length ? (
+      <ResponsiveContainer>
+        <PieChartStyled>
+          <Tooltip formatter={valFormatter} />
+          {displayLegend && (
+            <Legend
+              align="left"
+              iconType="circle"
+              verticalAlign="top"
+              wrapperStyle={{
+                fontWeight: 700,
+                textTransform: 'uppercase',
+              }}
+            />
+          )}
+          <Pie
+            data={data}
+            dataKey="value"
+            nameKey="title"
+            minAngle={minAngle}
+            label={labelFormatter}
+            unit=" %"
+            isAnimationActive={isAnimationActive}
           >
-            No data
-          </div>
-        )}
+            {data.map((entry, index) => (
+              <Cell
+                key={entry.title}
+                fill={cellColors[index % cellColors.length]}
+              />
+            ))}
+          </Pie>
+        </PieChartStyled>
+      </ResponsiveContainer>
+    ) : (
+      <div className="d-flex justify-content-center align-items-center h-100">
+        No data
+      </div>
+    )}
   </ChartWrapper>
 );
 

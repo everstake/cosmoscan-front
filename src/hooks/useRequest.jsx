@@ -24,6 +24,7 @@ const useRequest = (reqFunc, opts) => {
 
   useEffect(() => {
     request(opts);
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chain]);
 

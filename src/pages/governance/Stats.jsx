@@ -4,7 +4,7 @@ import ColStyled from '../../components/styled/ColStyled';
 import useRequest from '../../hooks/useRequest';
 import { Container, Row } from '../../components/styled/CustomBsGrid';
 import CardProposal from '../../components/governance/CardProposal';
-import Spinner from '../../components/Spinner';
+import Spinner from '../../components/reusable/Spinner';
 import API from '../../api';
 import Store from '../../store';
 
