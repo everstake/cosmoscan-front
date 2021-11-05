@@ -104,6 +104,8 @@ const TransactionDetails = () => {
             parsing(obj[prop]);
           } else if ('type' in obj) {
             t.type = obj[prop];
+          } else if (prop === 'amount') {
+            t.body.push({ [prop]: formatToken(Number(obj[prop])) });
           } else {
             t.body.push({ [prop]: obj[prop] });
           }
