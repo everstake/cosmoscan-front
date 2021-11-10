@@ -31,7 +31,6 @@ export const StateProvider = ({ children }) => {
   const currentChain = useMemo(() => {
     if (!sessionStorage.getItem('chain')) {
       sessionStorage.setItem('chain', 'cosmos');
-      window.location.replace('/cosmos');
       return {
         label: sessionStorage.getItem('chain').toLocaleUpperCase(),
         value: sessionStorage.getItem('chain'),
