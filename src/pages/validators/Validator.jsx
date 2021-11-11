@@ -1,5 +1,5 @@
 import React from 'react';
-import Helmet from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import { Tab, Nav } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 import ColStyled from '../../components/styled/ColStyled';

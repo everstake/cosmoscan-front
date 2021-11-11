@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { HelmetProvider } from 'react-helmet-async';
 import { Normalize } from 'styled-normalize';
 import { ThemeProvider } from 'styled-components';
 import GlobalStyles from '../styled/GlobalStyles';
@@ -12,15 +13,17 @@ import { StateProvider } from '../../store';
 
 const App = () => (
   <Router>
-    <ThemeProvider theme={theme}>
-      <Normalize />
-      <GlobalStyles />
-      <StateProvider>
-        <LayoutDefault>
-          <Routes />
-        </LayoutDefault>
-      </StateProvider>
-    </ThemeProvider>
+    <HelmetProvider>
+      <ThemeProvider theme={theme}>
+        <Normalize />
+        <GlobalStyles />
+        <StateProvider>
+          <LayoutDefault>
+            <Routes />
+          </LayoutDefault>
+        </StateProvider>
+      </ThemeProvider>
+    </HelmetProvider>
   </Router>
 );
 

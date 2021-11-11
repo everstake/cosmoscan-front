@@ -1,5 +1,5 @@
 import React from 'react';
-import Helmet from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import { Container, Row } from '../../components/styled/CustomBsGrid';
 import ColMarginStandard from '../../components/styled/ColMarginStabdard';
 import BlocksProposed from '../../components/validators/charts/BlocksProposed';

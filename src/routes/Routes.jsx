@@ -16,6 +16,7 @@ import Blocks from '../pages/blocks/Blocks';
 import Transactions from '../pages/transactions/Transactions';
 import BlockDetails from '../pages/blocks/BlockDetails';
 import TransactionDetails from '../pages/transactions/TransactionDetails';
+import AccountDetails from '../pages/AccountDetails';
 import { networkList } from '../utils/constants';
 import Store from '../store';
 
@@ -77,6 +78,11 @@ const Routes = () => {
           exact
           path={`/${chain}/validator/:address`}
           component={Validator}
+        />
+        <Route
+          exact
+          path={`/${chain}/account/:address`}
+          component={AccountDetails}
         />
         <Route component={NotFound} />
       </Switch>

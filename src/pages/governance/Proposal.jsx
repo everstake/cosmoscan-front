@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import styled from 'styled-components';
-import Helmet from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import { useParams } from 'react-router-dom';
 import moment from 'moment';
 import { Col } from 'react-bootstrap';
@@ -26,9 +26,10 @@ const VotingTableStyled = styled(VotingTable)`
 const Proposal = () => {
   const { id: proposalIdFromRoute } = useParams();
   const res = useRequest(API.getProposals, { id: proposalIdFromRoute });
-  const isData = useMemo(() => Boolean(res && res.resp && res.resp.length), [
-    res,
-  ]);
+  const isData = useMemo(
+    () => Boolean(res && res.resp && res.resp.length),
+    [res],
+  );
 
   const {
     votes_yes: yes,

@@ -1,5 +1,5 @@
-import React, { useMemo } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useContext, useMemo } from 'react';
+import { NavLink, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import moment from 'moment';
 import useRequest from '../../hooks/useRequest';
@@ -14,6 +14,7 @@ import TitleMinor from '../../components/styled/TitleMinor';
 import Flex from '../../components/styled/Flex';
 import Spinner from '../../components/reusable/Spinner';
 import Subtitle from '../../components/styled/Subtitle';
+import Store from '../../store';
 
 const Row = styled.div`
   display: flex;
@@ -32,6 +33,7 @@ const Wrapper = styled.div`
 const TransactionDetails = () => {
   const { id } = useParams();
   const { resp, isLoading } = useRequest(API.getTransactionDetails, id);
+  const { chain } = useContext(Store);
 
   const items = useMemo(() => {
     if (!resp || !Object.keys(resp).length) return [];
@@ -106,7 +108,7 @@ const TransactionDetails = () => {
             t.type = obj[prop];
           } else if (prop === 'amount') {
             t.body.push({ [prop]: formatToken(Number(obj[prop])) });
-          } else {
+          } else if (prop !== 'denom') {
             t.body.push({ [prop]: obj[prop] });
           }
         }
@@ -149,7 +151,14 @@ const TransactionDetails = () => {
                       <Card.Body key={index}>
                         <Row>
                           <Label as="span">{e}:</Label>
-                          <BreakTxt>{el[e]}</BreakTxt>
+
+                          {el[e].includes(chain) ? (
+                            <NavLink exact to={`/${chain}/account/${el[e]}`}>
+                              {el[e]}
+                            </NavLink>
+                          ) : (
+                            <BreakTxt>{el[e]}</BreakTxt>
+                          )}
                         </Row>
                       </Card.Body>
                     )),

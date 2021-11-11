@@ -1,5 +1,5 @@
 import React from 'react';
-import Helmet from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import { Col } from 'react-bootstrap';
 import { Container, Row } from '../../components/styled/CustomBsGrid';
 import ValidatorsTable from '../../components/validators/ValidatorsTable';
