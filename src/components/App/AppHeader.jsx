@@ -30,7 +30,7 @@ const LogoWrapper = styled.div`
   margin-right: 75px;
 
   @media (max-width: ${({ theme }) => theme.xlDown}) {
-    margin-right: 45px;
+    margin-right: 10px;
   }
 `;
 
@@ -45,12 +45,12 @@ const AppHeader = () => {
             <AppLogo />
           </LogoWrapper>
 
-          <div className="d-none d-md-flex w-100">
+          <div className="d-none d-lg-flex w-100">
             <AppNav />
           </div>
         </div>
-        <div className="d-none d-md-flex">{/*  TODO: Settings buttons  */}</div>
-        <div className="d-md-none">
+        <div className="d-none d-lg-flex">{/*  TODO: Settings buttons  */}</div>
+        <div className="d-lg-none">
           <AppMenu />
         </div>
       </Inner>

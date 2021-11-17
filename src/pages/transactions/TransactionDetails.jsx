@@ -93,7 +93,7 @@ const TransactionDetails = () => {
   const messages = useMemo(() => {
     if (!resp || !resp.messages.length) return [];
 
-    const parseMessage = resp.messages.reduce((acc, elem) => {
+    return resp.messages.reduce((acc, elem) => {
       const t = {
         type: '',
         body: [],
@@ -108,6 +108,17 @@ const TransactionDetails = () => {
             t.type = obj[prop];
           } else if (prop === 'amount') {
             t.body.push({ [prop]: formatToken(Number(obj[prop])) });
+          } else if (
+            typeof obj[prop] === 'string' &&
+            obj[prop].includes(`${chain}`) &&
+            obj[prop].length === 45
+          ) {
+            t.body.push({
+              [prop]: {
+                link: `/${chain}/account/${obj[prop]}`,
+                value: obj[prop],
+              },
+            });
           } else if (prop !== 'denom') {
             t.body.push({ [prop]: obj[prop] });
           }
@@ -118,9 +129,7 @@ const TransactionDetails = () => {
       acc.push(t);
       return acc;
     }, []);
-
-    return parseMessage;
-  }, [resp]);
+  }, [resp, chain]);
 
   return (
     <Container>
@@ -130,7 +139,7 @@ const TransactionDetails = () => {
         isLoading={isLoading}
       />
 
-      <div className="mt-5">
+      <div className="mt-4">
         <Card>
           <Subtitle p="10px">Messages</Subtitle>
 
@@ -152,13 +161,20 @@ const TransactionDetails = () => {
                         <Row>
                           <Label as="span">{e}:</Label>
 
-                          {el[e].includes(chain) ? (
-                            <NavLink exact to={`/${chain}/account/${el[e]}`}>
-                              {el[e]}
-                            </NavLink>
-                          ) : (
-                            <BreakTxt>{el[e]}</BreakTxt>
-                          )}
+                          <BreakTxt>
+                            {(() => {
+                              if (typeof el[e] === 'object') {
+                                if ('link' in el[e]) {
+                                  return (
+                                    <NavLink exact to={el[e].link}>
+                                      {el[e].value}
+                                    </NavLink>
+                                  );
+                                }
+                              }
+                              return el[e];
+                            })()}
+                          </BreakTxt>
                         </Row>
                       </Card.Body>
                     )),

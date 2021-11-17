@@ -5,7 +5,6 @@ import ChartContainer from '../../../layouts/ChartContainer';
 import PieChart from '../../chart-types/PieChart';
 import { formatPercentDec2 } from '../../../utils';
 
-
 const chartName = 'Voting';
 const labelFormatter = (entry) => `${formatPercentDec2(entry.value)}`;
 
@@ -15,7 +14,7 @@ function VotingChart({ data, isLoading }) {
   return (
     <ChartContainer
       title={chartName}
-      chart={(
+      chart={
         <PieChart
           isLoading={isLoading}
           data={data}
@@ -27,7 +26,7 @@ function VotingChart({ data, isLoading }) {
           cellColors={[theme.blue, theme.danger, theme.burgundy, theme.grey]}
           isAnimationActive={false}
         />
-      )}
+      }
     />
   );
 }

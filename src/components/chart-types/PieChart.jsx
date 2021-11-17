@@ -37,6 +37,7 @@ const PieChart = ({
   displayLegend,
   cellColors,
   growOnMobile,
+  displayTooltip,
 }) => (
   <ChartWrapper defaultHeight={height} growOnMobile={growOnMobile}>
     {/* eslint-disable-next-line no-nested-ternary */}
@@ -47,7 +48,7 @@ const PieChart = ({
     ) : data && data.length ? (
       <ResponsiveContainer>
         <PieChartStyled>
-          <Tooltip formatter={valFormatter} />
+          {displayTooltip && <Tooltip formatter={valFormatter} />}
           {displayLegend && (
             <Legend
               align="left"
@@ -87,7 +88,7 @@ const PieChart = ({
 
 PieChart.propTypes = {
   isLoading: PropTypes.bool,
-  data: PropTypes.arrayOf(PropTypes.object).isRequired,
+  data: PropTypes.arrayOf(PropTypes.object),
   valFormatter: PropTypes.func,
   labelFormatter: PropTypes.oneOfType([PropTypes.func, PropTypes.bool]),
   height: PropTypes.number,
@@ -96,8 +97,10 @@ PieChart.propTypes = {
   displayLegend: PropTypes.bool,
   growOnMobile: PropTypes.bool,
   cellColors: PropTypes.arrayOf(PropTypes.string),
+  displayTooltip: PropTypes.bool,
 };
 PieChart.defaultProps = {
+  data: [],
   isLoading: false,
   valFormatter: (val) => val,
   labelFormatter: (entry) => entry.value,
@@ -107,6 +110,7 @@ PieChart.defaultProps = {
   displayLegend: true,
   growOnMobile: true,
   cellColors: bluePalette,
+  displayTooltip: true,
 };
 
 export default PieChart;

@@ -7,7 +7,6 @@ import Store from '../../store';
 import TemplateCard from '../../components/reusable/TemplateCard';
 import TransactionsTable from '../../components/transactions/TransactionsTable';
 import { Container } from '../../components/styled/CustomBsGrid';
-import Subtitle from '../../components/styled/Subtitle';
 
 const BlockDetails = () => {
   const { chain } = useContext(Store);
@@ -78,8 +77,7 @@ const BlockDetails = () => {
         isLoading={isLoading}
       />
 
-      <div className="mt-5">
-        <Subtitle p="10px">Transaction</Subtitle>
+      <div className="mt-4">
         <TransactionsTable resp={txs} isLoading={isLoading} />
       </div>
     </Container>
