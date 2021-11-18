@@ -10,12 +10,6 @@ export const formatSec = (num) => `${num} sec`;
 
 export const formatUSD = (amount) => `$${numeral(amount).format('0,0[.][00]')}`;
 
-export const formatToken = (amount) =>
-  `${numeral(amount).format('0,0[.][00000]')} ${
-    networkList.find((e) => e.value === sessionStorage.getItem('chain'))
-      .coinCode
-  }`;
-
 export const formatTokenWithFixedFractional = (amount, precision = 5) => {
   let fractionalSize = '';
   for (let i = 0; i < precision; i += 1) {
@@ -47,6 +41,28 @@ export const formatPercentDec2 = (val) => {
   const res = numeral(val).format('0,0[.][00]');
   if (res === 'NaN') return `${roundToPrecision(val, 2)}%`;
   return `${res}%`;
+};
+
+export const formatToken = (amount) => {
+  const res = numeral(amount).format('0,0[.][0000]');
+
+  if (res === 'NaN') {
+    return `${roundToPrecision(amount, 5)} ${
+      networkList.find((e) => e.value === sessionStorage.getItem('chain'))
+        .coinCode
+    }`;
+  }
+  if (amount < 0.0001) {
+    return `${numeral(amount).format('0[.][00000000]')} ${
+      networkList.find((e) => e.value === sessionStorage.getItem('chain'))
+        .coinCode
+    }`;
+  }
+
+  return `${res} ${
+    networkList.find((e) => e.value === sessionStorage.getItem('chain'))
+      .coinCode
+  }`;
 };
 
 export const formatDateWithTime = (val) =>

@@ -1,5 +1,5 @@
-import React, { useMemo } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useContext, useMemo } from 'react';
+import { NavLink, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import moment from 'moment';
 import useRequest from '../../hooks/useRequest';
@@ -14,6 +14,7 @@ import TitleMinor from '../../components/styled/TitleMinor';
 import Flex from '../../components/styled/Flex';
 import Spinner from '../../components/reusable/Spinner';
 import Subtitle from '../../components/styled/Subtitle';
+import Store from '../../store';
 
 const Row = styled.div`
   display: flex;
@@ -32,6 +33,7 @@ const Wrapper = styled.div`
 const TransactionDetails = () => {
   const { id } = useParams();
   const { resp, isLoading } = useRequest(API.getTransactionDetails, id);
+  const { chain } = useContext(Store);
 
   const items = useMemo(() => {
     if (!resp || !Object.keys(resp).length) return [];
@@ -91,7 +93,7 @@ const TransactionDetails = () => {
   const messages = useMemo(() => {
     if (!resp || !resp.messages.length) return [];
 
-    const parseMessage = resp.messages.reduce((acc, elem) => {
+    return resp.messages.reduce((acc, elem) => {
       const t = {
         type: '',
         body: [],
@@ -106,7 +108,18 @@ const TransactionDetails = () => {
             t.type = obj[prop];
           } else if (prop === 'amount') {
             t.body.push({ [prop]: formatToken(Number(obj[prop])) });
-          } else {
+          } else if (
+            typeof obj[prop] === 'string' &&
+            obj[prop].includes(`${chain}`) &&
+            obj[prop].length === 45
+          ) {
+            t.body.push({
+              [prop]: {
+                link: `/${chain}/account/${obj[prop]}`,
+                value: obj[prop],
+              },
+            });
+          } else if (prop !== 'denom') {
             t.body.push({ [prop]: obj[prop] });
           }
         }
@@ -116,9 +129,7 @@ const TransactionDetails = () => {
       acc.push(t);
       return acc;
     }, []);
-
-    return parseMessage;
-  }, [resp]);
+  }, [resp, chain]);
 
   return (
     <Container>
@@ -128,7 +139,7 @@ const TransactionDetails = () => {
         isLoading={isLoading}
       />
 
-      <div className="mt-5">
+      <div className="mt-4">
         <Card>
           <Subtitle p="10px">Messages</Subtitle>
 
@@ -149,7 +160,21 @@ const TransactionDetails = () => {
                       <Card.Body key={index}>
                         <Row>
                           <Label as="span">{e}:</Label>
-                          <BreakTxt>{el[e]}</BreakTxt>
+
+                          <BreakTxt>
+                            {(() => {
+                              if (typeof el[e] === 'object') {
+                                if ('link' in el[e]) {
+                                  return (
+                                    <NavLink exact to={el[e].link}>
+                                      {el[e].value}
+                                    </NavLink>
+                                  );
+                                }
+                              }
+                              return el[e];
+                            })()}
+                          </BreakTxt>
                         </Row>
                       </Card.Body>
                     )),

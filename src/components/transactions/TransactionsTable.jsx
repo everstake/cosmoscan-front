@@ -38,7 +38,7 @@ const TransactionsTable = ({ resp, isLoading, request }) => {
   const { chain } = useContext(Store);
 
   const transactions = useMemo(() => {
-    if (!resp || !Object.keys(resp).length) return [];
+    if (!resp || !Object.keys(resp).length || resp.items === null) return [];
 
     return resp.items.map((transaction) => ({
       hash: {

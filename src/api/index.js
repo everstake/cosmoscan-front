@@ -160,6 +160,9 @@ const API = {
   getTransactionDetails(hash) {
     return APIService.get(`/transaction/${hash}`);
   },
+  getAccountDetails(address) {
+    return APIService.get(`/account/${address}`);
+  },
 };
 
 export default API;

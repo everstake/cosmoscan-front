@@ -13,19 +13,21 @@ const Row = styled.div`
   gap: 15px;
 `;
 const Label = styled(TitleMinor)`
-  min-width: 170px;
+  min-width: 150px;
 `;
 
 const TemplateCard = ({ title, items, isLoading }) => {
   return (
     <Card>
-      <Card.Header>
-        <Subtitle>{title}</Subtitle>
-      </Card.Header>
+      {!!title && (
+        <Card.Header>
+          <Subtitle>{title}</Subtitle>
+        </Card.Header>
+      )}
 
       {/* eslint-disable-next-line no-nested-ternary */}
       {isLoading ? (
-        <Flex.Center className="p-3">
+        <Flex.Center className="h-100 p-3">
           <Spinner />
         </Flex.Center>
       ) : items && items.length ? (
@@ -52,7 +54,7 @@ TemplateCard.propTypes = {
   isLoading: PropTypes.bool,
 };
 TemplateCard.defaultProps = {
-  title: '---',
+  title: '',
   items: [],
   isLoading: false,
 };

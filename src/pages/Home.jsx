@@ -1,5 +1,5 @@
 import React from 'react';
-import Helmet from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import { Container } from '../components/styled/CustomBsGrid';
 import MainStats from '../components/home/MainStats';
 import MainCharts from '../components/home/MainCharts';

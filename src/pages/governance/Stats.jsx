@@ -1,5 +1,5 @@
 import React, { useContext, useMemo } from 'react';
-import Helmet from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import ColStyled from '../../components/styled/ColStyled';
 import useRequest from '../../hooks/useRequest';
 import { Container, Row } from '../../components/styled/CustomBsGrid';

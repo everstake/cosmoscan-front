@@ -96,11 +96,10 @@ const Table = ({
   maxHeight,
   isHeightFixed,
 }) => {
-  const rowsOrdered = useMemo(() => orderRowsData(rows, cols, colValueKey), [
-    cols,
-    rows,
-    colValueKey,
-  ]);
+  const rowsOrdered = useMemo(
+    () => orderRowsData(rows, cols, colValueKey),
+    [cols, rows, colValueKey],
+  );
 
   // const sortBy = (by) => {
   //   console.log(rowsOrdered.sort((a, b) => +a[by] - +b[by]));

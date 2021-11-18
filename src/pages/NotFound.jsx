@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import Helmet from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 import { Container } from '../components/styled/CustomBsGrid';
