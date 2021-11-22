@@ -109,9 +109,11 @@ const TransactionDetails = () => {
           } else if (prop === 'amount') {
             t.body.push({ [prop]: formatToken(Number(obj[prop])) });
           } else if (
-            typeof obj[prop] === 'string' &&
-            obj[prop].includes(`${chain}`) &&
-            obj[prop].length === 45
+            (typeof obj[prop] === 'string' &&
+              obj[prop].includes(`${chain}`) &&
+              obj[prop].length === 45) ||
+            obj[prop].length === 46 ||
+            obj[prop].length === 50
           ) {
             t.body.push({
               [prop]: {
