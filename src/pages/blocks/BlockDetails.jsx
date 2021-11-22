@@ -58,7 +58,7 @@ const BlockDetails = () => {
           return (
             <NavLink
               exact
-              to={`/${chain}/validator/${blockDetails.proposer_address}`}
+              to={`/${chain.value}/validator/${blockDetails.proposer_address}`}
             >
               {blockDetails.proposer}
             </NavLink>

@@ -42,7 +42,7 @@ const TransactionsTable = ({ resp, isLoading, request }) => {
 
     return resp.items.map((transaction) => ({
       hash: {
-        link: `/${chain}/transaction/${transaction.hash}`,
+        link: `/${chain.value}/transaction/${transaction.hash}`,
         value: transaction.hash,
       },
       status: {

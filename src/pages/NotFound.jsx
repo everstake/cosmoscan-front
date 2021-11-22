@@ -56,7 +56,7 @@ const NotFound = () => {
         Unfortunately, the page you are looking for is not found... &#128577;
       </p>
       <div>
-        <LinkBtn to={`/${chain}`}>Home</LinkBtn>
+        <LinkBtn to={`/${chain.value}`}>Home</LinkBtn>
       </div>
     </Container>
   );

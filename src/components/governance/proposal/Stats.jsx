@@ -53,7 +53,7 @@ const Stats = ({
                   {proposer.length !== 45 ? (
                     <NavLink
                       exact
-                      to={`/${chain}/validator/${proposerAddress}`}
+                      to={`/${chain.value}/validator/${proposerAddress}`}
                     >
                       {noString(proposer)}
                     </NavLink>

@@ -42,7 +42,10 @@ const BlocksTable = () => {
     if (!resp || !Object.keys(resp).length) return [];
 
     return resp.items.map((block) => ({
-      height: { value: block.height, link: `/${chain}/block/${block.height}` },
+      height: {
+        value: block.height,
+        link: `/${chain.value}/block/${block.height}`,
+      },
       hash: block.hash,
       proposer: block.proposer,
       proposer_address: block.proposer_address,

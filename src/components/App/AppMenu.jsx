@@ -104,7 +104,7 @@ const AppMenu = () => {
                 <li key={route.name}>
                   {route.path ? (
                     <AppMenuLink
-                      to={`/${chain}${route.path}`}
+                      to={`/${chain.value}${route.path}`}
                       onClick={closeMenu}
                       exact
                     >
@@ -121,7 +121,7 @@ const AppMenu = () => {
                           <Dropdown.Item
                             key={e.name}
                             as={NavLink}
-                            to={`/${chain}${e.path}`}
+                            to={`/${chain.value}${e.path}`}
                             onClick={closeMenu}
                           >
                             {e.name}

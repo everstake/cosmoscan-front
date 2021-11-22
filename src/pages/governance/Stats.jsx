@@ -13,7 +13,7 @@ const Stats = () => {
   const { chain } = useContext(Store);
 
   const noProposals = useMemo(() => {
-    return chain === 'persistence' ? 'No Proposals' : 'No data';
+    return chain.value === 'persistence' ? 'No Proposals' : 'No data';
   }, [chain]);
 
   return (
