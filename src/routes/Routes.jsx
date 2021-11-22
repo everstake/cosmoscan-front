@@ -34,54 +34,66 @@ const Routes = () => {
         {/* TODO: Create routes config */}
         {/* <Route exact path={`/${chain}`} component={Home} /> */}
 
-        <Redirect exact from="/" to={`/${chain}`} />
-        <Route exact path={`/${chain}/blocks`} component={Blocks} />
-        <Route exact path={`/${chain}/block/:id`} component={BlockDetails} />
-        <Route exact path={`/${chain}/transactions`} component={Transactions} />
+        <Redirect exact from="/" to={`/${chain.value}`} />
+        <Route exact path={`/${chain.value}/blocks`} component={Blocks} />
         <Route
           exact
-          path={`/${chain}/transaction/:id`}
+          path={`/${chain.value}/block/:id`}
+          component={BlockDetails}
+        />
+        <Route
+          exact
+          path={`/${chain.value}/transactions`}
+          component={Transactions}
+        />
+        <Route
+          exact
+          path={`/${chain.value}/transaction/:id`}
           component={TransactionDetails}
         />
         <Route
           exact
-          path={`/${chain}/network-stats`}
+          path={`/${chain.value}/network-stats`}
           component={NetworkStats}
         />
         <Route
           exact
-          path={`/${chain}/network-charts`}
+          path={`/${chain.value}/network-charts`}
           component={NetworkCharts}
         />
         <Route
           exact
-          path={`/${chain}/governance-stats`}
+          path={`/${chain.value}/governance-stats`}
           component={GovernanceStats}
         />
-        <Route exact path={`/${chain}/proposal/:id`} component={Proposal} />
         <Route
           exact
-          path={`/${chain}/governance-charts`}
+          path={`/${chain.value}/proposal/:id`}
+          component={Proposal}
+        />
+        <Route
+          exact
+          path={`/${chain.value}/governance-charts`}
           component={GovernanceCharts}
         />
         <Route
           exact
-          path={`/${chain}/validators-stats`}
+          path={`/${chain.value}/validators-stats`}
           component={ValidatorsStats}
         />
         <Route
           exact
-          path={`/${chain}/validators-charts`}
+          path={`/${chain.value}/validators-charts`}
           component={ValidatorsCharts}
         />
         <Route
           exact
-          path={`/${chain}/validator/:address`}
+          path={`/${chain.value}/validator/:address`}
           component={Validator}
         />
         <Route
           exact
-          path={`/${chain}/account/:address`}
+          path={`/${chain.value}/account/:address`}
           component={AccountDetails}
         />
         <Route component={NotFound} />

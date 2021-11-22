@@ -146,7 +146,10 @@ const AppFooter = () => {
                   {routes.map((route) => (
                     <li key={route.name}>
                       {route.path ? (
-                        <FooterNavLink exact to={`/${chain}${route.path}`}>
+                        <FooterNavLink
+                          exact
+                          to={`/${chain.value}${route.path}`}
+                        >
                           {route.name}
                         </FooterNavLink>
                       ) : (
@@ -160,7 +163,7 @@ const AppFooter = () => {
                               <Dropdown.Item
                                 key={e.name}
                                 as={NavLink}
-                                to={`/${chain}${e.path}`}
+                                to={`/${chain.value}${e.path}`}
                               >
                                 {e.name}
                               </Dropdown.Item>

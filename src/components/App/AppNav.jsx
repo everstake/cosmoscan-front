@@ -65,7 +65,7 @@ const AppNav = () => {
         {routes.map((route) => (
           <li key={route.name}>
             {route.path ? (
-              <AppNavLink to={`/${chain}${route.path}`} exact>
+              <AppNavLink to={`/${chain.value}${route.path}`} exact>
                 {route.name}
               </AppNavLink>
             ) : (
@@ -79,7 +79,7 @@ const AppNav = () => {
                     <Dropdown.Item
                       key={e.name}
                       as={NavLink}
-                      to={`/${chain}${e.path}`}
+                      to={`/${chain.value}${e.path}`}
                     >
                       {e.name}
                     </Dropdown.Item>

@@ -7,7 +7,7 @@ const AppLogo = () => {
   const { chain } = useContext(Store);
   return (
     <div>
-      <Link to={`/${chain}`} className="d-inline-block">
+      <Link to={`/${chain.value}`} className="d-inline-block">
         <img src={logo} alt="Cosmoscan" width="35" height="35" />
       </Link>
     </div>
