@@ -5,34 +5,24 @@ import { Row } from '../../styled/CustomBsGrid';
 import ColStyled from '../../styled/ColStyled';
 import Section from './Section';
 import WidgetStats from '../../../layouts/WidgetStats';
-import { formatATOM } from '../../../utils';
-
+import { formatToken } from '../../../utils';
 
 // const balances = [
 //   { title: 'Total burned', value: '120 777 222 ATOM' },
 // ];
 
 const SectionBalances = ({ stats }) => {
-  const {
-    txVol, feeVol, unbond, highestFee,
-  } = stats;
+  const { txVol, feeVol, unbond, highestFee } = stats;
   return (
     <Section>
-      <Title>
-        Balances
-      </Title>
+      <Title>Balances</Title>
 
-      <Row
-        xs={1}
-        md={2}
-        lg={3}
-        xl={4}
-      >
+      <Row xs={1} md={2} lg={3} xl={4}>
         <ColStyled>
           <WidgetStats
             title="Transfer volume"
             isVertical
-            mainInfo={txVol ? formatATOM(txVol[txVol.length - 1]) : '---'}
+            mainInfo={txVol ? formatToken(txVol[txVol.length - 1]) : '---'}
             sparklineData={txVol ? txVol.map((e) => ({ y: +e })) : []}
           />
         </ColStyled>
@@ -41,7 +31,7 @@ const SectionBalances = ({ stats }) => {
           <WidgetStats
             title="Fee volume"
             isVertical
-            mainInfo={feeVol ? formatATOM(feeVol[feeVol.length - 1]) : '---'}
+            mainInfo={feeVol ? formatToken(feeVol[feeVol.length - 1]) : '---'}
             sparklineData={feeVol ? feeVol.map((e) => ({ y: +e })) : []}
           />
         </ColStyled>
@@ -50,7 +40,7 @@ const SectionBalances = ({ stats }) => {
           <WidgetStats
             title="Total unbonding"
             isVertical
-            mainInfo={unbond ? formatATOM(unbond[unbond.length - 1]) : '---'}
+            mainInfo={unbond ? formatToken(unbond[unbond.length - 1]) : '---'}
             sparklineData={unbond ? unbond.map((e) => ({ y: +e })) : []}
           />
         </ColStyled>
@@ -59,7 +49,11 @@ const SectionBalances = ({ stats }) => {
           <WidgetStats
             title="Highest fee block"
             isVertical
-            mainInfo={highestFee ? formatATOM(highestFee[highestFee.length - 1]) : '---'}
+            mainInfo={
+              highestFee
+                ? formatToken(highestFee[highestFee.length - 1])
+                : '---'
+            }
             sparklineData={highestFee ? highestFee.map((e) => ({ y: +e })) : []}
           />
         </ColStyled>

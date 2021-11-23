@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useMemo } from 'react';
-import Helmet from 'react-helmet';
+import React, { useState, useEffect } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { Container, Row } from '../../components/styled/CustomBsGrid';
 import ColMarginStandard from '../../components/styled/ColMarginStabdard';
 import useRequest from '../../hooks/useRequest';
@@ -8,18 +8,12 @@ import ProposalTurnout from '../../components/governance/charts/ProposalTurnout'
 import VoterActivity from '../../components/governance/charts/VoterActivity';
 // import VotingPowerToVeto from '../../components/governance/charts/VotingPowerToVeto';
 import VetoedProposals from '../../components/governance/charts/VetoedProposals';
-import { useChainsStateContext } from '../../store/chainContext';
 
 const Charts = () => {
   const { resp, isLoading } = useRequest(API.getProposalsCharts);
   const [turnouts, setTurnouts] = useState([]);
   const [voterActivity, setVoterActivity] = useState([]);
   const [vetoed, setVetoed] = useState([]);
-  const { chain } = useChainsStateContext();
-
-  const noProposals = useMemo(() => {
-    return chain === 'persistence' ? 'No Proposals' : 'No data';
-  }, [chain]);
 
   useEffect(() => {
     if (!resp || !resp.length) return;
@@ -73,24 +67,20 @@ const Charts = () => {
         />
       </Helmet>
 
-      {resp ? (
-        <Row xs={1} xl={2}>
-          <ColMarginStandard>
-            <ProposalTurnout isLoading={isLoading} data={turnouts} />
-          </ColMarginStandard>
-          <ColMarginStandard>
-            <VoterActivity isLoading={isLoading} data={voterActivity} />
-          </ColMarginStandard>
-          {/* <ColMarginStandard> */}
-          {/*  <VotingPowerToVeto /> */}
-          {/* </ColMarginStandard> */}
-          <ColMarginStandard>
-            <VetoedProposals isLoading={isLoading} data={vetoed} />
-          </ColMarginStandard>
-        </Row>
-      ) : (
-        <div className="text-center w-100">{noProposals}</div>
-      )}
+      <Row xs={1} xl={2}>
+        <ColMarginStandard>
+          <ProposalTurnout isLoading={isLoading} data={turnouts} />
+        </ColMarginStandard>
+        <ColMarginStandard>
+          <VoterActivity isLoading={isLoading} data={voterActivity} />
+        </ColMarginStandard>
+        {/* <ColMarginStandard> */}
+        {/*  <VotingPowerToVeto /> */}
+        {/* </ColMarginStandard> */}
+        <ColMarginStandard>
+          <VetoedProposals isLoading={isLoading} data={vetoed} />
+        </ColMarginStandard>
+      </Row>
     </Container>
   );
 };

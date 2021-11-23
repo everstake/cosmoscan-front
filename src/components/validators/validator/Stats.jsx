@@ -5,10 +5,8 @@ import Card from '../../styled/Card';
 import TitleMinor from '../../styled/TitleMinor';
 import StatsItemFlex from '../../styled/StatsItemFlex';
 import BreakTxt from '../../styled/BreakTxt';
-import {
-  Green, Blue,
-} from '../../styled/TxtColors';
-import { formatNum, formatATOM } from '../../../utils';
+import { Green, Blue } from '../../styled/TxtColors';
+import { formatNum, formatToken } from '../../../utils';
 import useRequest from '../../../hooks/useRequest';
 import API from '../../../api';
 
@@ -17,7 +15,6 @@ const StatsWrap = styled.div`
   flex-wrap: wrap;
   justify-content: space-between;
 `;
-
 
 const Stats = () => {
   const { address } = useParams();
@@ -31,25 +28,13 @@ const Stats = () => {
             <StatsItemFlex>
               <TitleMinor>Proposed blocks: </TitleMinor>
               <BreakTxt>
-                <Green>
-                  { formatNum(resp.proposed) }
-                </Green>
+                <Green>{formatNum(resp.proposed)}</Green>
               </BreakTxt>
             </StatsItemFlex>
-            {/*<StatsItemFlex>*/}
-            {/*  <TitleMinor>Missed signatures: </TitleMinor>*/}
-            {/*  <BreakTxt>*/}
-            {/*    <Burgundy>*/}
-            {/*      { formatNum(resp.missed_validations) }*/}
-            {/*    </Burgundy>*/}
-            {/*  </BreakTxt>*/}
-            {/*</StatsItemFlex>*/}
             <StatsItemFlex>
               <TitleMinor>ATOM generated in hub-3: </TitleMinor>
               <BreakTxt>
-                <Blue>
-                  { formatATOM(resp.revenue) }
-                </Blue>
+                <Blue>{formatToken(resp.revenue)}</Blue>
               </BreakTxt>
             </StatsItemFlex>
           </StatsWrap>

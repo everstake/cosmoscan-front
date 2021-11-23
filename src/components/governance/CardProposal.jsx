@@ -12,12 +12,11 @@ import {
   noString,
   formatNum,
   formatPercentValue,
-  formatATOM,
+  formatToken,
   formatPercentDec2,
   formatChartData,
 } from '../../utils';
-import { useChainsStateContext } from '../../store/chainContext';
-import { coinCodes } from '../../utils/constants';
+import useCoinFormatter from '../../hooks/useCoinFormatter';
 
 const Status = styled.div`
   ${({ status, theme: { success, danger } }) => css`
@@ -51,7 +50,8 @@ const NavLinkStyled = styled(NavLink)`
 
 const CardProposal = ({ proposal }) => {
   const theme = useContext(ThemeContext);
-  const { chain } = useChainsStateContext();
+  const coin = useCoinFormatter();
+
   const {
     id,
     status,
@@ -117,10 +117,8 @@ const CardProposal = ({ proposal }) => {
             )}
 
             <div className="mb-1">
-              <TitleMinor className="mb-0">
-                Amount of {coinCodes[chain]} voted:
-              </TitleMinor>
-              <div>{formatATOM(totalATOMVoted)}</div>
+              <TitleMinor className="mb-0">Amount of {coin} voted:</TitleMinor>
+              <div>{formatToken(totalATOMVoted)}</div>
             </div>
 
             <div className="mb-1">

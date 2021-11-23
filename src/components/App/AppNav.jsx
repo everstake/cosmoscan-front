@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled, { css } from 'styled-components';
 import { NavLink } from 'react-router-dom';
 import Dropdown from '../styled/Dropdown';
 import useRoutes from './hooks/useRoutes';
 import SelectChain from '../SelectChain';
-import { useChainsStateContext } from '../../store/chainContext';
+import Store from '../../store';
 
 const AppNavWrapper = styled.nav`
   align-items: center;
@@ -57,7 +57,7 @@ const AppNavButtonLink = styled.button`
 
 const AppNav = () => {
   const routes = useRoutes();
-  const { chain } = useChainsStateContext();
+  const { chain } = useContext(Store);
 
   return (
     <AppNavWrapper>
@@ -65,7 +65,7 @@ const AppNav = () => {
         {routes.map((route) => (
           <li key={route.name}>
             {route.path ? (
-              <AppNavLink to={`${route.path}${chain}`} exact>
+              <AppNavLink to={`/${chain.value}${route.path}`} exact>
                 {route.name}
               </AppNavLink>
             ) : (
@@ -79,7 +79,7 @@ const AppNav = () => {
                     <Dropdown.Item
                       key={e.name}
                       as={NavLink}
-                      to={`/${chain}${e.path}`}
+                      to={`/${chain.value}${e.path}`}
                     >
                       {e.name}
                     </Dropdown.Item>

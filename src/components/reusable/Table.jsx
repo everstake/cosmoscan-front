@@ -3,15 +3,16 @@ import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 import { Table as BTable } from 'react-bootstrap';
-import Card from './styled/Card';
+import Card from '../styled/Card';
 import Spinner from './Spinner';
-
 
 const TableResp = styled.div`
   width: 100%;
   overflow-x: auto;
-  max-height: ${({ maxHeight }) => (typeof maxHeight === 'number' ? `${maxHeight}px` : 'auto')};
-  height: ${({ maxHeight, isHeightFixed }) => (typeof maxHeight === 'number' && isHeightFixed ? `${maxHeight}px` : 'auto')};
+  max-height: ${({ maxHeight }) =>
+    typeof maxHeight === 'number' ? `${maxHeight}px` : 'auto'};
+  height: ${({ maxHeight, isHeightFixed }) =>
+    typeof maxHeight === 'number' && isHeightFixed ? `${maxHeight}px` : 'auto'};
   border-radius: 8px;
 `;
 
@@ -33,7 +34,7 @@ const Th = styled.th`
   top: -1px;
 `;
 
-const CellVal = styled.span`
+const CellVal = styled.div`
   max-width: 200px;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -41,8 +42,8 @@ const CellVal = styled.span`
   white-space: nowrap;
   color: ${({ color, theme }) => theme[color]} !important;
   vertical-align: middle;
-  
-  @media(max-width: ${({ theme }) => theme.lgDown}) {
+
+  @media (max-width: ${({ theme }) => theme.lgDown}) {
     max-width: 200px;
   }
 `;
@@ -77,7 +78,6 @@ const orderRowsData = (rows, cols, colValueKey) => {
 //   };
 // };
 
-
 // const handleScroll = (e, callback) => {
 //   console.log('handle scroll');
 //   const el = e.target;
@@ -88,9 +88,19 @@ const orderRowsData = (rows, cols, colValueKey) => {
 
 // callback
 const Table = ({
-  cols, rows, colLabelKey, colValueKey, isLoading, maxHeight, isHeightFixed,
+  cols,
+  rows,
+  colLabelKey,
+  colValueKey,
+  isLoading,
+  maxHeight,
+  isHeightFixed,
 }) => {
-  const rowsOrdered = useMemo(() => orderRowsData(rows, cols, colValueKey), [cols, rows, colValueKey]);
+  const rowsOrdered = useMemo(
+    () => orderRowsData(rows, cols, colValueKey),
+    [cols, rows, colValueKey],
+  );
+
   // const sortBy = (by) => {
   //   console.log(rowsOrdered.sort((a, b) => +a[by] - +b[by]));
   //   return;
@@ -114,48 +124,43 @@ const Table = ({
         maxHeight={maxHeight}
         isHeightFixed={isHeightFixed}
       >
-        <Tbl
-          striped
-          hover
-        >
+        <Tbl striped hover>
           <THead>
             <tr>
               {cols.map((col, index) => (
+                // eslint-disable-next-line react/no-array-index-key
                 <Th key={`cell-${index}`}>
-                  { col[colLabelKey] ? col[colLabelKey] : col}
+                  {col[colLabelKey] ? col[colLabelKey] : col}
                 </Th>
               ))}
             </tr>
           </THead>
+
           <tbody>
-            {isLoading
-              ? (
-                <Tr>
-                  <td
-                    colSpan={cols.length}
-                    rowSpan={10}
-                    className="text-center"
-                  >
-                    <Spinner />
-                  </td>
-                </Tr>
-              )
-              : rowsOrdered && rowsOrdered.length
-                ? rowsOrdered.map((row, rowIndex) => (
-                  <Tr key={`row-${rowIndex}`}>
-                    {Object.keys(row).map((cell, cellIndex) => (
-                      <td key={`cell-${cellIndex}`}>
+            {/* eslint-disable-next-line no-nested-ternary */}
+            {isLoading ? (
+              <Tr>
+                <td colSpan={cols.length} rowSpan={10} className="text-center">
+                  <Spinner />
+                </td>
+              </Tr>
+            ) : rowsOrdered && rowsOrdered.length ? (
+              rowsOrdered.map((row, rowIndex) => (
+                // eslint-disable-next-line react/no-array-index-key
+                <Tr key={`row-${rowIndex}`}>
+                  {Object.keys(row).map((cell, cellIndex) => (
+                    // eslint-disable-next-line react/no-array-index-key
+                    <td key={`cell-${cellIndex}`}>
+                      {row[cell].process ? (
+                        row[cell].process()
+                      ) : (
                         <CellVal color={row[cell] && row[cell].color}>
-                          {/* {typeof row[cell] === 'object' ? row[cell].value : row[cell]} */}
                           {(() => {
                             if (typeof row[cell] === 'object') {
                               if ('link' in row[cell]) {
                                 return (
-                                  <NavLink
-                                    exact
-                                    to={row[cell].link}
-                                  >
-                                    { row[cell].value }
+                                  <NavLink exact to={row[cell].link}>
+                                    {row[cell].value}
                                   </NavLink>
                                 );
                               }
@@ -164,20 +169,18 @@ const Table = ({
                             return row[cell];
                           })()}
                         </CellVal>
-                      </td>
-                    ))}
-                  </Tr>
-                ))
-                : (
-                  <Tr>
-                    <td
-                      colSpan={cols.length}
-                      className="text-center"
-                    >
-                      No data
+                      )}
                     </td>
-                  </Tr>
-                )}
+                  ))}
+                </Tr>
+              ))
+            ) : (
+              <Tr>
+                <td colSpan={cols.length} className="text-center">
+                  No data
+                </td>
+              </Tr>
+            )}
           </tbody>
         </Tbl>
       </TableResp>
@@ -186,8 +189,12 @@ const Table = ({
 };
 
 Table.propTypes = {
-  cols: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object, PropTypes.string])),
-  rows: PropTypes.arrayOf(PropTypes.oneOfType([PropTypes.object, PropTypes.array])),
+  cols: PropTypes.arrayOf(
+    PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
+  ),
+  rows: PropTypes.arrayOf(
+    PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+  ),
   colLabelKey: PropTypes.string,
   colValueKey: PropTypes.string,
   isLoading: PropTypes.bool,

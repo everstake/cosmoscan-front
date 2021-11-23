@@ -11,7 +11,7 @@ const Title = styled.h2`
   font-weight: 500;
   font-size: 28px;
   margin-bottom: 40px;
-  
+
   ${applyStyleModifiers(MODIFIER_CONFIG)};
 `;
 

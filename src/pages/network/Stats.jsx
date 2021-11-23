@@ -1,11 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 import moment from 'moment';
-import Helmet from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import useRequest from '../../hooks/useRequest';
 import { Container } from '../../components/styled/CustomBsGrid';
 import SectionChart from '../../components/network/stats/SectionChart';
-import DatePicker from '../../components/DatePicker';
+import DatePicker from '../../components/reusable/DatePicker';
 import SectionNetwork from '../../components/network/stats/SectionNetwork';
 import SectionAccounts from '../../components/network/stats/SectionAccounts';
 import SectionBalances from '../../components/network/stats/SectionBalances';

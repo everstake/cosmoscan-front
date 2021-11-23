@@ -3,29 +3,34 @@ import { useParams } from 'react-router-dom';
 import ChartContainer from '../../../../layouts/ChartContainer';
 import AreaChart from '../../../chart-types/AreaChart';
 import {
-  formatATOM, formatATOMAmount, formatDate, formatDateWithTime, roundToPrecision
+  formatToken,
+  formatTokenAmount,
+  formatDate,
+  formatDateWithTime,
+  roundToPrecision,
 } from '../../../../utils';
 import useRequest from '../../../../hooks/useRequest';
 import API from '../../../../api';
 import useChartFormatter from '../../../../hooks/useChartFormatter';
+import useCoinFormatter from '../../../../hooks/useCoinFormatter';
 
-
-const chartName = 'Delegated balance (ATOM)';
 const yAxisWidth = 70;
 const yTickCount = 10;
-const yAxisLabelsFormatter = (val) => formatATOMAmount(roundToPrecision(val));
+const yAxisLabelsFormatter = (val) => formatTokenAmount(roundToPrecision(val));
 const areaName = 'Delegated balance';
-
 
 const DelegatedBalance = () => {
   const { address } = useParams();
   const { resp, isLoading } = useRequest(API.getDelegatedBalance, address);
   const delBal = useChartFormatter(resp);
+  const coin = useCoinFormatter();
+
+  const chartName = `Delegated balance (${coin})`;
 
   return (
     <ChartContainer
       title={chartName}
-      chart={(
+      chart={
         <AreaChart
           areaName={areaName}
           isLoading={isLoading}
@@ -35,10 +40,10 @@ const DelegatedBalance = () => {
           yTickCount={yTickCount}
           yAxisDomain={['dataMin', 'dataMax']}
           xAxisTickFormatter={formatDate}
-          tooltipFormatter={formatATOM}
+          tooltipFormatter={formatToken}
           tooltipLabelFormatter={formatDateWithTime}
         />
-      )}
+      }
     />
   );
 };

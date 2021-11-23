@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import ValueContainer from './CustomValueContainer';
 import { selectStyles } from '../utils/constants';
 
-
 const SelectCustom = ({
   opts,
   defaultOpt,
@@ -51,6 +50,5 @@ SelectCustom.defaultProps = {
   isWithIcon: false,
   icon: '',
 };
-
 
 export default SelectCustom;

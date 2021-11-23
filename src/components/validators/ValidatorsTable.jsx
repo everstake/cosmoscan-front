@@ -1,5 +1,5 @@
-import React, { useMemo } from 'react';
-import Table from '../Table';
+import React, { useContext, useMemo } from 'react';
+import Table from '../reusable/Table';
 import useRequest from '../../hooks/useRequest';
 import {
   formatNum,
@@ -8,23 +8,24 @@ import {
   formatPercentDec2,
 } from '../../utils';
 import API from '../../api';
-import { useChainsStateContext } from '../../store/chainContext';
-import { coinCodes } from '../../utils/constants';
+import Store from '../../store';
+import useCoinFormatter from '../../hooks/useCoinFormatter';
 
 const ValidatorsTable = () => {
   const { resp, isLoading } = useRequest(API.getValidatorsList);
-  const { chain } = useChainsStateContext();
+  const { chain } = useContext(Store);
+  const coin = useCoinFormatter();
 
   const cols = [
     { value: 'num', label: '#' },
     { value: 'title', label: 'Validator' },
-    { value: 'power', label: `Voting power (${coinCodes[chain]})` },
+    { value: 'power', label: `Voting power (${coin})` },
     { value: 'percentPower', label: 'Voting power (%)' },
-    { value: 'selfStake', label: `Self-stake (${coinCodes[chain]})` },
+    { value: 'selfStake', label: `Self-stake (${coin})` },
     { value: 'fee', label: 'Fee' },
     { value: 'blocksProposed', label: 'Blocks proposed' },
     { value: 'delegators', label: 'Delegators' },
-    { value: 'powerChange', label: `Stake change (${coinCodes[chain]})` },
+    { value: 'powerChange', label: `Stake change (${coin})` },
     { value: 'votes', label: 'Governance votes' },
   ];
 
@@ -42,7 +43,7 @@ const ValidatorsTable = () => {
           // title: <a href={validator.title}>{ validator.title }</a>,
           title: {
             value: validator.title,
-            link: `/${chain}/validator/${validator.operator_address}`,
+            link: `/${chain.value}/validator/${validator.operator_address}`,
           },
           power: formatNum(roundToPrecision(+validator.power, 0)),
           percentPower: formatPercentDec2(+validator.percent_power),

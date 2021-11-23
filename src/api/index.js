@@ -148,6 +148,21 @@ const API = {
       `/validator/${address}/delegators${formatParams({ limit, offset })}`,
     );
   },
+  getBlockList(params) {
+    return APIService.get(`/blocks${formatParams(params)}`);
+  },
+  getTransactionList(params) {
+    return APIService.get(`/transactions${formatParams(params)}`);
+  },
+  getBlockDetails(height) {
+    return APIService.get(`/block/${height}`);
+  },
+  getTransactionDetails(hash) {
+    return APIService.get(`/transaction/${hash}`);
+  },
+  getAccountDetails(address) {
+    return APIService.get(`/account/${address}`);
+  },
 };
 
 export default API;

@@ -23,7 +23,7 @@ const VotingPower = () => {
   return (
     <ChartContainer
       title={chartTitle}
-      chart={(
+      chart={
         <PieChart
           isLoading={res.isLoading}
           data={data}
@@ -32,7 +32,7 @@ const VotingPower = () => {
           height={400}
           isAnimationActive={false}
         />
-      )}
+      }
     />
   );
 };

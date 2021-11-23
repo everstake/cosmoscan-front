@@ -1,6 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
+import Store from '../store';
 
 const useRequest = (reqFunc, opts) => {
+  const { chain } = useContext(Store);
   const [resp, setResp] = useState(null);
   // TODO: May be needed to change the initial value
   const [isLoading, setIsLoading] = useState(true);
@@ -22,11 +24,15 @@ const useRequest = (reqFunc, opts) => {
 
   useEffect(() => {
     request(opts);
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [chain]);
 
   return {
-    resp, err, isLoading, request,
+    resp,
+    err,
+    isLoading,
+    request,
   };
 };
 

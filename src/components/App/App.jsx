@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
+import { HelmetProvider } from 'react-helmet-async';
 import { Normalize } from 'styled-normalize';
 import { ThemeProvider } from 'styled-components';
 import GlobalStyles from '../styled/GlobalStyles';
@@ -9,11 +10,10 @@ import Routes from '../../routes';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../plugins/faLibrary';
 import { StateProvider } from '../../store';
-import { ChainsProvider } from '../../store/chainContext';
 
 const App = () => (
-  <ChainsProvider>
-    <Router>
+  <Router>
+    <HelmetProvider>
       <ThemeProvider theme={theme}>
         <Normalize />
         <GlobalStyles />
@@ -23,8 +23,8 @@ const App = () => (
           </LayoutDefault>
         </StateProvider>
       </ThemeProvider>
-    </Router>
-  </ChainsProvider>
+    </HelmetProvider>
+  </Router>
 );
 
 export default App;

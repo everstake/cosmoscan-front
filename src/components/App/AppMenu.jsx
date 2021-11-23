@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styled, { css } from 'styled-components';
 import { NavLink } from 'react-router-dom';
 import useRoutes from './hooks/useRoutes';
 import Dropdown from '../styled/Dropdown';
 import A from '../styled/A';
-import { useChainsStateContext } from '../../store/chainContext';
 import SelectChain from '../SelectChain';
+import Store from '../../store';
 
 const BtnReset = css`
   background-color: transparent;
@@ -81,7 +81,7 @@ const currentYear = new Date().getFullYear();
 const AppMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
   const routes = useRoutes();
-  const { chain } = useChainsStateContext();
+  const { chain } = useContext(Store);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -104,7 +104,7 @@ const AppMenu = () => {
                 <li key={route.name}>
                   {route.path ? (
                     <AppMenuLink
-                      to={`${route.path}${chain}`}
+                      to={`/${chain.value}${route.path}`}
                       onClick={closeMenu}
                       exact
                     >
@@ -121,7 +121,7 @@ const AppMenu = () => {
                           <Dropdown.Item
                             key={e.name}
                             as={NavLink}
-                            to={`/${chain}${e.path}`}
+                            to={`/${chain.value}${e.path}`}
                             onClick={closeMenu}
                           >
                             {e.name}

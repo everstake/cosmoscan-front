@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { Col } from 'react-bootstrap';
@@ -7,8 +7,8 @@ import { Row } from '../../styled/CustomBsGrid';
 import TitleMinor from '../../styled/TitleMinor';
 import BreakTxt from '../../styled/BreakTxt';
 import StatsItem from '../../styled/StatsItem';
-import { formatATOM, noString } from '../../../utils';
-import { useChainsStateContext } from '../../../store/chainContext';
+import { formatToken, noString } from '../../../utils';
+import Store from '../../../store';
 
 const Stats = ({
   stats: {
@@ -26,7 +26,7 @@ const Stats = ({
     totalATOMVoted,
   },
 }) => {
-  const { chain } = useChainsStateContext();
+  const { chain } = useContext(Store);
   return (
     <Card modifiers="height100">
       <Card.Body>
@@ -53,7 +53,7 @@ const Stats = ({
                   {proposer.length !== 45 ? (
                     <NavLink
                       exact
-                      to={`/${chain}/validator/${proposerAddress}`}
+                      to={`/${chain.value}/validator/${proposerAddress}`}
                     >
                       {noString(proposer)}
                     </NavLink>
@@ -112,7 +112,7 @@ const Stats = ({
               <span>{noString(turnout)}</span>
             </StatsItem>
             <StatsItem>
-              <span>{formatATOM(totalATOMVoted)}</span>
+              <span>{formatToken(totalATOMVoted)}</span>
             </StatsItem>
           </Col>
 

@@ -5,24 +5,28 @@ import PropTypes from 'prop-types';
 import { roundToPrecision } from '../utils';
 
 const PercentSpan = styled.span`
-color: ${({ increase, theme: { success, danger, black } }) => (() => {
-    if (!isFinite(increase)) {
-      return black;
-    }
-    if (Math.sign(increase) === 1) {
-      return success;
-    }
-    if (Math.sign(increase) === -1) {
-      return danger;
-    }
+  color: ${({ increase, theme: { success, danger, black } }) =>
+    (() => {
+      // eslint-disable-next-line no-restricted-globals
+      if (!isFinite(increase)) {
+        return black;
+      }
+      if (Math.sign(increase) === 1) {
+        return success;
+      }
+      if (Math.sign(increase) === -1) {
+        return danger;
+      }
 
-    return black;
-  })()
-}
+      return black;
+    })()};
 `;
 
 const Percent = ({ prevVal, currVal }) => {
-  const percentIncrease = roundToPrecision(((currVal - prevVal) / prevVal) * 100, 2);
+  const percentIncrease = roundToPrecision(
+    ((currVal - prevVal) / prevVal) * 100,
+    2,
+  );
   const isIncrease = Math.sign(percentIncrease) === 1;
 
   return (

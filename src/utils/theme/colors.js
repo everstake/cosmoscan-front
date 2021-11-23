@@ -26,5 +26,6 @@ export default {
   bgHeaderColor: {
     cosmos: '#332E59',
     persistence: '#383838',
+    bitsong: '#10267EFF',
   },
 };

@@ -1,56 +1,63 @@
-// import React, {createContext, useContext, useReducer} from 'react';
-// export const StateContext = createContext();
-// export const StateProvider = ({reducer, initialState, children}) =>(
-//   <StateContext.Provider value={useReducer(reducer, initialState)}>
-//     {children}
-//   </StateContext.Provider>
-// );
-// export const useStateValue = () => useContext(StateContext);
-
-
-import React, { createContext, useReducer } from 'react';
+import React, { createContext, useReducer, useMemo } from 'react';
 import PropTypes from 'prop-types';
+import { useHistory } from 'react-router-dom';
+import { networkList } from '../utils/constants';
 
 const initialState = {
-  stateValue: 'Hui value',
+  chain: { label: 'COSMOS', value: 'cosmos', coinCode: 'ATOM' },
 };
 
 const actions = {
-  SET_STATE_VALUE: 'SET_STATE_VALUE',
+  SET_CHAIN: 'SET_CHAIN',
 };
 
 const reducer = (state, action) => {
   switch (action.type) {
-    case actions.SET_STATE_VALUE:
-      return { ...state, stateValue: action.payload };
+    case actions.SET_CHAIN:
+      return {
+        ...state,
+        chain: action.payload,
+      };
     default:
-      throw new Error();
+      return state;
   }
 };
 
-const Store = createContext(initialState);
-
-// export const StateProvider = ({ children }) => (
-//   <Store.Provider value={useReducer(reducer, initialState)}>
-//     {children}
-//   </Store.Provider>
-// );
+const Store = createContext();
 
 export const StateProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
+  const history = useHistory();
 
-  const providerData = {
-    ...state,
-    setStateValue: (payload) => {
-      dispatch({ type: 'SET_STATE_VALUE', payload });
-    },
-  };
-  return (
-    <Store.Provider value={providerData}>
-      {children}
-    </Store.Provider>
+  const currentChain = useMemo(() => {
+    let currChain = networkList.find((e) =>
+      history.location.pathname.match(e.value),
+    );
+
+    currChain = currChain || initialState.chain;
+
+    sessionStorage.setItem('chain', currChain.value);
+
+    dispatch({ type: 'SET_CHAIN', payload: currChain });
+
+    return currChain;
+  }, [history]);
+
+  const providerData = useMemo(
+    () => ({
+      ...state,
+      currentChain,
+      setCurrentChain: (payload) => {
+        dispatch({ type: 'SET_CHAIN', payload });
+        sessionStorage.setItem('chain', payload.value);
+        history.replace(`/${payload.value}`);
+      },
+    }),
+    [currentChain, history, state],
   );
+  return <Store.Provider value={providerData}>{children}</Store.Provider>;
 };
+
 StateProvider.propTypes = {
   children: PropTypes.node.isRequired,
 };

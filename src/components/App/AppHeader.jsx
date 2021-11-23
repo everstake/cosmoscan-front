@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { Container } from '../styled/CustomBsGrid';
 import AppNav from './AppNav';
 import AppLogo from './AppLogo';
 import AppMenu from './AppMenu';
-import { useChainsStateContext } from '../../store/chainContext';
+import Store from '../../store';
 
 const Header = styled.header`
   height: ${({ theme }) => theme.heightHeader};
@@ -13,7 +13,7 @@ const Header = styled.header`
   width: 100%;
   z-index: 5;
   background-color: ${({ theme, bg }) =>
-    !bg ? theme.bgHeaderColor.cosmos : theme.bgHeaderColor[bg]};
+    theme.bgHeaderColor[bg.value] || theme.bgHeaderColor.cosmos};
   border-bottom: ${({ theme: { border } }) => border};
 `;
 
@@ -30,12 +30,12 @@ const LogoWrapper = styled.div`
   margin-right: 75px;
 
   @media (max-width: ${({ theme }) => theme.xlDown}) {
-    margin-right: 45px;
+    margin-right: 10px;
   }
 `;
 
 const AppHeader = () => {
-  const { chain } = useChainsStateContext();
+  const { chain } = useContext(Store);
 
   return (
     <Header bg={chain}>
@@ -45,12 +45,12 @@ const AppHeader = () => {
             <AppLogo />
           </LogoWrapper>
 
-          <div className="d-none d-md-flex w-100">
+          <div className="d-none d-lg-flex w-100">
             <AppNav />
           </div>
         </div>
-        <div className="d-none d-md-flex">{/*  TODO: Settings buttons  */}</div>
-        <div className="d-md-none">
+        <div className="d-none d-lg-flex">{/*  TODO: Settings buttons  */}</div>
+        <div className="d-lg-none">
           <AppMenu />
         </div>
       </Inner>

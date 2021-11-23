@@ -1,10 +1,10 @@
-import React from 'react';
-import Helmet from 'react-helmet';
+import React, { useContext } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 import { Container } from '../components/styled/CustomBsGrid';
 import Title from '../components/styled/Title';
-import { useChainsStateContext } from '../store/chainContext';
+import Store from '../store';
 
 // TODO: Extract if reused. Make a modifier
 const LinkBtn = styled(NavLink)`
@@ -39,7 +39,7 @@ const LinkBtn = styled(NavLink)`
 `;
 
 const NotFound = () => {
-  const { chain } = useChainsStateContext();
+  const { chain } = useContext(Store);
   return (
     <Container className="text-center">
       <Helmet>
@@ -56,7 +56,7 @@ const NotFound = () => {
         Unfortunately, the page you are looking for is not found... &#128577;
       </p>
       <div>
-        <LinkBtn to={`/${chain}`}>Home</LinkBtn>
+        <LinkBtn to={`/${chain.value}`}>Home</LinkBtn>
       </div>
     </Container>
   );
