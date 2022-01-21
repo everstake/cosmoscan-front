@@ -9,6 +9,7 @@ import { Green, Blue } from '../../styled/TxtColors';
 import { formatNum, formatToken } from '../../../utils';
 import useRequest from '../../../hooks/useRequest';
 import API from '../../../api';
+import useCoinFormatter from '../../../hooks/useCoinFormatter';
 
 const StatsWrap = styled.div`
   display: flex;
@@ -19,6 +20,7 @@ const StatsWrap = styled.div`
 const Stats = () => {
   const { address } = useParams();
   const { resp } = useRequest(API.getValidatorStats, address);
+  const coin = useCoinFormatter();
 
   return (
     <Card>
@@ -32,7 +34,7 @@ const Stats = () => {
               </BreakTxt>
             </StatsItemFlex>
             <StatsItemFlex>
-              <TitleMinor>ATOM generated in hub-3: </TitleMinor>
+              <TitleMinor>{coin} generated in hub-3: </TitleMinor>
               <BreakTxt>
                 <Blue>{formatToken(resp.revenue)}</Blue>
               </BreakTxt>

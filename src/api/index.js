@@ -16,7 +16,7 @@ const APIService = axios.create({
 APIService.interceptors.request.use(
   async (config) => {
     // eslint-disable-next-line no-param-reassign
-    config.baseURL = await changeChain();
+    config.baseURL = changeChain();
     return config;
   },
   (error) => Promise.reject(error),
