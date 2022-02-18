@@ -25,7 +25,7 @@ const ValidatorsTable = () => {
     { value: 'fee', label: 'Fee' },
     { value: 'blocksProposed', label: 'Blocks proposed' },
     { value: 'delegators', label: 'Delegators' },
-    { value: 'powerChange', label: `Stake change (${coin})` },
+    { value: 'powerChange', label: `Stake change, ${coin} (24h)` },
     { value: 'votes', label: 'Governance votes' },
   ];
 
