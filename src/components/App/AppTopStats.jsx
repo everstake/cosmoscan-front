@@ -17,6 +17,7 @@ const TopStatsStyled = styled.div`
   position: sticky;
   top: ${({ theme }) => theme.heightHeader};
   width: 100%;
+  min-height: 58px;
   background-color: ${({ theme }) => theme.white};
   box-shadow: ${({ theme }) => theme.shadow};
   padding-top: 5px;

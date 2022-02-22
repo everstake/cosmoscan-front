@@ -1,4 +1,4 @@
-import React, { useContext, useMemo } from 'react';
+import React, { useContext, useEffect, useMemo } from 'react';
 import moment from 'moment';
 import { NavLink, useParams } from 'react-router-dom';
 import useRequest from '../../hooks/useRequest';
@@ -11,7 +11,13 @@ import { Container } from '../../components/styled/CustomBsGrid';
 const BlockDetails = () => {
   const { chain } = useContext(Store);
   const { id } = useParams();
-  const { resp, isLoading } = useRequest(API.getBlockDetails, id);
+  const { resp, isLoading, request } = useRequest(API.getBlockDetails, id);
+
+  useEffect(() => {
+    request(id);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id]);
 
   const blockDetails = useMemo(() => {
     if (!resp || !Object.keys(resp).length) return [];

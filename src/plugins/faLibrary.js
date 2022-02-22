@@ -13,6 +13,7 @@ import {
   faCalendarAlt,
   faQuestionCircle,
   faCheck,
+  faSearch,
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
@@ -27,4 +28,5 @@ library.add(
   faRedditAlien,
   faQuestionCircle,
   faCheck,
+  faSearch,
 );

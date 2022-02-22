@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from 'react';
 import Store from '../store';
 
-const useRequest = (reqFunc, opts) => {
+const useRequest = (reqFunc, opts = '') => {
   const { chain } = useContext(Store);
   const [resp, setResp] = useState(null);
   // TODO: May be needed to change the initial value
