@@ -27,8 +27,10 @@ const Btn = styled(Button)`
   background-color: ${({ theme }) => theme.whiteGrey4};
   color: ${({ theme }) => theme.grey2};
 
+  &:focus,
   &:hover {
     background-color: ${({ theme }) => theme.grey};
+    box-shadow: none;
   }
 `;
 
@@ -37,7 +39,6 @@ const InputGroup = styled(BInputGroup)`
   border-radius: 0.25rem;
 
   .input-group-text {
-    //background: transparent;
     border-radius: 0;
     border: none;
   }
@@ -69,22 +70,25 @@ const AppSearchField = () => {
     if (target.length === 64) {
       const resp = await API.getTransactionDetails(target);
       if (resp.data.hash) {
-        history.push(`/${chain.value}/transaction/${target}`);
+        history.push(`/${chain.value}/transaction/${target}`, resp.data);
+        setValue('');
       }
     } else if (
       reg.test(target) &&
       target.replace(chain.value, '').length === 39
     ) {
-      history.push(`/${chain.value}/account/${target}`);
+      const resp = await API.getAccountDetails(target);
+
+      history.push(`/${chain.value}/account/${target}`, resp.data);
+      setValue('');
     } else if (Number(target)) {
       const resp = await API.getBlockDetails(target);
 
       if (resp.data.hash) {
-        history.push(`/${chain.value}/block/${target}`);
+        history.push(`/${chain.value}/block/${target}`, resp.data);
+        setValue('');
       }
     }
-
-    // setValue('');
   };
 
   return (

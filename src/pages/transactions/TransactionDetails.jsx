@@ -1,8 +1,7 @@
 import React, { useContext, useMemo } from 'react';
-import { NavLink, useParams } from 'react-router-dom';
+import { NavLink, useLocation, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import moment from 'moment';
-import useRequest from '../../hooks/useRequest';
 import API from '../../api';
 import TemplateCard from '../../components/reusable/TemplateCard';
 import { formatToken, formatTokenAmount } from '../../utils';
@@ -15,6 +14,7 @@ import Flex from '../../components/styled/Flex';
 import Spinner from '../../components/reusable/Spinner';
 import Subtitle from '../../components/styled/Subtitle';
 import Store from '../../store';
+import useRequestForSearch from '../../hooks/useRequestForSearch';
 
 const Row = styled.div`
   display: flex;
@@ -31,8 +31,13 @@ const Wrapper = styled.div`
 `;
 
 const TransactionDetails = () => {
+  const { state } = useLocation();
   const { id } = useParams();
-  const { resp, isLoading } = useRequest(API.getTransactionDetails, id);
+  const { resp, isLoading } = useRequestForSearch(
+    API.getTransactionDetails,
+    id,
+    state,
+  );
   const { chain } = useContext(Store);
 
   const items = useMemo(() => {
@@ -88,6 +93,8 @@ const TransactionDetails = () => {
         value: resp.memo,
       },
     ];
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [resp]);
 
   const messages = useMemo(() => {
@@ -131,6 +138,8 @@ const TransactionDetails = () => {
       acc.push(t);
       return acc;
     }, []);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [resp, chain]);
 
   return (

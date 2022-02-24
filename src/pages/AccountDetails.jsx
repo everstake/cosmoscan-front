@@ -1,16 +1,16 @@
-import React, { useContext, useMemo } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useContext, useEffect, useMemo } from 'react';
+import { useLocation, useParams } from 'react-router-dom';
 import styled, { ThemeContext } from 'styled-components';
 import { Container } from '../components/styled/CustomBsGrid';
 import PieChart from '../components/chart-types/PieChart';
-import useRequest from '../hooks/useRequest';
 import API from '../api';
 import TransactionsTable from '../components/transactions/TransactionsTable';
 import TemplateCard from '../components/reusable/TemplateCard';
-// import ChartContainer from '../layouts/ChartContainer';
 import Card from '../components/styled/Card';
 import Subtitle from '../components/styled/Subtitle';
 import { formatToken, formatPercentDec2 } from '../utils';
+import useRequestForSearch from '../hooks/useRequestForSearch';
+import useRequest from '../hooks/useRequest';
 
 const CardWrapper = styled(Card.Body)`
   display: grid;
@@ -59,13 +59,28 @@ const labelFormatter = (entry) => `${formatToken(entry.value)}`;
 
 const AccountDetails = () => {
   const theme = useContext(ThemeContext);
+  const { state } = useLocation();
   const { address } = useParams();
-  const { resp, isLoading } = useRequest(API.getAccountDetails, address);
+  const { resp, isLoading } = useRequestForSearch(
+    API.getAccountDetails,
+    address,
+    state,
+  );
   const trxAccount = useRequest(API.getTransactionList, {
     limit: 10,
     offset: 0,
     address,
   });
+
+  useEffect(() => {
+    trxAccount.request({
+      limit: 10,
+      offset: 0,
+      address,
+    });
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [address]);
 
   const accountDetails = useMemo(() => {
     if (!resp || !Object.keys(resp).length) return [];
