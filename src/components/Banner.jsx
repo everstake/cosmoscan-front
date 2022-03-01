@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import banner from '../assets/img/banner.jpg';
+import bannerMobile from '../assets/img/banner-mobile.jpg';
 import { Container } from './styled/CustomBsGrid';
 
 const Banner = styled.div`
@@ -15,6 +16,18 @@ const Image = styled.img`
   border-radius: 8px;
 `;
 
+const ImageDesctop = styled(Image)`
+  @media (max-width: 767px) {
+    display: none;
+  }
+`;
+
+const ImageMobile = styled(Image)`
+  @media (min-width: 767px) {
+    display: none;
+  }
+`;
+
 const BannerComponent = () => (
   <Container>
     <Banner>
@@ -23,7 +36,8 @@ const BannerComponent = () => (
         target="_blank"
         rel="noopener noreferrer"
       >
-        <Image src={banner} alt="gravidex" />
+        <ImageDesctop src={banner} alt="gravidex" />
+        <ImageMobile src={bannerMobile} alt="gravidex" />
       </a>
     </Banner>
   </Container>
