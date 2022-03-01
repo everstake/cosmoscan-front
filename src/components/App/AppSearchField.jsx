@@ -19,6 +19,11 @@ const SearchFieldStyled = styled.div`
   width: 100%;
   background-color: ${({ theme }) => theme.white};
   box-shadow: ${({ theme }) => theme.shadow};
+
+  @media (max-width: ${({ theme }) => theme.xlDown}) {
+    position: relative;
+    top: initial;
+  }
 `;
 
 const Btn = styled(Button)`
