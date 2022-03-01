@@ -1,17 +1,22 @@
 import React, { useContext, useMemo } from 'react';
 import moment from 'moment';
-import { NavLink, useParams } from 'react-router-dom';
-import useRequest from '../../hooks/useRequest';
+import { NavLink, useLocation, useParams } from 'react-router-dom';
 import API from '../../api';
 import Store from '../../store';
 import TemplateCard from '../../components/reusable/TemplateCard';
 import TransactionsTable from '../../components/transactions/TransactionsTable';
 import { Container } from '../../components/styled/CustomBsGrid';
+import useRequestForSearch from '../../hooks/useRequestForSearch';
 
 const BlockDetails = () => {
   const { chain } = useContext(Store);
   const { id } = useParams();
-  const { resp, isLoading } = useRequest(API.getBlockDetails, id);
+  const { state } = useLocation();
+  const { resp, isLoading } = useRequestForSearch(
+    API.getBlockDetails,
+    id,
+    state,
+  );
 
   const blockDetails = useMemo(() => {
     if (!resp || !Object.keys(resp).length) return [];

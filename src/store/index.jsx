@@ -1,4 +1,4 @@
-import React, { createContext, useReducer, useMemo } from 'react';
+import React, { createContext, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 import { networkList } from '../utils/constants';
@@ -7,26 +7,12 @@ const initialState = {
   chain: { label: 'COSMOS', value: 'cosmos', coinCode: 'ATOM' },
 };
 
-const actions = {
-  SET_CHAIN: 'SET_CHAIN',
-};
-
-const reducer = (state, action) => {
-  switch (action.type) {
-    case actions.SET_CHAIN:
-      return {
-        ...state,
-        chain: action.payload,
-      };
-    default:
-      return state;
-  }
-};
-
-const Store = createContext();
+const Store = createContext({
+  state: initialState,
+});
 
 export const StateProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const [chain, setChain] = useState();
   const history = useHistory();
 
   const currentChain = useMemo(() => {
@@ -38,22 +24,26 @@ export const StateProvider = ({ children }) => {
 
     sessionStorage.setItem('chain', currChain.value);
 
-    dispatch({ type: 'SET_CHAIN', payload: currChain });
+    setChain(currChain);
 
     return currChain;
   }, [history]);
 
+  const setCurrentChain = (payload) => {
+    setChain(payload);
+    sessionStorage.setItem('chain', payload.value);
+    history.replace(`/${payload.value}`);
+  };
+
   const providerData = useMemo(
     () => ({
-      ...state,
       currentChain,
-      setCurrentChain: (payload) => {
-        dispatch({ type: 'SET_CHAIN', payload });
-        sessionStorage.setItem('chain', payload.value);
-        history.replace(`/${payload.value}`);
-      },
+      chain,
+      setCurrentChain,
     }),
-    [currentChain, history, state],
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [currentChain, history, chain],
   );
   return <Store.Provider value={providerData}>{children}</Store.Provider>;
 };

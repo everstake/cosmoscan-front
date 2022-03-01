@@ -1,12 +1,10 @@
-import { useState, useEffect, useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import Store from '../store';
 
-const useRequest = (reqFunc, opts = '') => {
+const useRequestForSearch = (reqFunc, opts, state) => {
   const { chain } = useContext(Store);
   const [resp, setResp] = useState(null);
-  // TODO: May be needed to change the initial value
   const [isLoading, setIsLoading] = useState(true);
-  const [err, setErr] = useState(null);
 
   const request = async (options = opts) => {
     setIsLoading(true);
@@ -17,23 +15,27 @@ const useRequest = (reqFunc, opts = '') => {
     } catch (error) {
       // TODO: Implement the error handler
       console.error(error);
-      setErr(error);
       setIsLoading(false);
     }
   };
 
   useEffect(() => {
-    request(opts);
-
+    if (!state) {
+      request();
+    } else if (state) {
+      setResp(state);
+      setIsLoading(false);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [chain]);
+  }, [chain, state]);
 
   return {
     resp,
-    err,
     isLoading,
     request,
+    setIsLoading,
+    setResp,
   };
 };
 
-export default useRequest;
+export default useRequestForSearch;
