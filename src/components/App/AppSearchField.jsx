@@ -100,7 +100,7 @@ const AppSearchField = () => {
               <FontAwesomeIcon icon={['fa', 'search']} />
             </Btn>
             <FormControl
-              placeholder="Search by Address, TxHash, Block"
+              placeholder="Search by Address, TxHash, Block Height"
               aria-label="Username"
               aria-describedby="basic-addon1"
               // onChange={handleSearch}

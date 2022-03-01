@@ -5,6 +5,7 @@ import AppHeader from '../components/App/AppHeader';
 import AppTopStats from '../components/App/AppTopStats';
 import AppFooter from '../components/App/AppFooter';
 import AppSearchField from '../components/App/AppSearchField';
+import Banner from '../components/Banner';
 
 const AppWrapper = styled.div`
   min-height: 100vh;
@@ -23,6 +24,7 @@ const LayoutDefault = ({ children }) => (
     <AppHeader />
     <AppTopStats />
     <AppSearchField />
+    <Banner />
 
     <AppContent>{children}</AppContent>
 

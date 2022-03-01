@@ -1,25 +1,32 @@
 import React from 'react';
 import styled from 'styled-components';
-import banner from '../assets/img/mobile.png';
+import banner from '../assets/img/banner.jpg';
+import { Container } from './styled/CustomBsGrid';
 
 const Banner = styled.div`
-  height: 160px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 110px 0;
+  display: block;
+  padding: 30px 0 5px;
+  width: 100%;
+`;
+
+const Image = styled.img`
+  width: 100%;
+  box-shadow: 0 1px 7px rgb(0 0 0 / 4%);
+  border-radius: 8px;
 `;
 
 const BannerComponent = () => (
-  <Banner>
-    <a
-      href="https://cosmos.network/gravity-dex/?utm_source=cosmoscan&utm_medium=cpc&utm_campaign=gravitydex_launch&utm_term=gravitydex&utm_content=paid_banner"
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      <img src={banner} alt="gravidex" style={{ width: '100%' }} />
-    </a>
-  </Banner>
+  <Container>
+    <Banner>
+      <a
+        href="https://nation.io/dao/ukraine"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <Image src={banner} alt="gravidex" />
+      </a>
+    </Banner>
+  </Container>
 );
 
 export default BannerComponent;
