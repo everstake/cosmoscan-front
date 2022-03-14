@@ -32,7 +32,7 @@ const BannerComponent = () => (
   <Container>
     <Banner>
       <a
-        href="https://nation.io/dao/ukraine"
+        href="https://donate.thedigital.gov.ua/"
         target="_blank"
         rel="noopener noreferrer"
       >
