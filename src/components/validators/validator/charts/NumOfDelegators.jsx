@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import numeral from 'numeral';
 import { ThemeContext } from 'styled-components';
 import { useParams } from 'react-router-dom';
 import useRequest from '../../../../hooks/useRequest';
@@ -12,6 +13,7 @@ const chartName = '# of delegators';
 const yAxisWidth = 40;
 const yTickCount = 10;
 const areaName = chartName;
+const formatLabels = (num) => numeral(num).format('0,0');
 
 const NumOfDelegators = () => {
   const { address } = useParams();
@@ -28,7 +30,7 @@ const NumOfDelegators = () => {
           areaName={areaName}
           isLoading={isLoading}
           data={numOfDelegators}
-          yAxisLabelsFormatter={formatNum}
+          yAxisLabelsFormatter={formatLabels}
           yAxisWidth={yAxisWidth}
           yTickCount={yTickCount}
           yAxisDomain={['dataMin', 'dataMax']}
