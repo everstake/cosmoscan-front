@@ -10,10 +10,14 @@ import Subtitle from '../styled/Subtitle';
 
 const Row = styled.div`
   display: flex;
-  gap: 15px;
+  gap: 10px;
+
+  @media (max-width: 500px) {
+    flex-direction: column;
+  }
 `;
 const Label = styled(TitleMinor)`
-  min-width: 150px;
+  min-width: 200px;
 `;
 
 const TemplateCard = ({ title, items, isLoading }) => {

@@ -8,7 +8,7 @@ import TransactionsTable from '../components/transactions/TransactionsTable';
 import TemplateCard from '../components/reusable/TemplateCard';
 import Card from '../components/styled/Card';
 import Subtitle from '../components/styled/Subtitle';
-import { formatToken, formatPercentDec2 } from '../utils';
+import { formatToken, formatPercentDec2, formatUSD } from '../utils';
 import useRequestForSearch from '../hooks/useRequestForSearch';
 import useRequest from '../hooks/useRequest';
 
@@ -29,11 +29,38 @@ const GridWrapperTable = styled.div`
   grid-column: span 2;
 `;
 
+const accDetailsList = [
+  {
+    key: 'address',
+    label: 'Address',
+  },
+  {
+    key: 'balance',
+    label: 'Available Balance',
+  },
+  {
+    key: 'delegated',
+    label: 'Delegated',
+  },
+  {
+    key: 'unbonding',
+    label: 'Unbonding',
+  },
+  {
+    key: 'stake_reward',
+    label: 'Staking Rewards',
+  },
+  {
+    key: 'total_amount',
+    label: 'Total amount',
+  },
+];
+
 const arr = [
   {
     key: 'balance',
-    label: 'Balance',
-    title: 'Balance',
+    label: 'Available Balance',
+    title: 'Available Balance',
   },
   {
     key: 'delegated',
@@ -47,8 +74,8 @@ const arr = [
   },
   {
     key: 'stake_reward',
-    label: 'Stake Reward',
-    title: 'Stake Reward',
+    label: 'Staking Rewards',
+    title: 'Staking Rewards',
   },
 ];
 
@@ -71,16 +98,19 @@ const AccountDetails = () => {
     offset: 0,
     address,
   });
+  const stats = useRequest(API.getMetaStats, {});
 
   useEffect(() => {
-    trxAccount.request({
-      limit: 10,
-      offset: 0,
-      address,
-    });
+    stats.request();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [address]);
+
+  const price = useMemo(() => {
+    if (!stats.resp) return 0;
+
+    return +stats.resp.current_price;
+  }, [stats.resp]);
 
   const accountDetails = useMemo(() => {
     if (!resp || !Object.keys(resp).length) return [];
@@ -92,13 +122,26 @@ const AccountDetails = () => {
       }
     });
 
-    const items = Object.keys(resp).map((elem) => {
+    const items = accDetailsList.map((elem) => {
+      if (elem.key === 'total_amount') {
+        const total =
+          Number(resp.stake_reward) +
+          Number(resp.balance) +
+          Number(resp.delegated);
+
+        return {
+          key: elem.key,
+          label: elem.label.toLocaleUpperCase(),
+          value: `${formatToken(total)} / ${formatUSD(total * price)}`,
+        };
+      }
+
       return {
-        key: elem,
-        label: elem.replace(/_/gi, ' ').toLocaleUpperCase(),
-        value: Number.isFinite(Number(resp[elem]))
-          ? `${formatToken(+resp[elem])}`
-          : resp[elem],
+        key: elem.key,
+        label: elem.label.toLocaleUpperCase(),
+        value: Number.isFinite(Number(resp[elem.key]))
+          ? `${formatToken(+resp[elem.key])}`
+          : resp[elem.key],
       };
     });
 
@@ -122,7 +165,7 @@ const AccountDetails = () => {
       chartData,
       totalAmount,
     };
-  }, [resp]);
+  }, [resp, price]);
 
   const trx = useMemo(() => {
     if (!trxAccount.resp || !Object.keys(trxAccount.resp).length) return {};
@@ -138,7 +181,10 @@ const AccountDetails = () => {
         </Card.Header>
 
         <CardWrapper>
-          <TemplateCard items={accountDetails.items} isLoading={isLoading} />
+          <TemplateCard
+            items={accountDetails.items}
+            isLoading={isLoading || stats.isLoading}
+          />
 
           <Card className="p-2">
             <PieChart
