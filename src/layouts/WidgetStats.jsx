@@ -6,6 +6,8 @@ import Card from '../components/styled/Card';
 import TitleMinor from '../components/styled/TitleMinor';
 import Sparkline from '../components/chart-types/Sparkline';
 import Percent from '../components/Percent';
+import ChartWrapper from './ChartWrapper';
+import useChartDownload from '../hooks/useChartDownload';
 
 const CardBodyWidget = styled(Card.Body)`
   display: flex;
@@ -18,6 +20,7 @@ const WidgetItem = styled.div`
   justify-content: space-between;
   word-break: break-all;
   flex-direction: ${({ isVertical }) => (isVertical ? 'column' : 'row')};
+  row-gap: 10px;
 
   &:not(:first-child) {
     align-items: flex-end;
@@ -26,6 +29,12 @@ const WidgetItem = styled.div`
   &:not(:last-child) {
     margin-bottom: 10px;
   }
+`;
+
+const WidgetFooter = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 `;
 
 const WidgetStats = ({
@@ -37,51 +46,53 @@ const WidgetStats = ({
   tooltip,
 }) => {
   const theme = useContext(ThemeContext);
+  const { ref, handleDownload } = useChartDownload();
 
   return (
-    <Card modifiers="height100">
-      <CardBodyWidget>
-        <WidgetItem isVertical={isVertical}>
-          {tooltip ? (
-            <OverlayTrigger
-              delay={{ show: 250, hide: 400 }}
-              overlay={<Tooltip id="title-tooltip">{tooltip}</Tooltip>}
-            >
-              <TitleMinor>{title}</TitleMinor>
-            </OverlayTrigger>
-          ) : (
-            <TitleMinor>{title}</TitleMinor>
-          )}
-          <div>
-            {sparklineData && sparklineData.length > 1 && (
+    <ChartWrapper title={title} handleDownload={handleDownload}>
+      <>
+        <Card modifiers="height100" ref={ref}>
+          <CardBodyWidget>
+            <WidgetItem isVertical={isVertical}>
+              {tooltip ? (
+                <OverlayTrigger
+                  delay={{ show: 250, hide: 400 }}
+                  overlay={<Tooltip id="title-tooltip">{tooltip}</Tooltip>}
+                >
+                  <TitleMinor>{title}</TitleMinor>
+                </OverlayTrigger>
+              ) : (
+                <TitleMinor>{title}</TitleMinor>
+              )}
               <div>
-                <Sparkline
-                  data={sparklineData}
-                  color={
-                    sparklineData[sparklineData.length - 1].y >
-                    sparklineData[0].y
-                      ? theme.success
-                      : theme.danger
-                  }
-                />
+                {sparklineData && sparklineData.length > 1 && (
+                  <Sparkline
+                    data={sparklineData}
+                    color={
+                      sparklineData[sparklineData.length - 1].y >
+                      sparklineData[0].y
+                        ? theme.success
+                        : theme.danger
+                    }
+                  />
+                )}
               </div>
-            )}
-          </div>
-        </WidgetItem>
-        <WidgetItem>
-          <div>{mainInfo}</div>
-          <div>
-            {sparklineData && sparklineData.length && (
-              <Percent
-                prevVal={sparklineData[0].y}
-                currVal={sparklineData[sparklineData.length - 1].y}
-              />
-            )}
-            {extraInfo}
-          </div>
-        </WidgetItem>
-      </CardBodyWidget>
-    </Card>
+            </WidgetItem>
+
+            <WidgetFooter>
+              <div>{mainInfo}</div>
+              {sparklineData && sparklineData.length && (
+                <Percent
+                  prevVal={sparklineData[0].y}
+                  currVal={sparklineData[sparklineData.length - 1].y}
+                />
+              )}
+              {extraInfo}
+            </WidgetFooter>
+          </CardBodyWidget>
+        </Card>
+      </>
+    </ChartWrapper>
   );
 };
 

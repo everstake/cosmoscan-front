@@ -5,6 +5,8 @@ import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Card from '../components/styled/Card';
 import TitleChart from '../components/styled/TitleChart';
+import useChartDownload from '../hooks/useChartDownload';
+import ChartWrapper from './ChartWrapper';
 
 const ChartHeader = styled(Card.Header)`
   display: flex;
@@ -21,29 +23,37 @@ const Icon = styled(FontAwesomeIcon)`
   }
 `;
 
-const ChartContainer = ({ title, chart, select, titleTooltip }) => (
-  <Card>
-    <ChartHeader>
-      <TitleChart>
-        <span>
-          {title}
-          {titleTooltip && (
-            <OverlayTrigger
-              // placement="right"
-              delay={{ show: 250, hide: 400 }}
-              overlay={<Tooltip id="button-tooltip">{titleTooltip}</Tooltip>}
-            >
-              <Icon icon="question-circle" style={{ marginLeft: '5px' }} />
-            </OverlayTrigger>
-          )}
-        </span>
-      </TitleChart>
-      {select}
-    </ChartHeader>
+const ChartContainer = ({ title, chart, select, titleTooltip }) => {
+  const { ref, handleDownload } = useChartDownload();
 
-    <Card.Body>{chart}</Card.Body>
-  </Card>
-);
+  return (
+    <ChartWrapper title={title} handleDownload={handleDownload}>
+      <Card ref={ref}>
+        <ChartHeader>
+          <TitleChart>
+            <span>
+              {title}
+              {titleTooltip && (
+                <OverlayTrigger
+                  // placement="right"
+                  delay={{ show: 250, hide: 400 }}
+                  overlay={
+                    <Tooltip id="button-tooltip">{titleTooltip}</Tooltip>
+                  }
+                >
+                  <Icon icon="question-circle" style={{ marginLeft: '5px' }} />
+                </OverlayTrigger>
+              )}
+            </span>
+          </TitleChart>
+          {select}
+        </ChartHeader>
+
+        <Card.Body>{chart}</Card.Body>
+      </Card>
+    </ChartWrapper>
+  );
+};
 
 ChartContainer.propTypes = {
   title: PropTypes.string.isRequired,

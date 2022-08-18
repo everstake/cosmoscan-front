@@ -112,6 +112,15 @@ export const formatChartData = (chartDataRaw) => {
   }));
 };
 
+export const formatBarChartData = (chartDataRaw) => {
+  if (!chartDataRaw || !chartDataRaw) return [];
+
+  return chartDataRaw.map((e) => ({
+    name: e.time,
+    dataPiece: +e.value,
+  }));
+};
+
 export const formatSeconds = (seconds) => {
   const date = new Date(0);
   date.setMilliseconds(seconds * 1000); // specify value for MILLISECONDS here

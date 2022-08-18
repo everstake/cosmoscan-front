@@ -23,7 +23,7 @@ const SectionNetwork = ({ stats }) => {
     <Section>
       <Title>Network</Title>
 
-      <Row xs={1} md={2} lg={3} xl={4}>
+      <Row xs={1} md={2} lg={3} xl={3}>
         <ColStyled>
           <WidgetStats
             title="Total bonded balance"

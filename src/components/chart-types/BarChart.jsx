@@ -13,6 +13,7 @@ import {
 import PropTypes from 'prop-types';
 import styled, { ThemeContext } from 'styled-components';
 import Spinner from '../reusable/Spinner';
+import useHover from '../../hooks/useHover';
 
 const BarChartStyled = styled(BarChartDefault)`
   font-family: 'Montserrat', sans-serif;
@@ -42,9 +43,13 @@ const BarChart = ({
   isBrush,
 }) => {
   const theme = useContext(ThemeContext);
+  const [handleMouseOver, handleMouseOut, isHovering] = useHover();
 
   return (
-    <div style={{ width: '100%', height: '400px' }}>
+    <div
+      style={{ width: '100%', height: '400px' }}
+      onMouseEnter={handleMouseOver}
+    >
       {/* eslint-disable-next-line no-nested-ternary */}
       {isLoading ? (
         <div className="d-flex justify-content-center align-items-center h-100">
@@ -111,6 +116,9 @@ const BarChart = ({
               fill={barColor}
               name={barName}
               minPointSize={1}
+              isAnimationActive={isHovering}
+              animationDuration={1000}
+              onAnimationEnd={() => handleMouseOut()}
             />
           </BarChartStyled>
         </ResponsiveContainer>

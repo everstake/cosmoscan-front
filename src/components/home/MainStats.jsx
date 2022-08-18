@@ -57,11 +57,13 @@ const MainStats = () => {
             title="Price change"
             mainInfo={formatUSD(res.resp.current.price)}
             sparklineData={priceAggComp}
+            isVertical
           />
           <WidgetStats
             title="Market cap"
             mainInfo={formatUSD(formatNum(Number(res.resp.current.market_cap)))}
             sparklineData={marketCapAggComp}
+            isVertical
           />
           <WidgetStats
             title="Circulating supply"
@@ -79,6 +81,7 @@ const MainStats = () => {
             title="Bonded ratio"
             mainInfo={formatPercentValue(res.resp.current.staked_ratio)}
             sparklineData={stakedRatio}
+            isVertical
           />
           <WidgetStats
             title="Current inflation rate"

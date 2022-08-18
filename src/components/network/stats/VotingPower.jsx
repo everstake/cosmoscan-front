@@ -30,7 +30,7 @@ const VotingPower = () => {
           valFormatter={formatPercentDec2}
           labelFormatter={labelFormatter}
           height={400}
-          isAnimationActive={false}
+          // isAnimationActive={true}
         />
       }
     />

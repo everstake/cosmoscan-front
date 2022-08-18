@@ -17,6 +17,7 @@ export default createGlobalStyle`
     
      &:hover, &.active {
        color: ${({ theme }) => theme.blue};
+       text-decoration: none;
      }
      
      &:focus {
@@ -24,9 +25,16 @@ export default createGlobalStyle`
      }
   }
   
+  button {
+    border: none;
+    outline: none;
+    background: transparent;
+  }
+
   button:focus, select:focus, option:focus {
     outline: ${({ theme }) => theme.blue} auto 1px;
   }
+  
   
   h1, h2, h3, h4, h5, h6 {
     font-weight: 700;

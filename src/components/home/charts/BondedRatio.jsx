@@ -1,52 +1,54 @@
-import React, { useContext } from 'react';
+import React, { useContext, useMemo } from 'react';
 import { ThemeContext } from 'styled-components';
 import ChartContainer from '../../../layouts/ChartContainer';
 import SelectPeriod from '../../SelectPeriod';
-import AreaChart from '../../chart-types/AreaChart';
-import { formatPercentValue, formatDate, formatDateWithTime,
+import {
+  formatPercentValue,
+  formatDate,
+  formatDateWithTime,
+  formatBarChartData,
 } from '../../../utils';
 import useRequest from '../../../hooks/useRequest';
 import API from '../../../api';
-import useChartFormatter from '../../../hooks/useChartFormatter';
 import { periodOpts } from '../../../utils/constants';
+import BarChart from '../../chart-types/BarChart';
 
 const chartName = 'Bonded ratio';
 const yAxisWidth = 60;
 const yTickCount = 10;
-const areaName = chartName;
 const defaultPeriod = periodOpts[2];
 
 const BondedRatio = () => {
   const theme = useContext(ThemeContext);
   const color = theme.navyBlue;
   const res = useRequest(API.getBondedRatio, defaultPeriod.value);
-  const bondedRatio = useChartFormatter(res.resp);
+  const bondedRatio = useMemo(() => formatBarChartData(res.resp), [res]);
 
   return (
     <ChartContainer
       title={chartName}
-      select={(
+      select={
         <SelectPeriod
           defaultPeriod={defaultPeriod}
           isDisabled={res.isLoading}
           onChange={res.request}
         />
-      )}
-      chart={(
-        <AreaChart
-          areaName={areaName}
+      }
+      chart={
+        <BarChart
           isLoading={res.isLoading}
           data={bondedRatio}
           yAxisLabelsFormatter={formatPercentValue}
           yAxisWidth={yAxisWidth}
-          yTickCount={yTickCount}
+          yAxisTickCount={yTickCount}
           yAxisDomain={['dataMin', 'dataMax']}
           xAxisTickFormatter={formatDate}
           tooltipFormatter={formatPercentValue}
           tooltipLabelFormatter={formatDateWithTime}
-          color={color}
+          barName={chartName}
+          barColor={color}
         />
-      )}
+      }
     />
   );
 };

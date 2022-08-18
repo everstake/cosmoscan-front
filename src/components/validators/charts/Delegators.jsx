@@ -6,7 +6,6 @@ import { formatNum } from '../../../utils';
 import useRequest from '../../../hooks/useRequest';
 import API from '../../../api';
 
-
 const chartName = 'Total delegators';
 const barName = chartName;
 const yAxisWidth = 50;
@@ -14,23 +13,24 @@ const yAxisTickCount = 10;
 const xAxisTickFormatter = (val) => val;
 const tooltipLabelFormatter = xAxisTickFormatter;
 
-
 const Delegators = () => {
   const theme = useContext(ThemeContext);
   const { resp, isLoading } = useRequest(API.getDelegators);
   const delegators = useMemo(() => {
     if (!resp || !resp.length) return [];
 
-    return resp.map((el) => ({
-      name: el.validator,
-      dataPiece: el.value,
-    })).sort((a, b) => a.dataPiece - b.dataPiece);
+    return resp
+      .map((el) => ({
+        name: el.validator,
+        dataPiece: el.value,
+      }))
+      .sort((a, b) => a.dataPiece - b.dataPiece);
   }, [resp]);
 
   return (
     <ChartContainer
       title={chartName}
-      chart={(
+      chart={
         <BarChart
           isLoading={isLoading}
           data={delegators}
@@ -45,7 +45,7 @@ const Delegators = () => {
           isBrush
           barColor={theme.violet}
         />
-      )}
+      }
     />
   );
 };

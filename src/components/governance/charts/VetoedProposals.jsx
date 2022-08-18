@@ -5,14 +5,13 @@ import ChartContainer from '../../../layouts/ChartContainer';
 import BarChart from '../../chart-types/BarChart';
 import { formatId, formatPercentValue } from '../../../utils';
 
-
 const chartName = 'Most vetoed proposals';
 const yAxisWidth = 40;
 const yAxisTickCount = 10;
 const barName = chartName;
-const tooltipTxt = 'The proposals that received the highest amount of \'No with veto\' votes';
+const tooltipTxt =
+  "The proposals that received the highest amount of 'No with veto' votes";
 const tooltipLabelFormatter = (val) => `Proposal ${formatId(val)}`;
-
 
 const VetoedProposals = ({ isLoading, data }) => {
   const theme = useContext(ThemeContext);
@@ -21,7 +20,7 @@ const VetoedProposals = ({ isLoading, data }) => {
     <ChartContainer
       title={chartName}
       titleTooltip={tooltipTxt}
-      chart={(
+      chart={
         <BarChart
           isLoading={isLoading}
           data={data}
@@ -34,7 +33,7 @@ const VetoedProposals = ({ isLoading, data }) => {
           barColor={theme.burgundy}
           barName={barName}
         />
-      )}
+      }
     />
   );
 };

@@ -152,4 +152,6 @@ AreaChart.defaultProps = {
   yAllowDecimals: true,
 };
 
+AreaChart.displayName = 'AreaChart';
+
 export default AreaChart;

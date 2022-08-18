@@ -7,14 +7,12 @@ import { formatId, formatPercentValue } from '../../../utils';
 import SelectCustom from '../../SelectCustom';
 import { numsOfProposals } from '../../../utils/constants';
 
-
 const chartName = 'Proposal turnout';
 const yAxisWidth = 40;
 const yAxisTickCount = 10;
 const barName = chartName;
 const tooltipTxt = 'Total % of ATOM participating in voting';
 const tooltipLabelFormatter = (val) => `Proposal ${formatId(val)}`;
-
 
 const ProposalTurnout = ({ isLoading, data }) => {
   const theme = useContext(ThemeContext);
@@ -40,14 +38,14 @@ const ProposalTurnout = ({ isLoading, data }) => {
     <ChartContainer
       title={chartName}
       titleTooltip={tooltipTxt}
-      select={(
+      select={
         <SelectCustom
           opts={numsOfProposals}
           defaultOpt={numsOfProposals[2]}
           onChange={handleChange}
         />
-          )}
-      chart={(
+      }
+      chart={
         <BarChart
           isLoading={isLoading}
           data={proposals}
@@ -60,7 +58,7 @@ const ProposalTurnout = ({ isLoading, data }) => {
           barColor={theme.blue}
           barName={barName}
         />
-          )}
+      }
     />
   );
 };

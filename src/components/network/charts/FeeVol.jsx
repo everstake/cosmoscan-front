@@ -1,19 +1,19 @@
-import React, { useContext } from 'react';
+import React, { useContext, useMemo } from 'react';
 import { ThemeContext } from 'styled-components';
 import useRequest from '../../../hooks/useRequest';
-import useChartFormatter from '../../../hooks/useChartFormatter';
 import ChartContainer from '../../../layouts/ChartContainer';
 import SelectPeriod from '../../SelectPeriod';
-import AreaChart from '../../chart-types/AreaChart';
 import { periodOpts } from '../../../utils/constants';
 import {
   formatToken,
   formatTokenAmount,
   formatDate,
   formatDateWithTime,
+  formatBarChartData,
 } from '../../../utils';
 import API from '../../../api';
 import useCoinFormatter from '../../../hooks/useCoinFormatter';
+import BarChart from '../../chart-types/BarChart';
 
 const yAxisWidth = 40;
 const yTickCount = 10;
@@ -25,8 +25,8 @@ const FeeVol = () => {
   const coin = useCoinFormatter();
   const color = theme.blue5;
   const res = useRequest(API.getFeeVol, defaultPeriod.value);
-  const feeVolComp = useChartFormatter(res.resp);
   const chartName = `Fee volume (${coin})`;
+  const feeVolComp = useMemo(() => formatBarChartData(res.resp), [res]);
 
   return (
     <ChartContainer
@@ -39,19 +39,33 @@ const FeeVol = () => {
         />
       }
       chart={
-        <AreaChart
-          areaName={areaName}
+        <BarChart
+          barName={areaName}
           isLoading={res.isLoading}
           data={feeVolComp}
           yAxisLabelsFormatter={formatTokenAmount}
           yAxisWidth={yAxisWidth}
-          yTickCount={yTickCount}
+          yAxisTickCount={yTickCount}
           xAxisTickFormatter={formatDate}
           tooltipFormatter={formatToken}
           tooltipLabelFormatter={formatDateWithTime}
-          color={color}
+          barColor={color}
         />
       }
+      // chart={
+      //   <AreaChart
+      //     areaName={areaName}
+      //     isLoading={res.isLoading}
+      //     data={feeVolComp}
+      //     yAxisLabelsFormatter={formatTokenAmount}
+      //     yAxisWidth={yAxisWidth}
+      //     yTickCount={yTickCount}
+      //     xAxisTickFormatter={formatDate}
+      //     tooltipFormatter={formatToken}
+      //     tooltipLabelFormatter={formatDateWithTime}
+      //     color={color}
+      //   />
+      // }
     />
   );
 };

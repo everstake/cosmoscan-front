@@ -29,8 +29,8 @@ export const periodOpts = [
   {
     label: 'Last 3 months',
     value: {
-      by: 'day',
-      from: moment.utc().subtract(60, 'days').startOf('day').unix(),
+      by: 'week',
+      from: moment.utc().subtract(90, 'days').startOf('day').unix(),
       to: moment.utc().startOf('day').unix(),
     },
   },
