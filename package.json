@@ -27,7 +27,7 @@
     "react-router-sitemap": "^1.2.0",
     "react-scripts": "^3.4.3",
     "react-select": "^4.3.0",
-    "recharts": "^2.1.5",
+    "recharts": "^2.1.14",
     "styled-components": "^5.1.0",
     "styled-components-modifiers": "^1.2.5",
     "styled-normalize": "^8.0.7"
