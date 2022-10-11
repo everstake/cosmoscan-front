@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import banner from '../assets/img/banner.jpg';
-import bannerMobile from '../assets/img/banner-mobile.jpg';
+import banner from '../assets/img/banner.png';
 import { Container } from './styled/CustomBsGrid';
 
 const Banner = styled.div`
@@ -17,27 +16,20 @@ const Image = styled.img`
 `;
 
 const ImageDesctop = styled(Image)`
-  @media (max-width: 767px) {
-    display: none;
-  }
-`;
-
-const ImageMobile = styled(Image)`
-  @media (min-width: 767px) {
-    display: none;
-  }
+  //@media (max-width: 767px) {
+  //  display: none;
+  //}
 `;
 
 const BannerComponent = () => (
   <Container>
     <Banner>
       <a
-        href="https://donate.thedigital.gov.ua/"
+        href="https://aff.everstake.one/?utm_campaign=partner&utm_content=Keplr&utm_medium=Cosmos&utm_source=Cosmoscan&utm_term=1665078254"
         target="_blank"
         rel="noopener noreferrer"
       >
         <ImageDesctop src={banner} alt="gravidex" />
-        <ImageMobile src={bannerMobile} alt="gravidex" />
       </a>
     </Banner>
   </Container>
