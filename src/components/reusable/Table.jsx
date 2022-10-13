@@ -95,6 +95,7 @@ const Table = ({
   isLoading,
   maxHeight,
   isHeightFixed,
+  handleScroll,
 }) => {
   const rowsOrdered = useMemo(
     () => orderRowsData(rows, cols, colValueKey),
@@ -108,18 +109,22 @@ const Table = ({
 
   // useEffect(() => {
   //   const list = document.getElementById('tableWrap');
-  //   list.addEventListener('scroll', (e) => handleScroll(e, callback));
+  //   // list.addEventListener('scroll', (e) => handleScroll(e, callback));
+  //   list.addEventListener('scroll', (e) => handleScroll(e));
+  //
   //   // list.addEventListener('scroll', (e) => debounce((e) => handleScroll(e, callback), 2000));
   //
   //   return () => {
-  //     list.removeEventListener('scroll', (e) => handleScroll(e, callback));
+  //     // list.removeEventListener('scroll', (e) => handleScroll(e, callback));
+  //     list.removeEventListener('scroll', (e) => handleScroll(e));
   //     // list.removeEventListener('scroll',(e) => debounce((e) => handleScroll(e, callback), 2000));
   //   };
-  // }, []);
+  // }, [handleScroll]);
 
   return (
     <Card>
       <TableResp
+        onScroll={handleScroll}
         id="tableWrap"
         maxHeight={maxHeight}
         isHeightFixed={isHeightFixed}
@@ -201,6 +206,7 @@ Table.propTypes = {
   maxHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   isHeightFixed: PropTypes.bool,
   // callback: PropTypes.func,
+  handleScroll: PropTypes.func,
 };
 Table.defaultProps = {
   cols: [],
@@ -211,6 +217,9 @@ Table.defaultProps = {
   maxHeight: 517,
   isHeightFixed: false,
   // callback: () => null,
+  handleScroll: () => null,
 };
+
+Table.displayName = 'Table';
 
 export default Table;

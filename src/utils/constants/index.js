@@ -6,32 +6,39 @@ export const periodOpts = [
     label: 'Last day',
     value: {
       by: 'hour',
-      from: moment.utc().subtract(1, 'days').startOf('day').unix(),
-      to: moment.utc().subtract(1, 'days').endOf('day').unix(),
+      from: moment().subtract(1, 'days').startOf('day').unix(),
+      to: moment().subtract(1, 'days').endOf('day').unix(),
+      // to: moment().unix(),
     },
   },
   {
     label: 'Last week',
     value: {
       by: 'day',
-      from: moment.utc().subtract(7, 'days').startOf('day').unix(),
-      to: moment.utc().startOf('day').unix(),
+      from: moment().subtract(7, 'days').startOf('day').unix(),
+      // to: moment().startOf('day').unix(),
+      to: moment().subtract(1, 'days').endOf('day').unix(),
+      // to: moment().unix(),
     },
   },
   {
     label: 'Last month',
     value: {
       by: 'day',
-      from: moment.utc().subtract(30, 'days').startOf('day').unix(),
-      to: moment.utc().startOf('day').unix(),
+      from: moment().subtract(30, 'days').startOf('day').unix(),
+      // to: moment().startOf('day').unix(),
+      // to: moment().unix(),
+      to: moment().subtract(1, 'days').endOf('day').unix(),
     },
   },
   {
     label: 'Last 3 months',
     value: {
-      by: 'day',
-      from: moment.utc().subtract(60, 'days').startOf('day').unix(),
-      to: moment.utc().startOf('day').unix(),
+      by: 'week',
+      from: moment().subtract(90, 'days').startOf('day').unix(),
+      // to: moment().startOf('day').unix(),
+      to: moment().subtract(1, 'days').endOf('day').unix(),
+      // to: moment().unix(),
     },
   },
 ];
