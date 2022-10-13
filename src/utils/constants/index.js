@@ -7,6 +7,7 @@ export const periodOpts = [
     value: {
       by: 'hour',
       from: moment.utc().subtract(1, 'days').startOf('day').unix(),
+      // to: moment.utc().subtract(1, 'days').endOf('day').unix(),
       to: moment.utc().subtract(1, 'days').endOf('day').unix(),
     },
   },
@@ -15,7 +16,8 @@ export const periodOpts = [
     value: {
       by: 'day',
       from: moment.utc().subtract(7, 'days').startOf('day').unix(),
-      to: moment.utc().startOf('day').unix(),
+      // to: moment.utc().startOf('day').unix(),
+      to: moment.utc().subtract(1, 'days').endOf('day').unix(),
     },
   },
   {
@@ -23,7 +25,8 @@ export const periodOpts = [
     value: {
       by: 'day',
       from: moment.utc().subtract(30, 'days').startOf('day').unix(),
-      to: moment.utc().startOf('day').unix(),
+      // to: moment.utc().startOf('day').unix(),
+      to: moment.utc().subtract(1, 'days').endOf('day').unix(),
     },
   },
   {
@@ -31,7 +34,8 @@ export const periodOpts = [
     value: {
       by: 'day',
       from: moment.utc().subtract(60, 'days').startOf('day').unix(),
-      to: moment.utc().startOf('day').unix(),
+      // to: moment.utc().startOf('day').unix(),
+      to: moment.utc().subtract(1, 'days').endOf('day').unix(),
     },
   },
 ];
