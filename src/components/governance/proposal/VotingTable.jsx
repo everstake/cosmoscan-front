@@ -9,9 +9,9 @@ import StatsItemFlex from '../../styled/StatsItemFlex';
 import { Green, Burgundy, Red, Blue } from '../../styled/TxtColors';
 import Table from '../../reusable/Table';
 import Spinner from '../../reusable/Spinner';
-import useRequest from '../../../hooks/useRequest';
 import { calculatePercent, formatNum, formatStatuses } from '../../../utils';
 import API from '../../../api';
+import usePaginationScroll from '../../../hooks/usePaginationScroll';
 
 const FlexContainer = css`
   display: flex;
@@ -65,20 +65,21 @@ const cols = [
   { value: 'hash', label: 'Hash' },
 ];
 
+// const limit = 15;
+
 const VotingTable = ({ proposalId, className }) => {
   const [validatorType, setValidatorType] = useState('all');
-
-  const res = useRequest(API.getVotes, { proposal_id: proposalId });
-
-  const isVotesEmpty = useMemo(
-    () => Boolean(!res || !res.resp || !res.resp.length),
-    [res],
+  const { resp, handleScroll, isLoading } = usePaginationScroll(
+    API.getVotes,
+    proposalId,
   );
+
+  const isVotesEmpty = useMemo(() => Boolean(!resp || !resp.length), [resp]);
 
   const votesAll = useMemo(() => {
     if (isVotesEmpty) return [];
 
-    return res.resp
+    return resp
       .sort((a, b) => b.created_at - a.created_at)
       .map((vote) => ({
         voter: vote.title ? vote.title : vote.voter,
@@ -100,7 +101,7 @@ const VotingTable = ({ proposalId, className }) => {
         hash: vote.tx_hash,
         isValidator: vote.is_validator,
       }));
-  }, [res.resp, isVotesEmpty]);
+  }, [resp, isVotesEmpty]);
 
   // const [offset, setOffset] = useState(0);
   const [currentVotesSet, setCurrentVotesSet] = useState(votesAll);
@@ -172,7 +173,7 @@ const VotingTable = ({ proposalId, className }) => {
   return (
     <>
       {/* eslint-disable-next-line no-nested-ternary */}
-      {res.isLoading ? (
+      {isLoading ? (
         <div className="text-center mt-5">
           <Spinner />
         </div>
@@ -232,9 +233,9 @@ const VotingTable = ({ proposalId, className }) => {
           </Card>
 
           <Table
-            isLoading={res.isLoading}
             cols={cols}
             rows={currentVotesSet}
+            handleScroll={handleScroll}
             // rows={currVotes}
             // callback={(el) => {
             //   return setOffset((prev) => {
@@ -242,7 +243,7 @@ const VotingTable = ({ proposalId, className }) => {
             //       el.scrollTop = 0;
             //     }
             //     return prev + 10;
-            //   })
+            //   });
             // }}
           />
         </section>
