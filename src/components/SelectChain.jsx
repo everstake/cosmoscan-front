@@ -53,6 +53,7 @@ const SelectChain = () => {
       <Select
         options={networkList}
         defaultValue={currentChain}
+        value={currentChain}
         onChange={(e) => {
           setCurrentChain(e);
         }}

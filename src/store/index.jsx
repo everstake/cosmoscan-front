@@ -1,6 +1,6 @@
 import React, { createContext, useMemo, useState } from 'react';
 import PropTypes from 'prop-types';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { networkList } from '../utils/constants';
 
 const initialState = {
@@ -14,11 +14,10 @@ const Store = createContext({
 export const StateProvider = ({ children }) => {
   const [chain, setChain] = useState();
   const history = useHistory();
+  const local = useLocation();
 
   const currentChain = useMemo(() => {
-    let currChain = networkList.find((e) =>
-      history.location.pathname.match(e.value),
-    );
+    let currChain = networkList.find((e) => local.pathname.match(e.value));
 
     currChain = currChain || initialState.chain;
 
@@ -27,7 +26,7 @@ export const StateProvider = ({ children }) => {
     setChain(currChain);
 
     return currChain;
-  }, [history]);
+  }, [local]);
 
   const setCurrentChain = (payload) => {
     setChain(payload);
