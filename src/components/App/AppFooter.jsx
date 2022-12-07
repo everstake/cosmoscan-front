@@ -81,6 +81,15 @@ const P = styled.p`
   font-weight: 500;
 `;
 
+const Link = styled.a`
+  color: ${({ theme }) => theme.blue};
+
+  &:hover {
+    color: ${({ theme }) => theme.blue3};
+    text-decoration: none;
+  }
+`;
+
 const currentYear = new Date().getFullYear();
 const socials = [
   {
@@ -133,7 +142,15 @@ const AppFooter = () => {
                 <Title modifiers="blue">Cosmoscan</Title>
                 <P>
                   Cosmoscan is an open-source analytics platform for Cosmos
-                  network made by Everstake.
+                  network made by{' '}
+                  <Link
+                    href="https://everstake.one/"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    Everstake
+                  </Link>
+                  .
                 </P>
               </FooterItem>
             </Col>
