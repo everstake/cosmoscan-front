@@ -143,8 +143,8 @@ export const changeChain = () => {
   switch (sessionStorage.getItem('chain')) {
     case 'cosmos':
       return process.env.REACT_APP_API_COSMOS;
-    case 'persistence':
-      return process.env.REACT_APP_API_PERSISTENCE;
+    // case 'persistence':
+    //   return process.env.REACT_APP_API_PERSISTENCE;
     case 'bitsong':
       return process.env.REACT_APP_API_BITSONG;
     default:
