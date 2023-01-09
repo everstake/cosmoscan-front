@@ -21,7 +21,7 @@ const BannerComponent = () => {
     <Container>
       <Banner>
         <a
-          href="https://aff.everstake.one/?utm_campaign=partner&utm_content=Keplr&utm_medium=Cosmos&utm_source=Cosmoscan&utm_term=1665078254"
+          href="https://stake.is/7b457258"
           target="_blank"
           rel="noopener noreferrer"
         >
