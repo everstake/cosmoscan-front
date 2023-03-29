@@ -4,7 +4,7 @@ import { useHistory, useLocation } from 'react-router-dom';
 import { networkList } from '../utils/constants';
 
 const initialState = {
-  chain: { label: 'COSMOS', value: 'cosmos', coinCode: 'ATOM' },
+  chain: { label: 'BITSONG', value: 'bitsong', coinCode: 'BTSG' },
 };
 
 const Store = createContext({
